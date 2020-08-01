@@ -1,0 +1,12 @@
+body {
+  width: 100vw;
+}
+body .top {
+  background: #fff;
+}
+.border {
+  color: '#343222';
+}
+#footer .hack {
+  color: #fff;
+}
