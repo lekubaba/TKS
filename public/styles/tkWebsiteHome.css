@@ -29,7 +29,7 @@ section{
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
 	background: linear-gradient(30deg,#fff,#6c2169);
   	animation: animate 20s linear infinite;

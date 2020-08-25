@@ -10,16 +10,7 @@ let {formatDate} = require('../utils/DateUtil');
 /*首页*/
 
 router.get('/',function(req,res){
-	// res.render('tkWebSiteHome',{title:'将裂变的力量赋能销售'});
-	// res.render('index');
-	res.sendFile(path.resolve(__dirname,'../public/html/formdata.html'));
-})
-
-router.post('/formdata',function(req,res){
-	console.log(req.files[0]);
-	console.log(JSON.stringify(req.body));
-	res.json({name:'helo'})
-	
+	res.render('tkWebSiteHome',{title:'将裂变的力量赋能销售'});
 })
 
 
