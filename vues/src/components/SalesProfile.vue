@@ -1,38 +1,51 @@
 <template>
-	<div class="data">
-		<div class='total'>
-			<div class='total-all'>
-				<span class='gray'>今日到访</span>
-				<span>12</span>
-			</div>
-			<div class='total-all'>
-				<span class='gray'>到访总数</span>
-				<span>512</span>
-			</div>
-		</div>
+	<div class="sales">
 		<div class='profile'>
-			<div class='profile-item'>
+			<div class='profile-item' v-for = 'item in sales'>
 				<img class='profile-item-avatar' src="http://qiniu.tongkeapp.com/appletouchicon.png">
 				<div class='profile-item-content'>
 					<div class='profile-item-text'>
-						<div class='profile-item-info'>
-							<span class='user-name'>杨腾</span>
-							<span class='user-tel'>182****9987</span>
+						<div class='profile-item-info'>杨思 158****3233 8月23日</div>
+						<div class='profile-item-wraper'>
+							<div class='profile-item-left'>
+								<div class='profile-item-time'>推荐人：杨小小 13222332233</div>
+								<div class='profile-item-state' :style="{color:color}">金额：1324333</div>
+							</div>
 						</div>
-						<div class='profile-item-time'>8月23 12:22</div>
 					</div>
-					<div class='profile-item-button'>暂时没意向</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+<script>
 
+export default {
+	name: 'SalesProfile',
+	components: {
+		// HelloWorld
+	},
+	props:['sales'],
+	data(){
+		return {
+			salesProfile:'',
+			color:this.$store.state.color,
+		}
+	},
+	created() {
+	},
+	methods:{
+	},
+
+	
+}
+</script>
 <style scoped lang="less">
-	.data{
+	.sales{
 		width:100vw;
 		min-height: 100vh;
 		background-color: rgb(237,237,237);
+		padding-bottom: 100px;
 	}
 	.total{
 		width:100%;
@@ -50,21 +63,24 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		color: #1476fe;
 		font-weight:700;
 	}
 	.gray{
 		color: #808080;
 	}
+	.profile{
+	
+	}
+
 	.profile-item{
 		width:100vw;
-		height: 60px;
+		height: 70px;
 		display: flex;
 		padding:5px 20px 0 20px;
 	}
 	.profile-item-avatar{
-		width:42px;
-		height:42px;
+		width:32px;
+		height:32px;
 		border-radius: 21px;
 		
 	}
@@ -73,34 +89,38 @@
 		flex-direction: row;
 		justify-content: space-between;
 		width:calc(100vw - 82px);
-		padding:0px 5px 5px 6px;
-		border-bottom: 1px dashed #ccc;
+		padding:0px 0 5px 6px;
+		border-bottom: .5px dashed #ccc;
 	
 	}
 	.profile-item-text{
-		width:calc(100vw - 216px);
+		width:calc(100vw - 82px);
 	}
-	.profile-item-button{
-		width:120px;
-		height: 30px;
-		background-color: #1476fe;
-		border-radius: 15px;
+	.profile-item-wraper{
+		
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #fff;
-		font-size: 14px;
-		margin-top: 5px;
+		flex-direction: row;
+		justify-content: space-between;
 	}
-	.user-name,.user-tel{
-		font-size: 14px;
-		color: #333333;
+	.button-vip{
+		display: flex;
+		width:120px;
+		justify-content: space-between;
+	}
+	
+	.profile-item-info{
+		font-size: 12px;
+		color: #999;
 		font-weight: 700;
-		margin-right: 10px;
 	}
 	.profile-item-time{
 		font-size: 12px;
 		color: #999;
 	}
+	.profile-item-state{
+		font-size: 12px;
+		color: #1476fe;
+	}
 	
 </style>
+

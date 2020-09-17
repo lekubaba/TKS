@@ -45,10 +45,10 @@ source .bash_profile
 nvm --version // 查看nvm版本
 nvm install latest // 下载最新的 node 版本
 nvm ls-remote // 查看远程已经存在的版本（可能会很慢，请耐心等待）
-nvm install v8.9.0 // 下载指定版本nodejs
-nvm install v8.9.0 32 // 默认是64位，32位需指定
+nvm install v12.18.3 // 下载指定版本nodejs
+nvm install v12.18.3 32 // 默认是64位，32位需指定
 nvm current // 当前使用版本
-nvm use v8.9.1 // 使用指定版本
+nvm use v12.18.3 // 使用指定版本
 nvm list // 查看已经安装的nodejs版本
 node --version // 查看nodejs版本
 
