@@ -13,7 +13,7 @@ export default new Vuex.Store({
 			isVIP:true,
 		},
 		color:'#1476FE',
-		getAgentEndTime:'2020-11-01 00:59:59',
+		getAgentEndTime:'2020-10-01 00:59:59',
 	},
 	mutations: {
 	},

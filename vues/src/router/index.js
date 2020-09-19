@@ -34,7 +34,10 @@ import PromotionPoster from '../views/PromotionPoster.vue';
 import AgentPoster from '../views/AgentPoster.vue';
 import UnionPay from '../views/UnionPay.vue';
 import OpenThirdLevel from '../views/OpenThirdLevel.vue';
+import SuccessRemind from '../views/SuccessRemind.vue';
+import AddressPay from '../views/AddressPay.vue';
 import Theme from '../views/Theme.vue';
+import RegisterAgent from '../views/RegisterAgent.vue';
 import beforeEachGlobal from '../plugins/beforeEach.js';
 const Data = ()=>import(/* webpackChunkName: "userdata" */ '../views/UserData.vue');
 const Center = ()=>import(/* webpackChunkName: "usercenter" */ '../views/UserCenter.vue');
@@ -274,6 +277,13 @@ const routes = [
 				}
 				
 			},{
+				path:'/registeragent',
+				name:'RegisterAgent',
+				component:RegisterAgent,
+				meta:{
+					title:'免费代理',
+				}
+			},{
 				path:'/getcustomerpage',
 				name:'GetCustomerPage',
 				component:GetCustomerPage,
@@ -384,6 +394,24 @@ const routes = [
 				meta:{
 					title:'设置主题颜色',
 					requiresAuth:true
+				}
+				
+			},{
+				path:'/successremind',
+				name:'SuccessRemind',
+				component:SuccessRemind,
+				meta:{
+					title:' ',
+					requiresAuth:true
+				}
+				
+			},{
+				path:'/addresspay',
+				name:'AddressPay',
+				component:AddressPay,
+				meta:{
+					title:'收货信息并支付',
+					requiresAuth:false
 				}
 				
 			},

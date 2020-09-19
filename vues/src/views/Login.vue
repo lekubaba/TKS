@@ -30,14 +30,14 @@ export default {
 		align-items: center;
 	}
 	#login .logo{
-		width:120px;
+		width:160px;
 		height: auto;
-		margin-top:120px;
-		border-radius: 10px;
+		margin-top:100px;
+		border-radius: 15px;
 	}
 	.mission{
-		margin-top:20px;
-		width:60vw;
+		margin-top:10px;
+		width:40vw;
 	}
 	.login-title{
 		font-size: 20px;
@@ -57,7 +57,5 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-left: 2px solid #1FF0EF;
-		border-right: 2px solid #FE2E5C;
 	}
 </style>

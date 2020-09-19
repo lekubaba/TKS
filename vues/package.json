@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "html2canvas": "1.0.0-rc.4",
+    "v-distpicker": "^1.2.7",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-qr": "^2.2.1",

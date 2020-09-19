@@ -1,0 +1,94 @@
+[2020-09-20T04:00:17.716] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:00:17.722] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:00:36.086] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:00:36.092] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:00:51.480] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:00:51.486] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:03:10.379] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:03:10.386] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:07:46.892] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:07:46.900] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:08:03.729] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:08:03.735] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:11:51.673] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:11:51.680] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:18:33.734] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:18:33.740] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:18:56.004] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:18:56.010] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:20:55.105] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:20:55.111] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:22:01.642] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:22:01.649] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:23:49.855] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:23:49.862] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:30:29.286] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:30:29.292] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:31:11.579] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:31:11.585] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:33:11.168] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:33:11.174] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:33:33.838] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:33:33.846] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:37:19.101] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:37:19.107] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:38:23.001] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:38:23.008] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:43:28.284] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:43:28.290] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:43:31.087] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Ch".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T04:43:32.493] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Ch".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T04:45:16.405] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:45:16.411] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:46:05.308] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:46:05.315] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:46:49.780] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:46:49.786] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:47:59.445] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:47:59.452] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:49:13.486] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:49:13.493] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:50:26.208] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:50:26.215] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:50:50.952] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:50:50.958] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:53:13.938] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:53:13.948] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:53:41.128] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:53:41.135] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T04:59:28.683] [INFO] tongkelogs - server is running:8099
+[2020-09-20T04:59:28.689] [INFO] tongkelogs - 数据库连接成功

@@ -2,19 +2,17 @@ var mongoose = require('./connect.js');
 
 var Schema = mongoose.Schema;
 
-var FriendSchema = new Schema({
+
+var userSchema = new Schema({
+	_id:Schema.Types.ObjectId,
 	name:String,
-	tel:String,
-	address:[String]
+	self1:{type:Schema.Types.ObjectId,ref:'User'},
 })
 
-var ReSchema = new Schema({
-	name:String,
-	tel:[String],
-	friend:[FriendSchema]
-	
-})
 
+var User = mongoose.model('User',userSchema,'user');
+
+module.exports.User = User;
 
 
 var AgentSchema = new Schema({
@@ -48,12 +46,9 @@ var CustomerSchema = new Schema({
 		// customerProgress:{type:Array},
 })
 
-var Re = mongoose.model('re',ReSchema,'re');
 var Agent = mongoose.model('agent',AgentSchema,'agent');
 var Customer = mongoose.model('customer',CustomerSchema,'customer');
 
-
-module.exports.Re = Re;
 module.exports.Agent = Agent;
 module.exports.Customer = Customer;
 

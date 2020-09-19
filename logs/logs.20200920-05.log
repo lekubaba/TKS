@@ -1,0 +1,280 @@
+[2020-09-20T05:00:26.659] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:00:26.667] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:01:35.615] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:01:35.621] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:02:45.682] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:02:45.689] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:03:01.719] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:03:01.725] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:05:08.592] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:05:08.598] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:05:51.665] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:05:51.671] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:29:13.599] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:29:13.609] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:30:14.372] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:30:14.378] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:31:31.225] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:31:31.232] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:31:33.508] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:32:51.072] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:32:51.823] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:32:52.567] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:37:51.556] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:37:51.562] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:38:31.413] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:38:31.420] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:39:52.991] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:39:52.999] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:40:21.982] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:40:23.788] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:40:24.973] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:40:25.837] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:40:26.693] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at cb (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1342:17)
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/utils.js:120:56)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:861:16
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+    at setCursorDeadAndNotified (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:505:3)
+    at nextFunction (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:660:7)
+    at Cursor.next [as _next] (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:701:3)
+    at fetchDocs (/Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:857:10)
+    at /Users/lekubaba/leku/TKS/node_modules/_mongodb@2.2.34@mongodb/lib/cursor.js:880:7
+    at handleCallback (/Users/lekubaba/leku/TKS/node_modules/_mongodb-core@2.1.18@mongodb-core/lib/cursor.js:171:5)
+[2020-09-20T05:40:50.136] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:40:50.142] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:40:52.303] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:41:23.399] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:41:23.406] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:41:25.825] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:41:27.283] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:42:30.480] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:42:30.487] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:43:02.699] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:43:02.705] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:43:22.296] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:43:22.304] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:43:44.716] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:43:53.831] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:43:53.838] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:43:55.056] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:43:56.335] [ERROR] tongkelogs - MongooseError [MissingSchemaError]: Schema hasn't been registered for model "Test".
+Use mongoose.model(name, schema)
+    at new MissingSchemaError (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/error/missingSchema.js:20:11)
+    at NativeConnection.Connection.model (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/connection.js:1079:11)
+    at getModelsMapForPopulate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3657:20)
+    at populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3224:15)
+    at _populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3192:5)
+    at Function.Model.populate (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/model.js:3152:5)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mongoose@4.13.21@mongoose/lib/query.js:1538:17)
+    at Immediate.<anonymous> (/Users/lekubaba/leku/TKS/node_modules/_mquery@2.3.3@mquery/lib/utils.js:137:16)
+    at processImmediate (internal/timers.js:456:21)
+[2020-09-20T05:45:19.438] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:45:19.444] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:45:37.729] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:45:37.737] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:49:32.962] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:49:32.969] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:50:09.014] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:50:09.020] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:52:38.155] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:52:38.161] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:53:18.413] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:53:18.420] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:54:26.400] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:54:26.406] [INFO] tongkelogs - 数据库连接成功
+[2020-09-20T05:55:16.922] [INFO] tongkelogs - server is running:8099
+[2020-09-20T05:55:16.928] [INFO] tongkelogs - 数据库连接成功

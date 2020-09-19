@@ -66,4 +66,9 @@ router.post('/api/saveVerificationImformation',function(req,res){
 	res.send('hello:saveVerificationImformation');
 })
 
+router.post('/api/saveAddress',function(req,res){
+	console.log(req.body);
+	res.send('hello:saveAddress');
+})
+
 module.exports = router;

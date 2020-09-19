@@ -60,8 +60,7 @@ export default {
 		}
 	},
 	mounted() {
-		// this.draw();
-		// console.log(this.$refs.box);
+		
 	},
 	
 	methods:{

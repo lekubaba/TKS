@@ -34,8 +34,8 @@
 					<div class='mask-titlea' :style="{color:color}">{{stateTitle}}</div>
 					<div class='mask-titleb'>提交以后代理将在进度里看到你的反馈</div>
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirm' :data-state='state'>确认</div>
-						<div class='mask-cancel' @click='isCancel' :style="{color:color}">取消</div>
+						<div class='mask-confirm' @click='isConfirm' :data-state='state' :style="{color:color}">确认</div>
+						<div class='mask-cancel' @click='isCancel' :style="{backgroundColor:color}">取消</div>
 					</div>
 				</div>
 			</div>
@@ -46,8 +46,8 @@
 					<div class='mask2-title' :style="{color:color}">请输入金额(元)</div>
 					<input class='mask-inputa' type="number" placeholder="输入签约金额" ref='money' onkeyup="this.value=this.value.replace(/[, ]/g,'')" :style="{borderColor:color}">
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirmtwo'>确认</div>
-						<div class='mask-cancel' @click='isCanceltwo' :style="{color:color}">取消</div>
+						<div class='mask-confirm' @click='isConfirmtwo' :style="{color:color}">确认</div>
+						<div class='mask-cancel' @click='isCanceltwo' :style="{backgroundColor:color}">取消</div>
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,9 @@
 						<div class='column2'>{{account.bigSuperName}}</div>
 						<div class='column3'>{{account.bigSuperAccount}}</div>
 					</div>
-					<div class='closemask3' @click='closeMask3' :style="{color:color}">关闭</div>
+					<div class='mask-button'>
+						<div style="margin-top:20px;" class='mask-cancel' @click='closeMask3' :style="{backgroundColor:color}">关闭</div>
+					</div>
 				</div>
 			</div>
 		</transition>
@@ -379,31 +381,38 @@ export default {
 		color: #999;
 	}
 	.mask-button{
-		margin-top:20px;
+		position: absolute;
+		bottom: 0px;
 		width:100%;
 		height: 120px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		// border:1px solid red;
+		align-items: center;
+		justify-content: center;
 	}
 	.mask-cancel,.mask-confirm{
-		width:100%;
-		height: 60px;
+		width:30%;
+		height: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: #fff;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 900;
 		cursor: pointer;
-		border-top:.5px solid #aaa;
-	}
-	.mask-confirm{
-		color: #999;
+		border-radius: 5px;
+		margin:0 10px 0 10px;
 	}
 	.mask-cancel{
 		color: #fff;
-		// background-image: linear-gradient(135deg, rgba(244, 213, 131, 1), rgba(191, 152, 57, 1.0));
+		background-color: #1476FE;
+		
+		
+	}
+	.mask-confirm{
+		color: #1476FE;
+		background-color: #eee;
 	}
 	.mask2-title{
 		font-size: 24px;

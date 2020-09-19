@@ -10,7 +10,7 @@
 					<div class='buy-agree-title'>我已阅读并同意</div>
 					<div class='buy-agree-protocol' @click='toUserProtocol' :style="{color:this.$store.state.color}">《统客使用协议》</div>
 				</div>
-				<div class='buy-tk-pay' :style="{backgroundColor:this.$store.state.color}">
+				<div class='buy-tk-pay' :style="{backgroundColor:this.$store.state.color}" @click='toBuy'>
 					<span class='buy-underline'>¥6999</span>
 					<span class='buy-money-renminbi'>¥</span>
 					<span class='buy-money'>899.0</span>
@@ -25,7 +25,7 @@
 					<CountDown class='buy-agree-title' :style="{color:this.$store.state.color}" v-bind:endTime='getAgentEndTime' />
 				</div>
 				<div class='tk-vips-items'>
-					<div class='tk-vip-item' :style="{backgroundColor:this.$store.state.color}" @click='joinActivity'>报名参加活动</div>
+					<div class='tk-vip-item' :style="{backgroundColor:this.$store.state.color}" @click='toJoinActivity'>报名参加活动</div>
 				</div>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 						<div class='get-check-number' :style="{backgroundColor:this.$store.state.color}" @click='countDownSixty'>{{content}}</div>	
 					</div>
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirm' :style="{backgroundColor:this.$store.state.color}">报名参加</div>
+						<div class='mask-confirm' @click='isConfirm' :style="{backgroundColor:this.$store.state.color}">提交报名</div>
 						<div class='mask-cancel' >
 							<span @click='isCancel'>取消</span>
 						</div>
@@ -78,7 +78,7 @@ export default {
 				{id:7,posterUrl:'http://qiniu.tongkeapp.com/poster_08.jpg'},
 			],
 			showBuyTab:{
-				buyTk:false
+				buyTk:true,
 			},
 			mask:{
 				mask:false
@@ -101,16 +101,44 @@ export default {
 		toUserProtocol(){
 			this.$router.push({name:'UserProtocol'});
 		},
-		joinActivity(){
+		toBuy(){
+			this.$router.push({name:'AddressPay'});
+		},
+		toJoinActivity(){
 			this.mask.mask = true;
 		},
 		isConfirm(){
-			// this.mask.mask = false;
+			let customerName = this.$refs.customerName.value;
+			let customerPhoneNumber = this.$refs.customerPhoneNumber.value;
+			let verificationCode = this.$refs.verificationCode.value;
+			if(!customerName||!customerPhoneNumber||!verificationCode){
+				this.$message.info('内容为空');
+				return;
+			}
+			if(!this.$Utils.checkCName(customerName)||!this.$Utils.checkTel(customerPhoneNumber)||!this.$Utils.checkVC(verificationCode)){
+				this.$message.info('输入错误');
+				return;
+			}
+			
+			// doSomething ...检查获取的验证码是否正确；
+			
+			this.$router.replace({name:'SuccessRemind',query:{supTitle:'报名成功',subTitle:'专属顾问将在稍后联系您'}});
+			
 		},
 		isCancel(){
 			this.mask.mask = false;
 		},
 		countDownSixty () {
+			
+			let customerPhoneNumber = this.$refs.customerPhoneNumber.value;
+			if(customerPhoneNumber===''){
+				this.$message.info('手机号为空');
+				return;
+			}
+			if(!this.$Utils.checkTel(customerPhoneNumber)){
+				this.$message.info('手机号错误');
+				return;
+			}
 			if (!this.canClick) return  //改动的是这两行代码
 			this.canClick = false
 			this.content = this.totalTime + 's'

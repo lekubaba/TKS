@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Re} = require('../mongoose/modelSchema')
+let {User} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -9,34 +9,45 @@ var logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
 /*首页*/
 
-router.get('/adds',function(req,res){
-	let re = new Re();
-	re.name = '张三';
-	re.tel = ['19966778822'];
-	re.friend[0] = {name:'李四',tel:'13186784881',address:['长沙']};
-	re.save(function(err){
-		if(err) console.log(err);
-		res.send('hello re');
-	})
-})
 
 
-router.get('/find',function(req,res){
-	Re.find({'friend.tel':'18322223333'},function(err,val){
-		console.log(val);
-		res.send(val);
-	});
-})
+router.get('/thing',function(req,res){
 	
+	// let user = new User();
+	// user._id = new mongoose.Types.ObjectId;
+	// user.name = 'leku';
+	// user.self1 = user._id;
 	
-router.get('/update',function(req,res){
-	Re.update({'tel':'15911223322'},{'$push':{'friend':{'name':'黄三','tel':'14444444444','adress':['邵阳','怀化']}}},function(err){
-		if(err) return new Error('出错了');
-		res.send('更新成功了');
-	});
+	// user.save(function(err){
+	// 	if(err) return logger.error(err);
+	// 	res.send('heihei');
+	// })
+	
+	User.
+	findOne({name:'leku'}).
+		populate({path:'self1',
+			populate:{
+				path:'self1',
+				populate:{
+					path:'self1',
+					populate:{
+						path:'self1',
+						populate:{
+							path:'self1',
+							
+						}
+						
+					}
+					
+				}
+			}
+		}).
+		exec(function(err,user){
+			if(err) return logger.error(err);
+			res.send(user);
+		})
+
 })
-
-
 
 
 module.exports = router;

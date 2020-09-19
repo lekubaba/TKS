@@ -2,11 +2,11 @@
 	<transition name='fade'>
 		<div class='mask' v-if='isMask.isMask'>
 			<div class='mask-contenta'>
-				<div class='mask-titlea'>{{isTitle.superText}}</div>
+				<div class='mask-titlea' :style="{color:color}">{{isTitle.superText}}</div>
 				<div class='mask-titleb'>{{isTitle.subText}}</div>
 				<div class='mask-button'>
-					<div class='mask-confirm' @click='isConfirm'>确认</div>
-					<div class='mask-cancel' @click='isCancel'>取消</div>
+					<div class='mask-confirm' @click='isConfirm' :style="{color:color}">确认</div>
+					<div class='mask-cancel' @click='isCancel' :style="{backgroundColor:color}">取消</div>
 				</div>
 			</div>
 		</div>
@@ -18,7 +18,8 @@
 		name: 'MaskPage',
 		props:{
 			isMask:Object,
-			isTitle:Object
+			isTitle:Object,
+			color:String,
 		},
 		data(){
 			return {
@@ -96,25 +97,32 @@
 		width:100%;
 		height: 120px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		// border:1px solid red;
+		align-items: center;
+		justify-content: center;
 	}
 	.mask-cancel,.mask-confirm{
-		width:100%;
-		height: 55px;
+		width:30%;
+		height: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: #fff;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 900;
 		cursor: pointer;
-		border-top:.5px solid #aaa;
+		border-radius: 5px;
+		margin:0 10px 0 10px;
 	}
 	.mask-cancel{
-		color: #1476fe;
-		// background-image: linear-gradient(135deg, rgba(244, 213, 131, 1), rgba(191, 152, 57, 1.0));
+		color: #fff;
+		background-color: #1476FE;
+		
+		
 	}
 	.mask-confirm{
-		color: #999;
+		color: #1476FE;
+		background-color: #eee;
 	}
 </style>

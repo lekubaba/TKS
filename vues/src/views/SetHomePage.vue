@@ -24,8 +24,8 @@
 					<div class='mask-titlea' :style="{color:this.$store.state.color}">确定设为主推？</div>
 					<div class='mask-titleb'>首页将被替换，业绩、团队页也将被切换</div>
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirm'>确认</div>
-						<div class='mask-cancel' @click='isCancel' :style="{color:this.$store.state.color}">取消</div>
+						<div class='mask-confirm' @click='isConfirm' :style="{color:this.$store.state.color}">确认</div>
+						<div class='mask-cancel' @click='isCancel' :style="{backgroundColor:this.$store.state.color}">取消</div>
 					</div>
 				</div>
 			</div>
@@ -233,26 +233,33 @@ export default {
 		width:100%;
 		height: 120px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		// border:1px solid red;
+		align-items: center;
+		justify-content: center;
 	}
 	.mask-cancel,.mask-confirm{
-		width:100%;
-		height: 60px;
+		width:30%;
+		height: 40px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		color: #fff;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 900;
 		cursor: pointer;
-		border-top:.5px solid #aaa;
+		border-radius: 5px;
+		margin:0 10px 0 10px;
 	}
 	.mask-cancel{
-		color: #1476FE;
+		color: #fff;
+		background-color: #1476FE;
+		
+		
 	}
 	.mask-confirm{
-		color: #999;
+		color: #1476FE;
+		background-color: #eee;
 	}
 	
 	.fade-enter-active, .fade-leave-active {

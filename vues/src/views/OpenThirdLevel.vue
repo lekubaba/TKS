@@ -9,7 +9,7 @@
 			<div class='open-title'>开通</div>
 			<div class='open-subtitle'>此功能不可逆，请三思</div>
 		</div>
-		<MaskPage v-bind:is-mask.sync='isMask' v-bind:is-title='isTitle'></MaskPage>
+		<MaskPage v-bind:is-mask.sync='isMask' v-bind:is-title='isTitle' v-bind:color='this.$store.state.color'></MaskPage>
 	</div>
 </template>
 

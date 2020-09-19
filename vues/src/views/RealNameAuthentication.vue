@@ -102,6 +102,15 @@
 				
 			},
 			countDownSixty () {
+				let agentWechat = this.$refs.agentWechat.value;
+				if(agentWechat===''){
+					this.$message.info('手机号为空');
+					return;
+				}
+				if(!this.$Utils.checkTel(agentWechat)){
+					this.$message.info('手机号错误');
+					return;
+				}
 				if (!this.canClick) return  //改动的是这两行代码
 				this.canClick = false
 				this.content = this.totalTime + 's'
