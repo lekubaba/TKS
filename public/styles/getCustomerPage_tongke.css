@@ -1,0 +1,262 @@
+ *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Helvetica Neue,PingFang SC,Microsoft YaHei;
+    -webkit-font-smoothing:antialiased;/* chorm safari 抗锯齿*/
+    -webkit-overflow-scrolling:touch;
+    outline:none;
+}
+/* 滚动条样式调节*/
+::-webkit-scrollbar{margin-right:3px;width:4px;height:4px}
+::-webkit-scrollbar,::-webkit-scrollbar-track{background-color:transparent}
+::-webkit-scrollbar-thumb{width:4px;border-radius:2px;background-color:#e4e4e4}
+
+body,html{min-height:100%;}
+a,a:visited{text-decoration:none}
+h1,h2,h3,h4,h5,h6{font-weight:500}
+input{
+	border-radius: 0px;
+}
+body{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.promotion{
+	width:100vw;
+	min-height: 100vh;
+	background-color: rgb(237,237,237);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+}
+.poster-wraper{
+	width:100vw;
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.poster-item{
+	width:100%;
+	height: auto;
+}
+.button-wraper{
+	position: fixed;
+	bottom: 0px;
+	width:100vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.buy-tks{
+	width:100vw;
+	height: 105px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.buy-tk-pay{
+	width:95vw;
+	height: 48px;
+	background-color: #1476fe;
+	text-align: center;
+	line-height: 48px;
+	font-size: 20px;
+	font-weight: 900;
+	color: #fff;
+	border-radius: 5px;
+}
+.buy-money-renminbi{
+	font-size: 14px;
+}
+.buy-money{
+	font-size: 24px;
+	margin-right: 10px;
+}
+.buy-content{
+	font-size: 18px;
+}
+.buy-underline{
+	color:#aaa;
+	text-decoration:line-through;
+	margin-right: 10px;
+}
+.buy-tk-protocol{
+	margin-top:-20px;
+	width:95vw;
+	height: 32px;
+	padding:0 20px 0 2px;
+	display: flex;
+	align-items: center;
+	
+
+}
+.agent-protocol{
+	width:95vw;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+
+}
+.buy-agree{
+	margin-right: 5px;
+	width:12px;
+	height: 12px;
+	border-radius: 2px;
+	background-color: #1476fe;;
+	text-align: center;
+	line-height: 12px;
+	font-size: 8px;
+	color: #fff;
+	font-weight: 900;
+}
+.buy-agree-title{
+	color:#999;
+	font-size: 12px;
+}
+
+.buy-agree-text{
+	color:#999;
+	font-size: 13px;
+	margin-right: 10px;
+}
+
+.buy-agree-protocol{
+	font-size: 12px;
+	color:#1476fe;
+}
+.tk-vips{
+	width:100vw;
+	height: 105px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.tk-vips-items{
+	width:95vw;
+	height: 48px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.tk-vip-item{
+	width:100%;
+	height: 48px;
+	text-align: center;
+	line-height: 48px;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 900;
+	border-radius: 5px;
+	
+}
+#mask{
+	position: fixed;
+	bottom:0px;
+	width:100vw;
+	height: calc(100vh + 100vh);
+	background-color: rgba(0,0,0,.7);
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+}
+.mask-contenta{
+	position: relative;
+	bottom: 0px;
+	transition: bottom 3s;
+	width:100vw;
+	height: 100vh;
+	background-color: rgb(247,247,247);
+	display: flex;
+	flex-direction: column;
+	padding:30px;
+}
+
+.mask-title{
+	font-size: 24px;
+	font-weight: 900;
+	margin:15px 0 0px 0;
+	color: #333;
+}
+.mask-subtitle{
+	font-size: 14px;
+	color: #999;
+}
+.mask-inputa{
+	width:100%;
+	height: 55px;
+	border:none;
+	background-color: rgb(247,247,247);
+	font-size: 15px;
+	color: #333;
+	caret-color:#1476fe;
+	border-bottom: 0.5px solid #ccc;
+}
+.mask-button{
+	margin-top:20px;
+	width:100%;
+	display: flex;
+	flex-direction: column;
+}
+.mask-confirm{
+	margin-top:30px;
+	width:100%;
+	height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-size: 18px;
+	font-weight: 900;
+	cursor: pointer;
+	background-color: #1476fe;
+	border-radius: 5px;
+}
+.mask-cancel{
+	margin-top:20px;
+	color: #aaa;
+	text-align: right;
+}
+
+.rna-wraperb{
+	width:100%;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 0.5px solid #ccc;
+	
+}
+.rna-input-check{
+	width:60vw;
+	height: 55px;
+	border:none;
+	background-color: rgb(247,247,247);
+	font-size: 15px;
+	color: #555;
+	caret-color:#1476fe;
+}
+.get-check-number{
+	width:30vw;
+	height: 30px;
+	color: #fff;
+	background-color: #1476fe;
+	text-align: center;
+	line-height: 30px;
+	font-size: 14px;
+	border-radius: 2px;
+	font-weight: 900;
+}

@@ -1,13 +1,14 @@
 <template>
-	<div class='contact-boss' :style="{backgroundColor:this.$store.state.color}">
+	<div class='contact-boss' :style="{backgroundColor:color}">
 		<h1>联系我们</h1>
-		<h3>老板电话：15898776766</h3>
-		<h3>老板微信：15898776766</h3>
-		<h4>如遇到推广、佣金等问题，请联系我们。</h4>
+		<h3>老板电话：{{bossPhoneNumber}}</h3>
+		<h3>老板微信：{{bossWechat}}</h3>
+		<h4>如遇到推广、佣金等问题，请联系我。</h4>
 	</div>
 </template>
 
 <script>
+	import {mapState} from 'vuex';
 	export default {
 		name: 'ContactBoss',
 		components: {
@@ -15,11 +16,34 @@
 		},
 		data(){
 			return {
+				bossPhoneNumber:null,
+				bossWechat:null,
 				
 			}
 		},
 		created() {
-			
+			this.getBossInfo();
+		},
+		methods:{
+			getBossInfo(){
+				let productsID = this.$route.query.id;
+				let that = this;
+				this.axios.post('/api/getBossInfo',{productsID:productsID})
+					.then(function(res){
+						
+						that.bossPhoneNumber = res.data.bossPhoneNumber;
+						that.bossWechat = res.data.bossWechat;
+					})
+					.catch(function(err){
+						that.$message.info('系统出错了');
+					})
+			}
+		},
+		computed:{
+			...mapState({
+				userInfo:state=>state.userInfo,
+				color:state=>state.color,
+			})
 		}
 	}
 </script>

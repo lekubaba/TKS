@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
 		<div id="nav">
-			<router-link to="/promotion" class='tabbar-item-text' active-class="active" exact>首页</router-link>
-			<router-link to="/userdata" class='tabbar-item-text line' active-class="active" exact>客户数据</router-link>
-			<router-link to="/usercenter" class='tabbar-item-text' active-class="active" exact>我的</router-link>
+			<router-link :to="{name:'Promotion'}" class='tabbar-item-text' active-class="active" exact>首页</router-link>
+			<router-link :to="{name:'UserData'}" class='tabbar-item-text line' active-class="active" exact>客户数据</router-link>
+			<router-link :to="{name:'UserCenter'}" class='tabbar-item-text' active-class="active" exact>我的</router-link>
 		</div>
 		<router-view/>
 	</div>
@@ -17,7 +17,7 @@
 		},
 		watch: {
 			$route(to,from){
-				console.log(to.path)
+				
 			}
 		},
 		created () {
@@ -41,6 +41,7 @@
 		padding:10px 0 0 0;
 		background-color: #fff;
 		box-shadow: 0 0 6px 0 rgba(0,0,0,.1);
+		z-index: 1000;
 		
 	}
 	.line{

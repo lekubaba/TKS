@@ -2,17 +2,17 @@
 	<div id='profile-a'>
 		<div class='profile-head'>
 			<div class='head-left'>
-				<img class='profile-head-img' :src="customerInfo.customerAvatarImg">
+				<img class='profile-head-img' :src="customerInfo.customerID.customerAvatarImg?customerInfo.customerID.customerAvatarImg:imgAvatar">
 				<div class='profile-head-title'>
 					<span class='title-username'>{{customerInfo.customerName}} {{customerInfo.customerDesensitizationNumber}}</span>
-					<span class='title-tel'>{{customerInfo.beCustomerTime}}</span>
+					<span class='title-tel'>{{customerInfo.orderTime}}</span>
 				</div>
 			</div>
-			<div class='profile-head-production' :style="{color:color}">{{customerInfo.selectedProducts}}</div>
+			<div class='profile-head-production' :style="{color:color}">{{customerInfo.productsId.productsName}}</div>
 		</div>
 		<div class='profile-list'>
 			<ul class="layui-timeline">
-				<li class="layui-timeline-item" v-for='item in customerProgressing' v-bind:key ='item.id'>
+				<li class="layui-timeline-item" v-for='item in customerInfo.customerProgress'>
 					<i class="layui-icon layui-timeline-axis circle"></i>
 					<div class="layui-timeline-content layui-text">
 						<h3 class="layui-timeline-title">{{item.time}}</h3>
@@ -34,8 +34,8 @@
 			</div>
 		</div>
 		<div class='profile-contact' :style="{backgroundColor:color}">
-			<h3>客服电话：{{customerInfo.bossPhoneNumber}}</h3>
-			<h3>客服微信：{{customerInfo.bossWechat}}</h3>
+			<h3>客服电话：{{customerInfo.productsId.bossPhoneNumber}}</h3>
+			<h3>客服微信：{{customerInfo.productsId.bossWechat}}</h3>
 		</div>
 	</div>
 </template>
@@ -50,23 +50,20 @@ export default {
 	data(){
 		return {
 			customerInfo:{
-				customerName:'杨女士',
-				customerPhoneNumber:'15955667788',
-				customerDesensitizationNumber:'159****7788',
-				customerAvatarImg:'http://qiniu.tongkeapp.com/customerDefaultAvatar_01.png',
-				beCustomerTime:'8-22 12:22',
-				selectedProducts:'飞贷',
-				bossPhoneNumber:'15914132599',
-				bossWechat:'vipFace',
-				customerProgress:[
-					{id:0,time:'8月13日',customerProgress:'客户没有参加活动'},
-					{id:1,time:'8月15日',customerProgress:'客户参加了活动'},
-					{id:2,time:'8月18日',customerProgress:'销售正在跟进客户...'},
-					{id:3,time:'8月22日',customerProgress:'客户签约成功...'},
-					{id:4,time:'8月23日',customerProgress:'订单金额：58000'},
-					{id:5,time:'8月25日',customerProgress:'佣金已经发放'},
-				]
-			}
+				customerID:{
+					id:'',
+					customerAvatarImg:'',
+					customerNickname:'',
+				},
+				productsId:{
+					_id:'',
+					productsName:'',
+					bossPhoneNumber:'',
+					bossWechat:'',
+				}
+				
+			},
+			imgAvatar:'http://qiniu.tongkeapp.com/customerDefaultAvatar_01.png',
 		}
 	},
 	computed:{
@@ -74,9 +71,9 @@ export default {
 			color:state=>state.color,
 		}),
 		
-		customerProgressing(){
-			return this.customerInfo.customerProgress.reverse();
-		},
+		// customerProgressing(){
+		// 	return this.customerInfo.customerProgress.reverse();
+		// },
 		
 	},
 	created() {
@@ -87,10 +84,11 @@ export default {
 	methods:{
 		fetchData(){
 			let that = this;
-			let customerPhoneNumber = that.$route.query.customerPhoneNumber;
-			that.axios.post('/api/progressProfile',{customerPhoneNumber:customerPhoneNumber})
+			let orderID = that.$route.query.orderID;
+			that.axios.post('/api/progressProfile',{orderID:orderID})
 				.then(function(response){
 					that.$loading.hide();
+					that.customerInfo = response.data;
 					console.log(response.data);
 				})
 		}

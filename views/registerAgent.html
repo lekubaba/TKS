@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title%></title>
+        <link rel="shortcut icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="bookmark" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="apple-touch-icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <meta name="apple-mobile-web-app-title" content="代理">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="white">
+        <link rel="stylesheet" href="http://192.168.0.105:8099/styles/registerAgent.css">
+    </head>
+    <body>
+		<div id='register-agent'>
+			<div class='register-h'>
+				<div class='register-title1'>此招商由：</div>
+				<div class='register-title2' style="color:<%= color%>"><%= companyName%>发布</div>
+				<div class='register-title3'>推广产品：<span class='register-title4' style="color:<%= color%>"><%= productsName%></span></div>
+				<div class='registe-countdown'>
+					<div class='register-agree' style="background-color:<%= color%>">√</div>
+					<div class='register-agree-title'>限时招商</div>
+					<!-- <div class='register-agree-title' style="color:<%= color%>">12-22-22</div> -->
+				</div>
+				<div class='regulation' style="color:<%= color%>">注册代理并登陆可查看佣金政策</div>
+			</div>
+			<div class='register-c'>
+				<div id='message' style='height: 20px;'></div>
+				<input class='register-input' type="text" placeholder="| 请输入本人微信号" name='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<div class='remind'>微信号便于您与上下级推荐人沟通联系，获得/提供辅导帮助，请填写正确账号</div>
+			</div>
+			<div class='register-f'>
+				<div class='register-confirm' style="background-color:<%= color%>" data-openid = "<%= openID%>" data-productsid="<%= productsId%>">注册并登陆</div>
+			</div>
+		</div>
+    </body>
+    <script src='http://192.168.0.105:8099/scripts/jquery.min.js'></script>
+    <script src='http://192.168.0.105:8099/scripts/registerAgent.js'></script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title%></title>
+        <link rel="shortcut icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="bookmark" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="apple-touch-icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <meta name="apple-mobile-web-app-title" content="限时活动">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="white">
+        <link rel="stylesheet" href="http://qiniu.tongkeapp.com/getCustomerPage_tra.css">
+    </head>
+    <body>
+		<div class="promotion">
+			<div class='poster-wraper'>
+				<!-- 遍历海报 -->
+				<% Img.forEach(function(item){ %>
+					<img class='poster-item' src="<%= item%>">
+				<%})%>
+			</div>
+			<div class='button-wraper'>
+				<div class='tk-vips'>
+					<div class='buy-tk-protocol'>
+						<div class='buy-agree' style="background-color:<%= color%>">√</div>
+						<div class='buy-agree-text'>限时申请</div>
+						<!-- <div class='buy-agree-title' style="color:<%= color%>">倒计时：12-11-11</div> -->
+					</div>
+					<div class='tk-vips-items'>
+						<div class='tk-vip-item' style="background-color:<%= color%>">报名参加活动</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id='mask' style='display:none;'>
+			<div class='mask-contenta'>
+				<div class='mask-title'>
+					<span>填写信息</span>
+					<span id='message'></span>
+				</div>
+				<input class='mask-inputa customer-name' style="border-bottom: .5px solid <%= color%>;" type="text" placeholder="请输入姓名" name='customerName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<input class='mask-inputa customer-tel' style="border-bottom: .5px solid <%= color%>;" type="number" placeholder="请输入手机号" name='customerPhoneNumber' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<div class='rna-wraperb' style="border-bottom: .5px solid <%= color%>;">
+					<input type="number" class='rna-input-check' name='verificationCode' placeholder="验证码" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+					<button class='get-check-number' style="background-color:<%= color%>">获取验证码</button>	
+				</div>
+				<div class='mask-button'>
+					<div class='mask-cancel' style="color:<%= color%>">取消</div>
+					<div id='dataset' class='mask-confirm' style="background-color:<%= color%>" data-openid = "<%= openID%>" data-productsid="<%= productsId%>" data-code="">确认</div>
+				</div>
+			</div>
+		</div>
+    </body>
+    <script src='http://qiniu.tongkeapp.com/jquery.min.js'></script>
+    <script src='http://192.168.0.105:8099/scripts/getCustomer_tra.js'></script>
+</html>

@@ -5,11 +5,11 @@
 			<div class='userinfo-name'>{{userInfo.agentName}}</div>
 			<div class='total-data'>
 				<div class='total-half total-line' @click='SeeSales'>
-					<div class='total-half-half total-sales' :style="{color:color}">4987000</div>
+					<div class='total-half-half total-sales' :style="{color:color}">{{sales?sales:'0'}}</div>
 					<div class='total-half-half total-sales-title'>销售总额</div>
 				</div>
 				<div class='total-half total-linea' @click='SeeTeam'>
-					<div class='total-half-half total-sales' :style="{color:color}">1897</div>
+					<div class='total-half-half total-sales' :style="{color:color}">{{agents?agents:'0'}}</div>
 					<div class='total-half-half total-sales-title'>团队人数</div>
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 				<div class='arrow'>〉</div>
 			</div>
 			<div class='set-row binding-wechat' @click='BindWX'>
-				<div>绑定收款微信号</div>
+				<div>修改微信号</div>
 				<div class='arrow'>〉</div>
 			</div>
 			<div class='set-row set-up' @click='UserSetup'>
@@ -42,15 +42,36 @@ export default {
 	},
 	data(){
 		return {
-			
+			agents:'',
+			sales:'',
 		}
 	},
+	created(){
+		this.$loading.show();
+		this.getData();
+	},
 	methods:{
+		getData(){
+			let openID = window.localStorage['openID'];
+			let that = this;
+			this.axios.post('/api/usercenter',{openID:openID})
+			.then(function(res){
+				if(res.data.code==500){
+					that.$message.info('系统故障');
+					that.$loading.hide();
+				}else{
+					that.agents = res.data.agents;
+					that.sales = res.data.sales;
+					that.$loading.hide();
+					return;
+				}
+			})
+		},
 		SeeSales(){
-			this.$router.push({name:'SeeSales',params:{userId:this.userInfo.agentPhoneNumber}});
+			this.$router.push({name:'SeeSales',params:{userId:this.userInfo.openID}});
 		},
 		SeeTeam(){
-			this.$router.push({name:'SeeTeam',params:{userId:this.userInfo.agentPhoneNumber}});
+			this.$router.push({name:'SeeTeam',params:{userId:this.userInfo.openID}});
 		},
 		BindWX(){
 			this.$router.push({name:'BindWX'});
@@ -59,7 +80,23 @@ export default {
 			this.$router.push({name:'UserSetup'});
 		},
 		VipEdit(){
-			this.$router.push({name:'VipEdit'});
+			let that = this;
+			let openID = window.localStorage['openID'];
+			this.axios.post('/api/isbuildproducts',{openID:openID})
+			.then(function(res){
+				if(res.data.code===500){
+					that.$message.info('系统出错了');
+					return;
+				}
+				if(res.data.code===400){
+					that.$router.push({ path:'/choisemode/tra' });
+					return;
+				}
+				if(res.data.code===200){
+					that.$router.push({name:'VipEdit'});
+					return;
+				}
+			})
 		},
 	},
 	computed:{
@@ -67,7 +104,8 @@ export default {
 			userInfo:state=>state.userInfo,
 			color:state=>state.color,
 		})
-	}
+	},
+	
 
 }
 </script>

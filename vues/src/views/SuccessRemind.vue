@@ -2,10 +2,10 @@
 	<div id='success'>
 		<div class='success-wraper'>
 			<img class='righticon' src="http://qiniu.tongkeapp.com/righticon_02.png">
-			<h2 class='tit'>{{this.$route.query.supTitle}}</h2>
+			<h2 class='tit'>已提交成功</h2>
 		</div>
-		<p class='para'>{{this.$route.query.subTitle}}</p>
 		<p class='para'>...</p>
+		<div class='modify' @click='toInformationPage' v-if='state?true:false'>去修改</div>
 	</div>
 </template>
 
@@ -18,14 +18,19 @@ export default {
 	},
 	data(){
 		return {
-			title:{
-				supTitle:'',
-				subTitle:'',
-			}
+			state:'',
 		}
 	},
 	created() {
-		
+		this.getData();
+	},
+	methods:{
+		getData(){
+			this.state = this.$route.query.kind;
+		},
+		toInformationPage(){
+			this.$router.replace({name:this.state});
+		}
 	}
 }
 </script>
@@ -59,6 +64,18 @@ export default {
 		margin-top:5px;
 		font-size: 16px;
 		color:#64b587;
+	}
+	.modify{
+		width:85vw;
+		height: 50px;
+		background-color:#1476FE;
+		margin-top:100px;
+		font-size: 16px;
+		font-weight: 900;
+		text-align: center;
+		line-height: 50px;
+		color:#fff;
+		border-radius: 10px;
 	}
 	
 	

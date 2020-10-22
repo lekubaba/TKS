@@ -29,7 +29,7 @@ db.lekubaba.update({"name":"lekubaba"},{$set:{"name":"lekumama"}},{upsert:true,m
 
 'mongodb修改器：$set,$inc,$push,$unset,$pop,$upsert...':
 
-'$set': db.lekubaba.update({'name':'yjx'},{'$set':{'age':22},{upsert:true,multi:true}});将集合中的文档键值为name:'yjx'，的文档的'age'field的值修改为22，
+'$set': db.lekubaba.update({'name':'yjx'},{'$set':{'age':22}},{upsert:true,multi:true});将集合中的文档键值为name:'yjx'，的文档的'age'field的值修改为22，
 
 ............其中upsert为 true ，说明即使该字段不存在，则插入该字段，multi为true ，则将所有name:'yjx'的文档统一修改；
 

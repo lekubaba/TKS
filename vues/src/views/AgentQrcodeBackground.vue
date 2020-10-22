@@ -1,15 +1,17 @@
 <template>
 	<div class='agent-qrcode-background'>
-		<div class='add-remind'>本月剩余上传次数：5次</div>
+		<div class='add-remind'>每月上传次数限：3次</div>
 		<div class='add-background' :style="{backgroundColor:this.$store.state.color}">
-			<div class='background-plus'>+</div>
+			<div class='background-plus'>+
+				<input id="imgLocal" class="input-loc-img" name="imgLocal" ref="imgLocal" type='file' accept="image/*" @change="upFile()">
+			</div>
 			<div class='background-title'>上传招商码背景图</div>
 			<div class='background-subtitle'>尺寸：680像素*1088像素</div>
 		</div>
 		<div class='add-remind'>将作为招商二维码背景图</div>
 		<div class='add-title'>示例：</div>
 		<div class='add-example'>
-			<img src="http://qiniu.tongkeapp.com/agent_poster_04.png">
+			<img :src="exampleSrc">
 		</div>
 	</div>
 </template>
@@ -20,8 +22,58 @@
 		components: {
 			// HelloWorld
 		},
+		data(){
+			return {
+				uploadToken: '',
+				exampleSrc:''
+			}
+		},
 		created() {
-			
+			this.$loading.show();
+			this.getData();
+		},
+		methods:{
+			getData(){
+				let that = this;
+				let openID = window.localStorage['openID'];
+				that.axios.post('/api/uploadTokenAgent',{openID:openID})
+				.then(function(res){
+					that.$loading.hide();
+					that.uploadToken = res.data.uploadToken;
+					that.exampleSrc = res.data.agentQr;
+				})
+			},
+			upFile(){
+				let that = this;
+				let openID = window.localStorage['openID'];
+				var data = new FormData();
+				data.append('token', this.uploadToken);
+				data.append('file', this.$refs.imgLocal.files[0]);
+				this.axios({
+					method: 'POST',
+					url: 'http://up-z2.qiniup.com',
+					data: data,
+					onUploadProgress: function (progressEvent) {
+						let complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+						that.$message.info(complete);
+					},
+				}).then((res) => {
+					if (res.status === 200) {
+						let url = 'http://images.tongkeapp.com/'+res.data.key;
+						that.exampleSrc = url;
+						that.axios.post('/api/saveagentqrcode',{openID:openID,url:url})
+						.then(function(res1){
+							if(res1.data.code===500){
+								that.$message.info('系统出错了');
+								return;
+							}
+							that.$router.replace({name:'SuccessRemind'});
+						})
+					}else{
+						that.$message.info('上传失败');
+					}
+				})
+			},
 		}
 	}
 </script>
@@ -68,6 +120,8 @@
 		margin-bottom: 100px;
 	}
 	.background-plus{
+		position: relative;
+		top:0px;
 		margin-top:20px;
 		width:40px;
 		height: 30px;
@@ -95,6 +149,17 @@
 	}
 	.add-example img{
 		width:100%;
+	}
+	.input-loc-img{
+		position: absolute; 
+		top: 0px; 
+		left: 0px; 
+		display: block; 
+		width: 100%; 
+		height: 100%; 
+		border-radius: 50%; 
+		opacity: 0; 
+		cursor: pointer;
 	}
 </style>
 

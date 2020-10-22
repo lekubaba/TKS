@@ -6,7 +6,7 @@ module.exports = {
 	productionSourceMap:false,
 	lintOnSave: true,
 	css: {
-	requireModuleExtension: false
+		requireModuleExtension: false
 	},
 	devServer: {
 		disableHostCheck: true,

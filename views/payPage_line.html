@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title%></title>
+        <link rel="shortcut icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="bookmark" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="apple-touch-icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <meta name="apple-mobile-web-app-title" content="代理">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="white">
+        <link rel="stylesheet" href="http://192.168.0.105:8099/styles/payPage_line.css">
+    </head>
+    <body>
+		<div class='address-pay'>
+			<div class='address-h'>
+				<div class='h-wrapper'>
+					<img class='h-avatar' src="http://qiniu.tongkeapp.com/lekubaba.jpeg" alt="img">
+					<div class='h-name-star'>
+						<span class='h-name'>由好友 杨锦旋 为您推荐！</span>
+						<div class='h-star'>
+							<span>&#9733;</span>
+							<span>&#9733;</span>
+							<span>&#9733;</span>
+							<span>&#9733;</span>
+							<span>&#9733;</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='address-c'>
+				<div class='c-wrapper'>
+					<div class='c-wraperb'>
+						<span>联系人</span>
+						<input type="text" class='c-input' name='customerName' placeholder="请填收货人姓名" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+					</div>
+					<div class='c-wraperb'>
+						<span>手机号</span>
+						<input type="number" class='c-input' name='customerPhoneNumber' placeholder="收货人手机号" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+					</div>
+					<div class='c-wraperb'>
+						<span>验证码</span>
+						<div class='c-check'>
+							<input type="number" class='c-input-check' name='verificationCode' placeholder="请填写验证码" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+							<div class='get-check-number' style="background-color:<%= color%>">60</div>	
+						</div>
+					</div>
+					<div class='c-wraperb open-city'>
+						<span>所在地区</span>
+						<div class='province-city-area'>
+							<span id='address'></span>
+							<div class='to-city'>〉</div>
+						</div>
+					</div>
+					<div class='c-wraperc'>
+						<textarea maxlength="30" class='c-textarea' name='customerAddress' placeholder="详细地址 : 如道路,门牌号,小区,楼栋号,单元室等" onkeyup="this.value=this.value.replace(/[, ]/g,'')"></textarea>
+					</div>
+					
+				</div>
+			</div>
+			<!-- footer部分 -->
+			<div class='address-f'>
+				<div class='f-wrapper'>
+					<div class='f-content'>
+						<img class='f-products-img' src="http://qiniu.tongkeapp.com/products_01.png" alt="商品">
+						<div class='f-products-text'>
+							<div class='f-products-title'>越南进口玉芒一整箱20斤...</div>
+							<div class='f-products-money'>
+								<span class='f-span'>原价：</span>
+								<span class='original-price'>¥199</span>
+								<span class='f-span'>，活动价：</span>
+								<span class='activity-price'>¥99</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class='c-submit' style="background-color:<%= color%>">确认并支付</div>
+		</div>
+		<div class='mask-city' style='display:none;'>
+			<div class='wrapper-c'>
+				<div class='please'>请选择</div>
+				<div class='close-city'>×</div>
+				<div id='distpicker' data-toggle="distpicker">
+					<select id='province' data-province="所在省"></select>
+					<select id='city' data-city="所在市"></select>
+					<select id='district' data-district="所在区"></select>
+				</div>
+			</div>
+		</div>
+    </body>
+    <script src='http://192.168.0.105:8099/scripts/jquery.min.js'></script>
+    <script src='http://192.168.0.105:8099/scripts/distpicker.min.js'></script>
+    <script src='http://192.168.0.105:8099/scripts/payPage_line.js'></script>
+</html>

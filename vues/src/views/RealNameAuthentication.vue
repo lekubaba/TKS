@@ -8,12 +8,12 @@
 			<span>身份证</span><input type="text" class='rna-input' name='idCard' placeholder="请填写管理员身份证号" ref='idCard' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
 		</div>
 		<div class='rna-wraperb'>
-			<span>微信号</span><input type="text" class='rna-input' name='agentWechat' placeholder="客服微信(手机号)" ref='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			<span>手机号</span><input type="text" class='rna-input' name='agentWechat' placeholder="管理员手机号(同微信号)" ref='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
 		</div>
 		<div class='rna-wraperb'>
 			<span>验证码</span>
 			<div class='rna-check'>
-				<input type="text" class='rna-input-check' name='verificationCode' placeholder="请填写验证码" ref='verificationCode' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<input type="number" class='rna-input-check' name='verificationCode' placeholder="请填写验证码" ref='verificationCode' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
 				<div class='get-check-number' :style="{backgroundColor:this.$store.state.color}" @click='countDownSixty'>{{content}}</div>	
 			</div>
 		</div>
@@ -38,7 +38,9 @@
 			return {
 				content: '获取验证码',
 				totalTime: 60,
-				canClick: true //添加canClick
+				canClick: true, //添加canClick
+				agentWechat:'',
+				alicode:''
 			}
 		},
 		created() {
@@ -48,13 +50,13 @@
 			saveImformation(){
 				let that = this;
 				let ref = this.$refs;
-				
 				let agentName = ref.agentName.value;
 				let idCard = ref.idCard.value;
 				let agentWechat = ref.agentWechat.value;
 				let verificationCode = ref.verificationCode.value;
 				let companyName = ref.companyName.value;
 				let productsName = ref.productsName.value;
+				let openID = window.localStorage['openID'];
 				
 				let isAgentName = this.$Utils.checkCName(agentName);
 				let isIdCard = this.$Utils.checkID(idCard);
@@ -76,32 +78,40 @@
 					return;
 				}
 				
-				if(verificationCode){
-					console.log('验证验证码');/* 如果错误，提醒验证码错误，如果正确，下一步 */
+				if(Number(verificationCode)!==this.alicode){
+					this.$message.info('验证码错误');
+					return;
 				}
 				
 				if(isAgentName&&isIdCard&&isAgentWechat&&isVerificationCode&&isCompanyName&&isProductsName){
+					
 					let saveImformations = {
-						agentPhoneNumber:this.userInfo.agentPhoneNumber,
+						openID:openID,
 						agentName:agentName,
 						idCard:idCard,
 						agentWechat:agentWechat,
 						companyName:companyName,
-						productsName:productsName
+						productsName:productsName,
 					}
 					
-					this.axios.post('/api/saveVerificationImformation',{...saveImformations})
-						.then(function(res){
-							console.log(res.data);
-							that.$message.success('保存成功');
-						})
+					this.axios.post('/api/saveVerificationImformation',saveImformations)
+					.then(function(res){
+						if(res.data.code===500){
+							that.$message.info('系统出错了');
+							return;
+						}
+						that.$router.replace({name:'SuccessRemind'})
+					})
 					
-					
+				}else{
+					this.$message.info('格式错误');
+					return;
 				}
 				
 				
 			},
 			countDownSixty () {
+				let that = this;
 				let agentWechat = this.$refs.agentWechat.value;
 				if(agentWechat===''){
 					this.$message.info('手机号为空');
@@ -123,7 +133,17 @@
 						this.totalTime = 60;
 						this.canClick = true  //这里重新开启
 					}
-				},1000)
+				},1000);
+				this.axios.post('/api/alicode',{tel:agentWechat})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$message.info('系统出错了');
+						return;
+					}
+					that.agentWechat = agentWechat;
+					that.alicode = res.data.alicode;
+					that.$message.info('发送成功');
+				})
 			}
 		},
 		computed:{

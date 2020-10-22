@@ -3,7 +3,7 @@
 		<div id='qrcode-wraper' ref='box'>
 			<img id='http-url' :src='src' @load = 'draw'>
 			<div id='http-qr'>
-				<vue-qr :text="httpUrl" :size="90" :margin='px10'></vue-qr>
+				<vue-qr :text="agentUrl" :size="90" :margin='px10'></vue-qr>
 			</div>
 		</div>
 		<div class='save-qrcode'>长按保存二维码或分享给朋友</div>
@@ -15,6 +15,7 @@
 	
 import VueQr from 'vue-qr';
 import html2canvas from 'html2canvas';
+import {mapState} from 'vuex';
  
 
 export default {
@@ -25,19 +26,48 @@ export default {
 	data(){
 		return {
 			qrmcodeSrc:'',
-			src:'http://qiniu.tongkeapp.com/agent_poster_04.png',
+			// src:'http://qiniu.tongkeapp.com/agent_poster_04.png',
+			src:'',
 			src2:'http://qiniu.tongkeapp.com/tkicon.png',
-			httpUrl:'http://www.tongkeapp.com',
+			agentUrl:'http://feige.tongkeapp.com'+'/api/getagentpage/'+localStorage['openID']+'/'+this.$route.query.id,
 			imgUrl:'',
 			imgload:false,
 			px10:10,
 		}
+	},
+	created() {
+		this.$loading.show();
+		this.getData();
+	},
+	computed:{
+		...mapState({
+			userInfo:state=>state.userInfo,
+			color:state=>state.color,
+			isPromotion:state=>state.isPromotion,
+		})
 	},
 	mounted() {
 
 	},
 	
 	methods:{
+		getData(){
+			let that = this;
+			let openID = window.localStorage['openID'];
+			this.axios.post('/api/getagentqrcode',{openID:openID})
+			.then(function(res){
+				if(res.data.code===500){
+					that.$loading.hide();
+					that.$message.info('系统故障了');
+					return;
+				}
+				if(res.data.code===200){
+					that.$loading.hide();
+					that.src = res.data.agentQrcodeBackground;
+					return;
+				}
+			})
+		},
 		draw(){
 			var d = document.getElementById('qrcode-wraper');
 			if(this.qrmcodeSrc) return;
@@ -61,9 +91,7 @@ export default {
 			this.draw();
 		}
 	},
-	created() {
-		
-	}
+	
 }
 </script>
 

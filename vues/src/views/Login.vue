@@ -3,11 +3,12 @@
 		<img class='logo' src="http://qiniu.tongkeapp.com/tkImgLogo.png">
 		<div class='login-title'>统客</div>
 		<img class='mission' src="http://qiniu.tongkeapp.com/tkMission_01.png">
-		<div class='login-button'>微信登陆</div>
+		<div class='login-button' @click='Login'>微信登陆</div>
 	</div>
 </template>
 
 <script>
+import qs from 'qs';
 
 export default {
 	name: 'Login',
@@ -15,8 +16,54 @@ export default {
 		// HelloWorld
 	},
 	created() {
-		
-	}
+		this.WecahtAuthLogin();
+	},
+	methods:{
+		Login(){
+			let redirect_url = 'http://feige.tongkeapp.com/#/login';
+			let APPID = 'wx1d23498d4a220713';
+			redirect_url = this.$Utils.encodeURL(redirect_url);
+			window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
+		},
+		WecahtAuthLogin(){
+			let that = this;
+			let redirect_uri = window.location.href;
+			let parsedUrl = qs.parse(redirect_uri.split('?')[1]);
+			let code = parsedUrl.code;
+			if(!code){
+				return;
+			}else{
+				that.axios.post('/api/code',{code:code})
+					.then(function(res){
+						if(res.data.code===500){
+							return that.$message.info('系统出错了');
+						}
+						// 测试的时候,得到code过了5分钟，过期
+						if(res.data.code===900){
+							return window.location.href = 'http://feige.tongkeapp.com/#/login';
+						}
+						if(res.data.code===200){
+							// 将服务端响应的数据存储到Storage,并记录登陆状态；
+							window.localStorage.setItem('agentAvatarImg',res.data.agentAvatarImg);
+							window.localStorage.setItem('agentNickname',res.data.agentNickname);
+							window.localStorage.setItem('isPromotion',res.data.isPromotion);
+							window.localStorage.setItem('isVIP',res.data.isVIP);
+							window.localStorage.setItem('color',res.data.color);
+							window.localStorage.setItem('openID',res.data.openID);
+							window.localStorage.setItem('isLogin',true);
+							let fullPath = window.localStorage['fullPath'];
+							if(!fullPath){
+								return	window.location.href = 'http://feige.tongkeapp.com';
+							}
+							window.location.href = 'http://feige.tongkeapp.com/#'+fullPath;
+							window.localStorage.removeItem('fullPath');
+						}
+						
+						
+					})
+			}
+		}
+	},
 }
 </script>
 
@@ -37,7 +84,7 @@ export default {
 	}
 	.mission{
 		margin-top:10px;
-		width:40vw;
+		width:35vw;
 	}
 	.login-title{
 		font-size: 20px;

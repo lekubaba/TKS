@@ -1,14 +1,14 @@
 <template>
 	<div class="team">
 		<div class='profile'>
-			<div class='profile-item' v-for = 'item in team' v-bind:key='item'>
-				<img class='profile-item-avatar' src="http://qiniu.tongkeapp.com/appletouchicon.png">
+			<div class='profile-item' v-for = 'item in team'>
+				<img class='profile-item-avatar' :src="item.agentAvatarImg">
 				<div class='profile-item-content'>
 					<div class='profile-item-text'>
-						<div class='profile-item-info'>杨思 15888888888   8月23日</div>
+						<div class='profile-item-info'>{{item.agentNickname}} {{item.agentWechat}}   {{item.beAgentTime}}</div>
 						<div class='profile-item-wraper'>
 							<div class='profile-item-left'>
-								<div class='profile-item-state' :style="{color:color}">总业绩：1324333</div>
+								<div class='profile-item-state' :style="{color:color}">总业绩：{{item.sales}}</div>
 							</div>
 						</div>
 					</div>

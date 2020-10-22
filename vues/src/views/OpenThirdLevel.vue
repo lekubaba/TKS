@@ -34,24 +34,41 @@
 			}
 		},
 		created() {
-			
+			this.$loading.show();
+			this.getData();
 		},
 		methods:{
+			getData(){
+				let that = this;
+				let openID = window.localStorage['openID'];
+				this.axios.post('/api/islevel',{openID:openID})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$message.success('系统出错了');
+						return;
+					}
+					if(res.data.code===200){
+						that.$loading.hide();
+						return;
+					}
+					that.$loading.hide();
+					that.$router.replace({name:'SuccessRemind'})
+				})
+			},
 			confirmationBox(event){
-				let openState = this.$Utils.removeSpace(this.openState);
-				if(openState !== 'undefined' && openState==='opened'){
-					this.$message.info('已经开通过了');
-				}else if(openState !== 'undefined' && openState==='opening'){
-					this.isMask.isMask = true;
-				}
-				
+				this.isMask.isMask = true;
 			},
 			openThirdLevel(){
 				let that = this;
-				this.axios.post('/api/openThirdLevel',{userNumber:'15877998877'})
-				.then(function(val){
-					console.log(val.data);
-					that.$message.success('开通成功');
+				let openID = window.localStorage['openID'];
+				this.axios.post('/api/openThirdLevel',{openID:openID})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$message.success('系统出错了');
+						return;
+					}
+					that.$router.replace({name:'SuccessRemind'})
+					
 				})
 			}
 			

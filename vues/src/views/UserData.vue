@@ -2,60 +2,53 @@
 	<div class="data">
 		<div class='total'>
 			<div class='total-all'>
-				<span class='gray'>今日获客</span>
-				<span class='colorful' :style="{color:color}">{{customerStatistics.todayCustomer}}</span>
+				<span class='gray'>今日申请数</span>
+				<span class='colorful' :style="{color:color}">{{dayCount?dayCount:'0'}}</span>
 			</div>
 			<div class='total-all'>
-				<span class='gray'>获客总数</span>
-				<span class='colorful' :style="{color:color}">{{customerStatistics.totalCustomer}}</span>
+				<span class='gray'>申请总数</span>
+				<span class='colorful' :style="{color:color}">{{count?count:'0'}}</span>
 			</div>
 		</div>
 		<div class='profile'>
-			<div class='profile-item' v-for = 'item in customerList' v-bind:key='item.id'>
-				<img class='profile-item-avatar' src="http://qiniu.tongkeapp.com/customerDefaultAvatar_01.png">
+			<div class='profile-item' v-for = 'item in customerList'>
+				<img class='profile-item-avatar' :src="item.customerID.customerAvatarImg">
 				<div class='profile-item-content'>
 					<div class='profile-item-text'>
-						<div class='profile-item-info'>{{item.remindText}}</div>
+						<div class='profile-item-info'>{{item.customerName}} {{item.orderTime}}</div>
 						<div class='profile-item-wraper'>
 							<div class='profile-item-left'>
 								<div class='profile-item-time'>{{item.customerDesensitizationNumber}}</div>
-								<div class='profile-item-state' :style="{color:color}">{{item.presentState}}</div>
+								<div class='profile-item-state' :style="{color:color}">金额：{{item.orderMoney?item.orderMoney:'暂无'}}</div>
 							</div>
-							<div class='button-vip' :data-customer-phone-number='item.customerPhoneNumber'>
-								<div class='profile-item-button' @click='progressing' :style="{backgroundColor:color}">进度</div>
-								<div class='profile-item-button-1' @click='feedback' v-if='userInfo.isVIP' :style="{backgroundColor:color}">反馈</div>
+							<div class='button-vip' :data-id='item._id' :data-mode='item.mode'>
+								<div class='profile-item-button' @click='progressing' :style="{backgroundColor:color}" v-if="item.mode=='tra'" >进度</div>
+								<div class='profile-item-button-1' @click='feedback' v-if='userInfo.isVIP' :style="{backgroundColor:color}" >反馈</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<Loading v-bind:show='isLoading' v-bind:show2='isLoading2'/>
 	</div>
 </template>
 <script>
 import {mapState} from 'vuex';
+import Loading from '../components/Loading.vue'
 export default {
 	name: 'Data',
 	components: {
-		// Loading
+		Loading
 	},
 	data(){
 		return {
-			customerStatistics:{
-				todayCustomer:'12',
-				totalCustomer:'29'
-			},
-			customerList:[
-				{
-					id:0,
-					customerName:'杨女士',
-					beCustomerTime:'8-22 12:22',
-					customerPhoneNumber:'15955667788',
-					customerDesensitizationNumber:'159****7788',
-					presentState:'客户已经签约',
-					remindText:'杨女士，8月22日 12:23，报名参加了活动'
-				}
-			]
+
+			dayCount:'',
+			count:'',
+			customerList:[],
+			isLoading:false,
+			isLoading2:true,
 		}
 	},
 	computed:{
@@ -67,30 +60,66 @@ export default {
 	created() {
 		this.$loading.show()
 		this.fetchData();
-		console.log(this.color)
 	},
 	methods:{
 		fetchData(){
 			let that = this;
-			let agentPhoneNumber=this.userInfo.agentPhoneNumber;
-			this.axios.post('/api/userData',{agentPhoneNumber:agentPhoneNumber})
+			let openID=this.userInfo.openID;
+			this.axios.post('/api/userData',{openID:openID})
 				.then(function(response){
 					that.$loading.hide();
-					console.log(response.data);
+					if(response.data.code===500){
+						that.$message.info('系统故障了');
+						return;
+					}
+					that.customerList = response.data.orders;
+					that.dayCount = response.data.dayCount;
+					that.count = response.data.count;
 					
 				})
 		},
 		feedback(event){
-			let customerPhoneNumber = event.currentTarget.parentNode.dataset.customerPhoneNumber;
-			this.$router.push({name:'FeedBack',query:{customerPhoneNumber:customerPhoneNumber}});
+			let orderID = event.currentTarget.parentNode.dataset.id;
+			let mode = event.currentTarget.parentNode.dataset.mode;
+			this.$router.push({name:'FeedBack',query:{orderID:orderID,mode:mode}});
 		},
 		progressing(event){
-			let customerPhoneNumber = event.currentTarget.parentNode.dataset.customerPhoneNumber;
-			this.$router.push({name:'Profile',query:{customerPhoneNumber:customerPhoneNumber}});
+			let orderID = event.currentTarget.parentNode.dataset.id;
+			let mode = event.currentTarget.parentNode.dataset.mode;
+			this.$router.push({name:'Profile',query:{orderID:orderID,mode:mode}});
 		},
+		scroll() {
+			let that = this;
+			let openID = window.localStorage['openID'];
+			window.onscroll = () => {
+				// 距离底部100px时加载一次
+				let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 100
+				if (bottomOfWindow&&that.isLoading == false) {
+					that.isLoading = true;
+					let count = that.customerList.length;
+					that.axios.post('/api/userDatas',{openID:openID,num:count})
+					.then(function(res){
+						if(res.data.code===500){
+							that.$message.info('系统故障了');
+							return;
+						}
+						if(res.data.orders.length===0){
+							that.isLoading2 = false;
+							return;
+						}
+						that.customerList = that.customerList.concat(res.data.orders)
+						that.isLoading = false;
+						
+					})
+				}
+			}
+		}
 
 	},
-	
+	mounted() {
+		this.scroll()
+	}
+
 }
 </script>
 <style scoped lang="less">
@@ -127,7 +156,7 @@ export default {
 
 	.profile-item{
 		width:100vw;
-		height: 70px;
+		height: 65px;
 		display: flex;
 		padding:5px 20px 0 20px;
 	}

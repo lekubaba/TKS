@@ -1,29 +1,29 @@
 <template>
 	<div class="promotion">
 		<div class='poster-wraper'>
-			<img class='poster-item' v-for='item in agentPoster' v-bind:key='item.id' :src="item.posterUrl">
+			<img class='poster-item' v-for='item in agentPoster' :src="item">
 		</div>
 		<div class='button-wraper'>
-			<div class='buy-tks' v-if='showBuyTab.buyTk'>
+			<div class='buy-tks' v-if='!isPromotion'>
 				<div class='buy-tk-protocol'>
 					<div class='buy-agree' :style="{backgroundColor:color}">√</div>
 					<div class='buy-agree-title'>我已阅读并同意</div>
 					<div class='buy-agree-protocol' @click='toUserProtocol' :style="{color:color}">《统客使用协议》</div>
 				</div>
-				<div class='buy-tk-pay' :style="{backgroundColor:color}">
-					<span class='buy-underline'>¥6999</span>
+				<div class='buy-tk-pay' :style="{backgroundColor:color}" @click='buyTongke'>
+					<span class='buy-underline'>¥29999</span>
 					<span class='buy-money-renminbi'>¥</span>
-					<span class='buy-money'>1299.0</span>
-					<span class='buy-content'>开启裂变</span>
+					<span class='buy-money'>0.0</span>
+					<span class='buy-content'>申请免费开通</span>
 				</div>
 			</div>
-			<div class='tk-vips' v-if='!showBuyTab.buyTk'>
+			<div class='tk-vips' v-if='isPromotion'>
 				<div class='buy-tk-protocol'>
 					<div class='buy-agree' :style="{backgroundColor:color}">√</div>
 					<div class='buy-agree-title'>新手必读</div>
-					<div class='buy-agree-protocol' @click='toPromotionGuide' :style="{color:color}">《推广入门指南》</div>
+					<div class='buy-agree-protocol' @click='toPromotionGuide' :style="{color:color}" :data-id='productsID'>《佣金政策与规则》</div>
 				</div>
-				<div class='tk-vips-items' data-url='lekubaba' :style="{backgroundColor:color}">
+				<div class='tk-vips-items' data-url='lekubaba' :style="{backgroundColor:color}" :data-id='productsID'>
 					<div class='tk-vip-item' @click='toPromotionQrcode'>推广码</div>
 					<div class='tk-vip-item' @click='toAgentQrcode'>招商码</div>
 					<div class='tk-vip-item' @click='toContactBoss'>老板</div>
@@ -43,19 +43,8 @@ export default {
 	},
 	data(){
 		return {
-			agentPoster:[
-				{id:0,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:1,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:2,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:3,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:4,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:5,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:6,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-				{id:7,posterUrl:'http://qiniu.tongkeapp.com/agent_poster_04.png'},
-			],
-			showBuyTab:{
-				buyTk:false
-			},
+			agentPoster:'',
+			productsID:'',
 			
 		}
 	},
@@ -66,29 +55,62 @@ export default {
 	methods:{
 		fetchData(){
 			let that = this;
-			this.axios.post('/api/promotion',{test:true})
+			let isPromotion = this.isPromotion;
+			let openID = this.userInfo.openID;
+			let proData = {
+				isPromotion:isPromotion,
+				openID:openID,
+			}
+			this.axios.post('/api/promotion',proData)
 				.then(function(res){
-					console.log(res.data);
-					that.$message.success('Promotion');
+					if(res.data.code===500){
+						this.$message.info('系统出错了');
+						return;
+					}
+					//如果代理还未参与推广，首页则展示统客介绍海报;
+					if(!isPromotion){
+						that.agentPoster = res.data.mainPromotionProducts.promotionPoster;
+						that.productsID = res.data.mainPromotionProducts._id;
+						window.localStorage.setItem('isVIP',res.data.isVIP);
+						window.localStorage.setItem('isPromotion',res.data.isPromotion);
+						window.localStorage.setItem('isAddLevel',res.data.mainPromotionProducts.isAddLevel);
+						return;
+					}else{
+						that.agentPoster = res.data.mainPromotionProducts.agentPoster;
+						that.productsID = res.data.mainPromotionProducts._id;
+						window.localStorage.setItem('isVIP',res.data.isVIP);
+						window.localStorage.setItem('isPromotion',res.data.isPromotion);
+						window.localStorage.setItem('isAddLevel',res.data.mainPromotionProducts.isAddLevel);
+					}
 				})
+		},
+		buyTongke(){
+			this.$message.info('内测阶段');
 		},
 		toUserProtocol(){
 			this.$router.push({name:'UserProtocol'});
 		},
-		toPromotionGuide(){
-			this.$router.push({name:'PromotionGuide'});
+		toPromotionGuide(e){
+			//产品ID
+			let _id = e.target.dataset.id;
+			this.$router.push({name:'PromotionGuide',query:{id:_id}});
 		},
 		toPromotionQrcode(e){
-			// console.log(e.target.parentNode.dataset.url);
-			this.$router.push({name:'PromotionQrcode'});
+			//产品ID
+			let _id = e.target.parentNode.dataset.id;
+			this.$router.push({name:'PromotionQrcode',query:{id:_id}});
 		},
-		toAgentQrcode(){
-			this.$router.push({name:'AgentQrcode'});
+		toAgentQrcode(e){
+			//产品ID
+			let _id = e.target.parentNode.dataset.id;
+			this.$router.push({name:'AgentQrcode',query:{id:_id}});
 		},
-		toContactBoss(){
-			this.$router.push({name:'ContactBoss'});
+		toContactBoss(e){
+			//产品ID
+			let _id = e.target.parentNode.dataset.id;
+			this.$router.push({name:'ContactBoss',query:{id:_id}});
 		},
-		toMorePromotion(){
+		toMorePromotion(e){
 			this.$router.push({name:'MorePromotion'});
 		},
 
@@ -98,7 +120,9 @@ export default {
 	},
 	computed:{
 		...mapState({
+			userInfo:state=>state.userInfo,
 			color:state=>state.color,
+			isPromotion:state=>state.isPromotion,
 		})
 	}
 }
@@ -147,9 +171,6 @@ export default {
 	.buy-tk-pay{
 		width:95vw;
 		height: 48px;
-		// background-image: linear-gradient(135deg, rgba(244, 213, 131, 1), rgba(191, 152, 57, 1.0));
-		// background-color: #1476fe;
-		// background-image: linear-gradient(45deg,#1ff0ef 0%,#fe2e5c 100%);
 		text-align: center;
 		line-height: 48px;
 		font-size: 20px;

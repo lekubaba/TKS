@@ -21,6 +21,7 @@
     "de": "pm2 delete all"
   },
   "dependencies": {
+    "@alicloud/pop-core": "^1.7.9",
     "body-parser": "^1.18.3",
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "^1.4.3",

@@ -26,7 +26,7 @@
 			},
 			LoginOut(){
 				window.localStorage.clear();
-				this.$router.push({name:'Login'});
+				window.location.reload();
 
 			}
 		},

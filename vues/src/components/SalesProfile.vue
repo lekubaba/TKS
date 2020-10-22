@@ -2,14 +2,14 @@
 	<div class="sales">
 		<div class='profile'>
 			<div class='profile-item' v-for = 'item in sales'>
-				<img class='profile-item-avatar' src="http://qiniu.tongkeapp.com/appletouchicon.png">
+				<img class='profile-item-avatar' :src="item.customerID.customerAvatarImg">
 				<div class='profile-item-content'>
 					<div class='profile-item-text'>
-						<div class='profile-item-info'>杨思 158****3233 8月23日</div>
+						<div class='profile-item-info'>{{item.customerName}} {{item.customerDesensitizationNumber}} {{item.orderTime}}</div>
 						<div class='profile-item-wraper'>
 							<div class='profile-item-left'>
-								<div class='profile-item-time'>推荐人：杨小小 13222332233</div>
-								<div class='profile-item-state' :style="{color:color}">金额：1324333</div>
+								<div class='profile-item-time'>推荐人：{{item.agentID.agentNickname}} 微信：{{item.agentID.agentWechat}}</div>
+								<div class='profile-item-state' :style="{color:color}">金额：{{item.orderMoney?item.orderMoney:'暂无'}}</div>
 							</div>
 						</div>
 					</div>
@@ -28,7 +28,6 @@ export default {
 	props:['sales'],
 	data(){
 		return {
-			salesProfile:'',
 			color:this.$store.state.color,
 		}
 	},

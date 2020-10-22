@@ -35,7 +35,7 @@ class Utils {
 		str = str.replace(/\s+/g,"");
 		return reg.test(str);
 	}
-	checkVC(str){
+	checkVC(str){ //检测四位验证码
 		let reg = /^\d{4}$/;
 		str = str.replace(/\s+/g,"");
 		return reg.test(str);
@@ -43,6 +43,13 @@ class Utils {
 	checkMoney(str){
 		let reg = /^[1-9]\d*$/;
 		str = str.replace(/\s+/g,"");
+		return reg.test(str);
+	}
+	encodeURL(str){
+		return encodeURIComponent(str);
+	}
+	checkURL(str){
+		let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
 		return reg.test(str);
 	}
 }

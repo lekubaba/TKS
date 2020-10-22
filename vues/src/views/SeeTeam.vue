@@ -2,53 +2,124 @@
 	<div class='see-team'>
 		<div class='team-total' :style="{backgroundColor:color}">
 			<div class='team-title'>团队人数</div>
-			<div class='team-sum'>0</div>
+			<div class='team-sum'>{{team?team:'0'}}</div>
 		</div>
 		<div class='see-t-navs'>
-			<router-link :to="{name:'OneLevelTeam',query:{level:'one'}}" class='see-t-nav' active-class="active" exact>一级团队</router-link>
-			<router-link :to="{name:'TwoLevelTeam',query:{level:'two'}}" class='see-t-nav' active-class="active" exact>二级团队</router-link>
-			<router-link :to="{name:'TotalLevelTeam',query:{level:'allin'}}" class='see-t-nav' active-class="active" exact v-if='userInfo.isVIP'>全部</router-link>
+			<router-link :to="{name:'OneLevelTeam',query:{level:'one'}}" replace class='see-t-nav' active-class="active" exact>一级团队</router-link>
+			<router-link :to="{name:'TwoLevelTeam',query:{level:'two'}}" replace class='see-t-nav' active-class="active" exact v-if='isAddLevel'>二级团队</router-link>
+			<router-link :to="{name:'TotalLevelTeam',query:{level:'allin'}}" replace class='see-t-nav' active-class="active" exact v-if='userInfo.isVIP'>全部</router-link>
 		</div>
 		<router-view v-bind:team='teamProfile'/>
+		<Loading v-bind:show='isLoading' v-bind:show2='isLoading2'/>
 		
 	</div>
 </template>
 
 <script>
 	import {mapState} from 'vuex';
+	import Loading from '../components/Loading.vue';
 	export default {
 		name: 'SeeTeam',
 		components: {
-			// HelloWorld
+			Loading
 		},
 		data(){
 			return {
-				teamProfile:''
+				teamProfile:[],
+				team:'',
+				isLoading:false,
+				isLoading2:true,
+				level:'',
 			}
 		},
 		created() {
-			
+			this.$loading.show();
+			this.getData();
+		},
+		methods:{
+			getData(){
+				let that = this;
+				let openID = window.localStorage['openID'];
+				this.axios.post('/api/seeteam',{openID:openID})
+				.then(function(res){
+					if(res.data.code==500){
+						that.$message.info('系统故障了');
+						return;
+					}
+					that.team = res.data.team;
+					that.$loading.hide();
+					
+				})
+			},
+			scroll() {
+				let that = this;
+				let openID = window.localStorage['openID'];
+				
+				
+				window.onscroll = () => {
+					// 距离底部200px时加载一次
+					
+					let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 100
+					if (bottomOfWindow&&that.isLoading == false) {
+						if(!that.level){
+							return;
+						}
+						that.isLoading = true;
+						let count = that.teamProfile.length;
+						let level = that.level;
+						that.axios.post('/api/seeteamplus',{openID:openID,num:count,level:level})
+						.then(function(res){
+							if(res.data.code===500){
+								that.$message.info('系统故障了');
+								return;
+							}
+							if(res.data._agents.length===0){
+								that.isLoading2 = false;
+								return;
+							}
+							that.teamProfile = that.teamProfile.concat(res.data._agents)
+							that.isLoading = false;
+							
+						})
+						
+					}
+				}
+			},
 		},
 		watch:{
 			$route (newRoute) {
+				let that = this;
 				let newUserId = newRoute.params.userId
-				let newQuery = newRoute.query.level
-				if(newQuery==='zero'){
-					this.teamProfile = [1]
-				}else if(newQuery==='one'){
-					this.teamProfile = [1,2]
-				}else if(newQuery==='two'){
-					this.teamProfile = [1,2,3]
-				}else if(newQuery==='allin'){
-					this.teamProfile = [1,2,3,4,5]
+				let newQuery = newRoute.query.level;
+				this.level = newQuery;
+				that.isLoading = false;
+				that.isLoading2 = true;
+				let openID = window.localStorage['openID'];
+				let data = {
+					level:newQuery,
+					openID:openID
 				}
+				this.axios.post('/api/seeteamlevel',data)
+				.then(function(res){
+					if(res.data.code==500){
+						that.$message.info('系统故障了');
+						return;
+					}
+					
+					that.teamProfile = res.data._agents;
+					
+				})
 			}
 		},
 		computed:{
 			...mapState({
 				userInfo:state=>state.userInfo,
 				color:state=>state.color,
+				isAddLevel:state=>state.isAddLevel,
 			})
+		},
+		mounted() {
+			this.scroll()
 		}
 	}
 </script>

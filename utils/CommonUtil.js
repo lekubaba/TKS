@@ -2,6 +2,7 @@
  * Created by Arvin on 2016/12/19.
  */
 var requestIp = require('request-ip');
+var URL = require('url');
 
 var CommonUtil = {
     getNicknameFromMobile: function (str) {
@@ -110,7 +111,13 @@ var CommonUtil = {
             }
         }
         return obj;
-    }
+    },
+	getKey:function(str){
+		let strObject = URL.parse(str);
+		let pathname = strObject.pathname;
+		let key = pathname.split('/')[1];
+		return key;
+	}
 };
 
 

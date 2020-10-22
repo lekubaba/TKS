@@ -2,20 +2,20 @@
 	<div id='feedback'>
 		<div class='feedback-wraper'>
 			<div class='customer-info'>
-				<img class='info-avatar' src="http://qiniu.tongkeapp.com/customerDefaultAvatar_01.png">
+				<img class='info-avatar' :src="customerInfo.customerAvatarImg?customerInfo.customerAvatarImg:imgAvatar">
 				<span class='span1'>{{customerInfo.customerName}}</span>
 				<span class='span2' :style="{color:color}">{{customerInfo.customerPhoneNumber}}</span>
 			</div>
 			<h1 >告诉代理当前进度</h1>
-			<div class='iscontact'>
+			<div class='iscontact' v-if="mode=='tra'">
 				<div class='problem' :style="{color:color}">是否已联系了客户？</div>
-				<div class='confirm' @click='isContactCustomer' data-contacted='contacted' :style="{backgroundColor:color}">已联系</div>
+				<div class='confirm' @click='isContactCustomer' data-contacted='contacted' :style="{backgroundColor:color}" v-if='!customerInfo.contacted'>已联系</div>
 			</div>
-			<div class='iscontact'>
+			<div class='iscontact' v-if="mode=='tra'">
 				<div class='problem' :style="{color:color}">客户是否已签约？</div>
-				<div class='confirm' @click='isSignUp' data-signed='signed' :style="{backgroundColor:color}">已签约</div>
+				<div class='confirm' @click='isSignUp' data-signed='signed' :style="{backgroundColor:color}" v-if='!customerInfo.signed'>已签约</div>
 			</div>
-			<div class='iscontact'>
+			<div class='iscontact' v-if="mode=='tra'||mode=='link'">
 				<div class='problem' :style="{color:color}">订单金额为多少？</div>
 				<div class='confirm' @click='enterTheAmount' :style="{backgroundColor:color}">输入订单金额</div>
 			</div>
@@ -23,9 +23,9 @@
 				<div class='problem' :style="{color:color}">给代理发佣金</div>
 				<div class='confirm' @click='Commission' :style="{backgroundColor:color}">获取账户</div>
 			</div>
-			<div class='iscontact'>
+			<div class='iscontact' v-if="mode=='tra'">
 				<div class='problem' :style="{color:color}">佣金是否已发放？</div>
-				<div class='confirm' @click='isCommission' data-issued='issued' :style="{backgroundColor:color}">佣金已发放</div>
+				<div class='confirm' @click='isCommission' data-issued='issued' :style="{backgroundColor:color}" v-if='!customerInfo.issued'>佣金已发放</div>
 			</div>
 		</div>
 		<transition name='fade'>
@@ -34,8 +34,8 @@
 					<div class='mask-titlea' :style="{color:color}">{{stateTitle}}</div>
 					<div class='mask-titleb'>提交以后代理将在进度里看到你的反馈</div>
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirm' :data-state='state' :style="{color:color}">确认</div>
-						<div class='mask-cancel' @click='isCancel' :style="{backgroundColor:color}">取消</div>
+						<div class='mask-cancel' @click='isCancel' :style="{color:color}">取消</div>
+						<div class='mask-confirm' @click='isConfirm' :data-state='state' :style="{backgroundColor:color}">确认</div>
 					</div>
 				</div>
 			</div>
@@ -46,8 +46,8 @@
 					<div class='mask2-title' :style="{color:color}">请输入金额(元)</div>
 					<input class='mask-inputa' type="number" placeholder="输入签约金额" ref='money' onkeyup="this.value=this.value.replace(/[, ]/g,'')" :style="{borderColor:color}">
 					<div class='mask-button'>
-						<div class='mask-confirm' @click='isConfirmtwo' :style="{color:color}">确认</div>
-						<div class='mask-cancel' @click='isCanceltwo' :style="{backgroundColor:color}">取消</div>
+						<div class='mask-cancel' @click='isCanceltwo' :style="{color:color}">取消</div>
+						<div class='mask-confirm' @click='isConfirmtwo' :style="{backgroundColor:color}">确认</div>
 					</div>
 				</div>
 			</div>
@@ -63,21 +63,21 @@
 					</div>
 					<div class='row'>
 						<div class='column1'>推荐人</div>
-						<div class='column2'>{{account.agentName}}</div>
-						<div class='column3'>{{account.agentAccount}}</div>
+						<div class='column2'>{{account.agentNickname}}</div>
+						<div class='column3'>{{account.agentWechat}}</div>
 					</div>
 					<div class='row'>
 						<div class='column1'>上级</div>
-						<div class='column2'>{{account.superName}}</div>
-						<div class='column3'>{{account.superAccount}}</div>
+						<div class='column2'>{{account.superLevel?account.superLevel.agentNickname:'无'}}</div>
+						<div class='column3'>{{account.superLevel?account.superLevel.agentWechat:'无'}}</div>
 					</div>
 					<div class='row'>
 						<div class='column1'>上上级</div>
-						<div class='column2'>{{account.bigSuperName}}</div>
-						<div class='column3'>{{account.bigSuperAccount}}</div>
+						<div class='column2'>{{account.bigSuperLevel?account.bigSuperLevel.agentNickname:'无'}}</div>
+						<div class='column3'>{{account.bigSuperLevel?account.bigSuperLevel.agentWechat:'无'}}</div>
 					</div>
 					<div class='mask-button'>
-						<div style="margin-top:20px;" class='mask-cancel' @click='closeMask3' :style="{backgroundColor:color}">关闭</div>
+						<div style="margin-top:20px;" class='mask-cancel' @click='closeMask3' :style="{color:color}">关闭</div>
 					</div>
 				</div>
 			</div>
@@ -95,10 +95,18 @@ export default {
 	},
 	data(){
 		return {
+			mode:null,
+			orderID:null,
 			customerInfo:{
-				customerName:'杨女士',
-				customerPhoneNumber:'15915889988'
+				code:'',
+				customerAvatarImg:'',
+				customerName:'',
+				customerPhoneNumber:'',
+				contacted:'',
+				signed:'',
+				issued:'',
 			},
+			imgAvatar:'http://qiniu.tongkeapp.com/customerDefaultAvatar_01.png',
 			mask:{
 				mask1:false,
 				mask2:false,
@@ -106,27 +114,7 @@ export default {
 			},
 			stateTitle:'',
 			state:'',
-			colorfulBackground:{
-				backgroundColor:'#1476FE'
-			},
-			// 每一个客户，数据库都会保存状态对应的颜色
-			colorfulButtons:{
-					contactButtonColor:'#1476Fe',
-					signButtonColor:'#1476Fe',
-					moneyButtonColor:'#1476Fe',
-					commissionButtonColor:'#1476Fe',
-			},
-			colorfulFont:{
-				color: '#1476FE'
-			},
-			account:{
-				agentName:'杨腾',
-				agentAccount:'15811111111',
-				superName:'杨三毛',
-				superAccount:'15914132568',
-				bigSuperName:'杨冯',
-				bigSuperAccount:'13567998802'
-			}
+			account:{},
 		}
 	},
 	computed:{
@@ -134,7 +122,26 @@ export default {
 			color:state=>state.color,
 		})
 	},
+	created() {
+		this.$loading.show();
+		this.orderID = this.$route.query.orderID;
+		this.mode = this.$route.query.mode;
+		this.getData();
+	},
 	methods:{
+		getData(){
+			let that = this;
+			let data = {
+				orderID:that.orderID,
+			}
+			
+			this.axios.post('/api/feedback',data)
+				.then(function(val){
+					that.$loading.hide();
+					that.customerInfo = val.data;
+					return;
+				})
+		},
 		isContactCustomer(){
 			this.stateTitle = '确定联系过客户了吗';
 			this.state = 'contacted';
@@ -149,6 +156,12 @@ export default {
 			this.mask.mask2 = true;
 		},
 		Commission(){
+			let orderID = this.$route.query.orderID;
+			let that = this;
+			this.axios.post('/api/getAccount',{orderID:orderID})
+				.then(function(res){
+					that.account = res.data;
+				})
 			this.mask.mask3 = true;
 		},
 		isCommission(){
@@ -162,11 +175,28 @@ export default {
 		//保存状态
 		isConfirm(event){
 			let that = this;
+			let orderID = this.$route.query.orderID;
 			let state = event.currentTarget.dataset.state;
-			this.axios.post('/api/saveFeedback',{agentPhoneNumber:'15914132569',customerPhoneNumber:'13233332222',state:state})
+			this.axios.post('/api/saveFeedback',{orderID:orderID,state:state})
 				.then(function(val){
-					console.log(val.data);
-					that.$message.success('反馈成功');
+					if(val.data.code===500){
+						that.$message.info('系统故障了');
+						return;
+					}
+					if(state==='contacted'){
+						that.customerInfo.contacted = true;
+						that.$message.success('反馈成功');
+						return;
+					}else if(state==='signed'){
+						that.customerInfo.signed = true;
+						that.$message.success('反馈成功');
+						return;
+					}else if(state==='issued'){
+						that.customerInfo.issued = true;
+						that.$message.success('反馈成功');
+						return;
+					}
+					
 				})
 			this.mask.mask1 = false;
 		},
@@ -175,28 +205,31 @@ export default {
 		},
 		//保存签约金额
 		isConfirmtwo(){
+			
 			let that = this;
+			let orderID = this.$route.query.orderID;
 			let money = this.$refs.money.value;
-			money===''?this.$message.info('请输入数字'):this.$Utils.checkMoney(money)?this.saveMoney(money):this.$message.info('输入数字');
-			console.log(money);
-			this.mask.mask2 = false;
-		},
-		saveMoney(money){
-			let that = this;
-			this.axios.post('/api/saveMoney',{agentPhoneNumber:'15914132569',customerPhoneNumber:'13233332222',money:money})
+			if(money===''){
+				this.$message.info('请输入金额');
+				return;
+			}
+			
+			if(!this.$Utils.checkMoney(money)){
+				this.$message.info('格式错误');
+				return;
+			}
+			this.axios.post('/api/saveMoney',{orderID:orderID,money:money})
 				.then(function(val){
-					console.log(val.data);
 					that.$message.success('反馈成功');
 				})
+			this.mask.mask2 = false;
+			return;
 		},
 		closeMask3(){
 			this.mask.mask3 = false;
 		}
 	},
-	created() {
-		let customerPhoneNumber = this.$route.query.customerPhoneNumber;
-		console.log(customerPhoneNumber);
-	}
+	
 }
 </script>
 
@@ -405,14 +438,15 @@ export default {
 		margin:0 10px 0 10px;
 	}
 	.mask-cancel{
-		color: #fff;
-		background-color: #1476FE;
+		
+		color: #1476FE;
+		background-color: #eee;
 		
 		
 	}
 	.mask-confirm{
-		color: #1476FE;
-		background-color: #eee;
+		color: #fff;
+		background-color: #1476FE;
 	}
 	.mask2-title{
 		font-size: 24px;

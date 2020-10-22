@@ -37,10 +37,16 @@
 			},
 			saveColorToDatabase(color){
 				let that = this;
-				this.axios.post('/api/saveColorToDatabase',{userNumber:'15877998877',color:color})
-				.then(function(val){
-					console.log(val.data);
-					that.$message.success('保存成功');
+				let openID = window.localStorage['openID'];
+				this.axios.post('/api/saveColorToDatabase',{openID:openID,color:color})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$message.success('系统出错了');
+						return;
+					}
+					window.localStorage.setItem('color',color);
+					that.$router.replace({name:'SuccessRemind'})
+					
 				})
 			}
 		},

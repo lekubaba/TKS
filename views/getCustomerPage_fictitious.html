@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title%></title>
+        <link rel="shortcut icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="bookmark" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <link rel="icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="apple-touch-icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
+        <meta name="apple-mobile-web-app-title" content="限时活动">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="white">
+        <link rel="stylesheet" href="http://192.168.0.105:8099/styles/getCustomerPage_fictitious.css">
+    </head>
+    <body>
+		<div class="promotion">
+			<div class='poster-wraper'>
+				<!-- 遍历海报 -->
+				<% Img.forEach(function(item){ %>
+					<img class='poster-item' src="<%= item%>">
+				<%})%>
+			</div>
+			<div class='button-wraper'>
+				<div class='buy-tks'>
+					<div class='buy-tk-protocol'>
+						<div class='buy-agree' style="background-color:<%= color%>">√</div>
+						<div class='buy-agree-title'>我已阅读并同意</div>
+						<div class='buy-agree-protocol' @click='toUserProtocol' style="color:<%= color%>">《统客使用协议》</div>
+					</div>
+					<div class='buy-tk-pay' style="background-color:<%= color%>" data-openid = "<%= openID%>" data-productsid="<%= productsId%>">
+						<span class='buy-underline'>¥6999</span>
+						<span class='buy-money-renminbi'>¥</span>
+						<span class='buy-money'>899.0</span>
+						<span class='buy-content'>开启裂变</span>
+					</div>
+				</div>
+		</div>
+    </body>
+    <script src='http://192.168.0.105:8099/scripts/jquery.min.js'></script>
+    <script src='http://192.168.0.105:8099/scripts/getCustomer_fictitious.js'></script>
+</html>

@@ -1,56 +1,46 @@
 <template>
-	<div class='vip-edit' :style="{backgroundColor:this.$store.state.color}">
-		<div class='edit-text'>
-			<div class='edit-sup-title'>推广内容配置</div>
-			<div class='edit-sub-title'>用于推广和招纳代理</div>
-		</div>
+	<div class='vip-edit'>
 		<div class='edit-wraper'>
 			<div class='wraper-items'>
-				<div class='wraper-item' @click='toRealNameAuthentication' >
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">实</div>
-					<div class='wraper-item-title'>实名认证</div>
+				<div class='wraper-item item-line' @click='toRealNameAuthentication' >
+					<div class='wraper-item-title'>| 完善信息</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-				<div class='wraper-item item-a' @click='toPromotionCover'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">封</div>
-					<div class='wraper-item-title'>推广封面图</div>
+				<div class='wraper-item item-line' @click='toPromotionQrcodeBackground'>
+					<div class='wraper-item-title'>| 推广码背景图</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-				<div class='wraper-item' @click='toPromotionQrcodeBackground'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">码</div>
-					<div class='wraper-item-title'>推广码背景图</div>
+				<div class='wraper-item item-line' @click='toAgentQrcodeBackground'>
+					<div class='wraper-item-title'>| 招商码背景图</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-			</div>
-			<div class='wraper-items items-a'>
-				<div class='wraper-item' @click='toAgentQrcodeBackground'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">背</div>
-					<div class='wraper-item-title'>招商码背景图</div>
+				<div class='wraper-item item-line' @click='toPromotionPoster'>
+					<div class='wraper-item-title'>| 推广正文</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-				<div class='wraper-item item-b' @click='toPromotionPoster'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">推</div>
-					<div class='wraper-item-title'>推广正文</div>
+				<div class='wraper-item item-line' @click='toAgentPoster'>
+					<div class='wraper-item-title'>| 招商正文</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-				<div class='wraper-item' @click='toAgentPoster'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">招</div>
-					<div class='wraper-item-title'>招商正文</div>
+				<div class='wraper-item item-line' @click='toCommissionRegular'>
+					<div class='wraper-item-title'>| 佣金与规则</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-			</div>
-		</div>
-		<div class='edit-text'>
-			<div class='edit-sup-title'>其他重要配置</div>
-			<div class='edit-sub-title'>个性化功能</div>
-		</div>
-		<div class='edit-wraper-two'>
-			<div class='wraper-items-two'>
-				<div class='wraper-item' @click='toTheme'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">主</div>
-					<div class='wraper-item-title'>配置颜色</div>
+				<div class='wraper-item item-line' @click='toSetLink' v-if="pro.mode==='link'">
+					<div class='wraper-item-title'>| 配置链接</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
+				</div>
+				<div class='wraper-item item-line' @click='toTheme'>
+					<div class='wraper-item-title'>| 配置颜色</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
 				<div class='wraper-item' @click='toOpenThirdLevel'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">三</div>
-					<div class='wraper-item-title'>开通三级</div>
+					<div class='wraper-item-title'>| 开通三级</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
-				<div class='wraper-item' @click='toUnionPay'>
-					<div class='wraper-item-img' :style="{backgroundColor:this.$store.state.color}">付</div>
-					<div class='wraper-item-title'>支付配置</div>
+				<div class='wraper-item' @click='toUnionPay' v-if="pro.mode==='line'">
+					<div class='wraper-item-title'>| 支付配置</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
 			</div>
 		</div>
@@ -64,24 +54,79 @@
 		components: {
 			// HelloWorld
 		},
+		data(){
+			return {
+				pro:'',
+			}
+		},
+		created() {
+			this.$loading.show()
+			this.getData();
+		},
 		methods:{
+			getData(){
+				let that = this;
+				let openID = window.localStorage['openID'];
+				this.axios.post('/api/getmode',{openID:openID})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$loading.hide()
+						that.$message.info('系统出错了');
+						return;
+					}
+					that.$loading.hide();
+					
+					that.pro = res.data.pro
+				})
+			},
 			toRealNameAuthentication(){
+				if(this.pro.isAuth){
+					this.$router.push({name:'SuccessRemind',query:{kind:'RealNameAuthentication'}})
+					return;
+				}
 				this.$router.push({name:'RealNameAuthentication'})
 			},
-			toPromotionCover(){
-				this.$router.push({name:'PromotionCover'})
-			},
 			toPromotionQrcodeBackground(){
+				if(this.pro.isPromotionQr){
+					this.$router.push({name:'SuccessRemind',query:{kind:'PromotionQrcodeBackground'}})
+					return;
+				}
 				this.$router.push({name:'PromotionQrcodeBackground'})
 			},
 			toAgentQrcodeBackground(){
+				if(this.pro.isAgentQr){
+					this.$router.push({name:'SuccessRemind',query:{kind:'AgentQrcodeBackground'}})
+					return;
+				}
 				this.$router.push({name:'AgentQrcodeBackground'})
 			},
 			toPromotionPoster(){
+				if(this.pro.isPromotionTxt){
+					this.$router.push({name:'SuccessRemind',query:{kind:'PromotionPoster'}})
+					return;
+				}
 				this.$router.push({name:'PromotionPoster'})
 			},
 			toAgentPoster(){
+				if(this.pro.isAgentTxt){
+					this.$router.push({name:'SuccessRemind',query:{kind:'AgentPoster'}})
+					return;
+				}
 				this.$router.push({name:'AgentPoster'})
+			},
+			toCommissionRegular(){
+				if(this.pro.isRegular){
+					this.$router.push({name:'SuccessRemind',query:{kind:'CommissionRegular'}})
+					return;
+				}
+				this.$router.push({name:'CommissionRegular'})
+			},
+			toSetLink(){
+				if(this.pro.isLink){
+					this.$router.push({name:'SuccessRemind',query:{kind:'SetLink'}})
+					return;
+				}
+				this.$router.push({name:'SetLink'})
 			},
 			toUnionPay(){
 				this.$router.push({name:'UnionPay'})
@@ -90,24 +135,25 @@
 				this.$router.push({name:'OpenThirdLevel'})
 			},
 			toTheme(){
+				if(this.pro.isColor){
+					this.$router.push({name:'SuccessRemind',query:{kind:'Theme'}})
+					return;
+				}
 				this.$router.push({name:'Theme'})
 			}
 		},
-		created() {
-			
-		}
+		
 	}
 </script>
 
 <style scoped lang="less">
 	.vip-edit{
 		width:100vw;
-		min-height: 100vh;
-		background-color: #1476FE;
+		min-height: 110vh;
+		background-color: rgb(237,237,237);
 		display: flex;
 		flex-direction:column;
 		align-items: center;
-		// justify-content: center;
 	}
 	.edit-text{
 		margin-top:50px;
@@ -115,7 +161,6 @@
 	}
 	.edit-sup-title{
 		font-size: 12px;
-		// font-weight: 900;
 		color:#fff;
 	}
 	.edit-sub-title{
@@ -123,12 +168,11 @@
 		color: #eee;
 	}
 	.edit-wraper{
-		padding:0 10px 0 10px;
 		margin-top:20px;
 		width:90vw;
-		height: 210px;
+		height: auto;
 		background-image: linear-gradient(135deg,#fff 0%,#ededed 100%);
-		border-radius: 20px;
+		border-radius: 10px;
 		box-shadow: 0 1px 11px 0px rgba(0,0,0,.1);
 		display: flex;
 		flex-direction: column;
@@ -136,10 +180,11 @@
 		justify-content: center;
 	}
 	.wraper-items{
+		padding:10px 0 10px 0;
 		width:100%;
-		height: 44%;
+		height:auto;
 		display: flex;
-		flex-direction: row;
+		flex-direction:  column;
 		align-items: center;
 		justify-content: space-between;
 		
@@ -148,17 +193,19 @@
 		// border-top:1px solid rgba(57,72,92,.1); 
 	}
 	.wraper-item{
-		width:30%;
-		height: 100%;
+		width:100%;
+		height: 60px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
+	}
+	.item-line{
+		border-bottom: .5px solid #ccc;
 	}
 	.wraper-item-img{
 		width:40px;
 		height: 40px;
-		background-color: #1476fe;
 		border-radius: 30px;
 		margin-bottom: 10px;
 		text-align: center;
@@ -168,33 +215,9 @@
 		color: #fff;
 	}
 	.wraper-item-title{
+		margin-left: 20px;
 		font-size: 13px;
 		font-weight: 900;
 		color: #777;
-	}
-	.item-a,.item-b{
-		// border-left: 1px solid rgba(57,72,92,.1);
-		// border-right: 1px solid rgba(57,72,92,.1);
-	}
-	.edit-wraper-two{
-		padding:0 10px 0 10px;
-		margin-top:20px;
-		width:90vw;
-		height: 120px;
-		background-image: linear-gradient(135deg,#fff 0%,#ededed 100%);
-		border-radius: 20px;
-		box-shadow: 0 1px 11px 0px rgba(0,0,0,.1);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	.wraper-items-two{
-		width:100%;
-		height:70%;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
 	}
 </style>
