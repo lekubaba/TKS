@@ -59,11 +59,11 @@ $(document).ready(function(){
 		// 有code，则说明用户点击了注册代理按钮
 		}else{
 			
-			let openID = $('.register-confirm').attr('data-openid');
+			let agentID = $('.register-confirm').attr('data-agentid');
 			let productsId = $('.register-confirm').attr('data-productsid');
 			let options = {
 				code:code,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 				agentWechat:localStorage['agentWechat']?localStorage['agentWechat']:'还没设置微信'
 			}
@@ -75,11 +75,13 @@ $(document).ready(function(){
 				window.localStorage.setItem('agentAvatarImg',data.agentAvatarImg);
 				window.localStorage.setItem('agentNickname',data.agentNickname);
 				window.localStorage.setItem('isPromotion',data.isPromotion);
+				window.localStorage.setItem('isAddLevel',data.isAddLevel);
 				window.localStorage.setItem('isVIP',data.isVIP);
 				window.localStorage.setItem('color',data.color);
-				window.localStorage.setItem('openID',data.openID);
+				window.localStorage.setItem('agentID',data.agentID);
+				window.localStorage.setItem('productsId',data.productsId);
 				window.localStorage.setItem('isLogin',true);
-				window.location.href = 'http://feige.tongkeapp.com';
+				window.location.href = '/api/followwechat';
 				return;
 				
 			})
@@ -108,7 +110,8 @@ $(document).ready(function(){
 		window.localStorage.setItem('agentWechat',agentWechat);
 			
 		let redirect_url = window.location.href;
-		let APPID = 'wx1d23498d4a220713';
+		// let APPID = 'wx1d23498d4a220713'; //测试
+		let APPID = 'wx9e1db1b2a18b4a3d';
 		redirect_url = encodeURIComponent(redirect_url);
 		window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 	})

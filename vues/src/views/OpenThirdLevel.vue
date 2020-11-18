@@ -40,8 +40,8 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/islevel',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/islevel',{agentID:agentID})
 				.then(function(res){
 					if(res.data.code===500){
 						that.$message.success('系统出错了');
@@ -60,8 +60,8 @@
 			},
 			openThirdLevel(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/openThirdLevel',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/openThirdLevel',{agentID:agentID})
 				.then(function(res){
 					if(res.data.code===500){
 						that.$message.success('系统出错了');

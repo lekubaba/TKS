@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>扫码进入管理后台</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <style>
+			*{
+			    margin:0;
+			    padding:0;
+			    box-sizing:border-box;
+			    font-family:Helvetica Neue,PingFang SC,Microsoft YaHei;
+			    -webkit-font-smoothing:antialiased;/* chorm safari 抗锯齿*/
+			    -webkit-overflow-scrolling:touch;
+			    outline:none;
+			}
+			/* 滚动条样式调节*/
+			::-webkit-scrollbar{margin-right:3px;width:4px;height:4px}
+			::-webkit-scrollbar,::-webkit-scrollbar-track{background-color:transparent}
+			::-webkit-scrollbar-thumb{width:4px;border-radius:2px;background-color:#e4e4e4}
+			
+			body,html{min-height:100%;}
+			a,a:visited{text-decoration:none}
+			h1,h2,h3,h4,h5,h6{font-weight:500}
+			input{
+				border-radius: 0px;
+			}
+			body{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			
+			.tkqrcode{
+				padding:20px;
+				width:100vw;
+				height: 100vh;
+				background-color: #1475FE;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				font-size: 13px;
+			}
+			
+			.qrcodeimg{
+				width:100vw;
+				height: auto;
+			}
+			
+		</style>
+    </head>
+    <body>
+		<div class='tkqrcode'>
+			<img class='qrcodeimg' src="http://qiniu.tongkeapp.com/tkqrcode.png">
+		</div>
+    </body>
+</html>

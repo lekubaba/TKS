@@ -29,7 +29,7 @@ export default {
 			// src:'http://qiniu.tongkeapp.com/agent_poster_04.png',
 			src:'',
 			src2:'http://qiniu.tongkeapp.com/tkicon.png',
-			agentUrl:'http://feige.tongkeapp.com'+'/api/getagentpage/'+localStorage['openID']+'/'+this.$route.query.id,
+			agentUrl:'http://wx.tongkeapp.com'+'/api/getagentpage/'+localStorage['agentID']+'/'+this.$route.query.id,
 			imgUrl:'',
 			imgload:false,
 			px10:10,
@@ -53,8 +53,8 @@ export default {
 	methods:{
 		getData(){
 			let that = this;
-			let openID = window.localStorage['openID'];
-			this.axios.post('/api/getagentqrcode',{openID:openID})
+			let agentID = window.localStorage['agentID'];
+			this.axios.post('/api/getagentqrcode',{agentID:agentID})
 			.then(function(res){
 				if(res.data.code===500){
 					that.$loading.hide();

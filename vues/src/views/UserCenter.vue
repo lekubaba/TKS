@@ -23,6 +23,10 @@
 				<div>修改微信号</div>
 				<div class='arrow'>〉</div>
 			</div>
+			<div class='set-row binding-wechat' @click='ChangePromotion'>
+				<div>切换推广</div>
+				<div class='arrow'>〉</div>
+			</div>
 			<div class='set-row set-up' @click='UserSetup'>
 				<div>设置</div>
 				<div class='arrow'>〉</div>
@@ -52,9 +56,9 @@ export default {
 	},
 	methods:{
 		getData(){
-			let openID = window.localStorage['openID'];
+			let agentID = window.localStorage['agentID'];
 			let that = this;
-			this.axios.post('/api/usercenter',{openID:openID})
+			this.axios.post('/api/usercenter',{agentID:agentID})
 			.then(function(res){
 				if(res.data.code==500){
 					that.$message.info('系统故障');
@@ -68,21 +72,24 @@ export default {
 			})
 		},
 		SeeSales(){
-			this.$router.push({name:'SeeSales',params:{userId:this.userInfo.openID}});
+			this.$router.push({name:'SeeSales',params:{userId:this.userInfo.agentID}});
 		},
 		SeeTeam(){
-			this.$router.push({name:'SeeTeam',params:{userId:this.userInfo.openID}});
+			this.$router.push({name:'SeeTeam',params:{userId:this.userInfo.agentID}});
 		},
 		BindWX(){
 			this.$router.push({name:'BindWX'});
+		},
+		ChangePromotion(){
+			this.$router.push({name:'MainPromotion'});
 		},
 		UserSetup(){
 			this.$router.push({name:'UserSetup'});
 		},
 		VipEdit(){
 			let that = this;
-			let openID = window.localStorage['openID'];
-			this.axios.post('/api/isbuildproducts',{openID:openID})
+			let agentID = window.localStorage['agentID'];
+			this.axios.post('/api/isbuildproducts',{agentID:agentID})
 			.then(function(res){
 				if(res.data.code===500){
 					that.$message.info('系统出错了');

@@ -43,8 +43,8 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				that.axios.post('/api/uploadTokenAgentPoster',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				that.axios.post('/api/uploadTokenAgentPoster',{agentID:agentID})
 				.then(function(res){
 					that.$loading.hide();
 					that.uploadToken = res.data.uploadToken;
@@ -57,7 +57,7 @@
 					return;
 				}
 				let that = this;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
 				var data = new FormData();
 				data.append('token', this.uploadToken);
 				data.append('file', this.$refs.imgLocal.files[0]);
@@ -75,7 +75,7 @@
 						if(that.state==false){
 							that.agentPoster = [url];
 							that.state = true;
-							that.axios.post('/api/saveagentposter',{openID:openID,url:url}).then(function(res1){
+							that.axios.post('/api/saveagentposter',{agentID:agentID,url:url}).then(function(res1){
 								if(res1.data.code===500){
 									that.$message.info('系统出错了');
 									return;
@@ -84,7 +84,7 @@
 							})
 						}else{
 							that.agentPoster.push(url);
-							that.axios.post('/api/saveagentposter',{openID:openID,url:url}).then(function(res1){
+							that.axios.post('/api/saveagentposter',{agentID:agentID,url:url}).then(function(res1){
 								if(res1.data.code===500){
 									that.$message.info('系统出错了');
 									return;
@@ -99,8 +99,8 @@
 			},
 			changePreagentPoster(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/changepreagentposter',{openID:openID}).then(function(res){
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/changepreagentposter',{agentID:agentID}).then(function(res){
 					if(res.data.code===500){
 						that.$message.info('系统出错了');
 						return;

@@ -27,7 +27,7 @@ export default {
 			qrmcodeSrc:'',
 			src:'',
 			src2:'http://qiniu.tongkeapp.com/tkicon.png',
-			customerUrl:'http://feige.tongkeapp.com'+'/api/getcustomerpage/'+localStorage['openID']+'/'+this.$route.query.id,
+			customerUrl:'http://wx.tongkeapp.com'+'/api/getcustomerpage/'+localStorage['agentID']+'/'+this.$route.query.id,
 			imgUrl:'',
 			imgload:false,
 			px10:10,
@@ -44,8 +44,8 @@ export default {
 	methods:{
 		getData(){
 			let that = this;
-			let openID = window.localStorage['openID'];
-			this.axios.post('/api/getpromotionqrcode',{openID:openID})
+			let agentID = window.localStorage['agentID'];
+			this.axios.post('/api/getpromotionqrcode',{agentID:agentID})
 			.then(function(res){
 				if(res.data.code===500){
 					that.$loading.hide();

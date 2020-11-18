@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 var logger = require('../utils/logger.js').logger;
 
 var DB_URL   = 'mongodb://127.0.0.1:27017/leku';
+// var DB_URL   = '';
 
 // mongoose.Promise = require('bluebird');
 

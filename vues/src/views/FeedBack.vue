@@ -63,8 +63,8 @@
 					</div>
 					<div class='row'>
 						<div class='column1'>推荐人</div>
-						<div class='column2'>{{account.agentNickname}}</div>
-						<div class='column3'>{{account.agentWechat}}</div>
+						<div class='column2'>{{account.agentID.agentNickname}}</div>
+						<div class='column3'>{{account.agentID.agentWechat}}</div>
 					</div>
 					<div class='row'>
 						<div class='column1'>上级</div>

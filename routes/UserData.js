@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Agent,Customer,Products,Order} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -12,23 +12,44 @@ let {formatDate} = require('../utils/DateUtil');
 // 客户数据初始化数据
 router.post('/api/userData',async function(req,res){
 
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
 	
 	try {
 		let _date = formatDate('yyyy-MM-dd');
-		let _dayCount = await Order.count({openID:openID,orderTime:{'$regex':_date}});
-		let _count = await Order.count({openID:openID});
-		let _order = await Order.find({openID:openID}).limit(20).skip(0).
-						   lean().populate('customerID','customerAvatarImg').
-						   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
-		
-		if(!_order){
-			res.json({code:200,count:0,dayCount:0,orders:[]});
+		let _agent = await Agent.findOne({_id:agentID}).select('openID isVIP').lean();
+		//不是vip
+		if(!_agent.isVIP){
+			let _dayCount = await Order.count({agentID:agentID,productsId:productsId,orderTime:{'$regex':_date}});
+			let _count = await Order.count({agentID:agentID,productsId:productsId});
+			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(0).
+							   lean().populate('customerID','customerAvatarImg').
+							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
+			
+			if(!_order){
+				res.json({code:200,count:0,dayCount:0,orders:[]});
+				return;
+			}
+			
+			res.json({code:200,count:_count,dayCount:_dayCount,orders:_order});
+			return;
+		//vip
+		}else{
+			let _dayCount = await Order.count({topSuperLevel:agentID,productsId:productsId,orderTime:{'$regex':_date}});
+			let _count = await Order.count({topSuperLevel:agentID,productsId:productsId});
+			let _order = await Order.find({topSuperLevel:agentID,productsId:productsId}).limit(20).skip(0).
+							   lean().populate('customerID','customerAvatarImg').
+							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
+			
+			if(!_order){
+				res.json({code:200,count:0,dayCount:0,orders:[]});
+				return;
+			}
+			
+			res.json({code:200,count:_count,dayCount:_dayCount,orders:_order});
 			return;
 		}
 		
-		res.json({code:200,count:_count,dayCount:_dayCount,orders:_order});
-		return;
 		
 	}catch(err){
 		logger.error(err);
@@ -40,22 +61,38 @@ router.post('/api/userData',async function(req,res){
 // 下拉加载数据
 router.post('/api/userDatas',async function(req,res){
 
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
 	let skipNum = req.body.num;
 	
 	try {
 		let _date = formatDate('yyyy-MM-dd');
-		let _order = await Order.find({openID:openID}).limit(10).skip(skipNum).
-						   lean().populate('customerID','customerAvatarImg').
-						   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
-		
-		if(!_order){
-			res.json({code:200,orders:[]});
+		let _agent = await Agent.findOne({_id:agentID}).select('openID isVIP').lean();
+		if(!_agent.isVIP){
+			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(10).skip(skipNum).
+							   lean().populate('customerID','customerAvatarImg').
+							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
+			
+			if(!_order){
+				res.json({code:200,orders:[]});
+				return;
+			}
+			
+			res.json({code:200,orders:_order});
+			return;
+		}else{
+			let _order = await Order.find({topSuperLevel:agentID,productsId:productsId}).limit(10).skip(skipNum).
+							   lean().populate('customerID','customerAvatarImg').
+							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
+			
+			if(!_order){
+				res.json({code:200,orders:[]});
+				return;
+			}
+			
+			res.json({code:200,orders:_order});
 			return;
 		}
-		
-		res.json({code:200,orders:_order});
-		return;
 		
 	}catch(err){
 		logger.error(err);
@@ -101,29 +138,14 @@ router.post('/api/saveMoney',async function(req,res){
 	let orderID = req.body.orderID;
 	let orderMoney = Number(req.body.money);
 	try{
-		let _order = await Order.findOne({_id:orderID}).select('openID orderMoney').lean();
-		Order.update({_id:orderID},{'$set':{'orderMoney':orderMoney}},function(err){
-			
-			if(err){
-				logger.error(err);
-				return res.json({code:500});
-			}
-			let value = orderMoney - _order.orderMoney;
-			Agent.update({openID:_order.openID},{$inc:{sales:value}},function(err){
-				
-				if(err){
-					logger.error(err);
-					return res.json({code:500});
-				}
-				
-				let data = {
-					code:200,
-				}
-				res.json(data)
-				return;	
-			})
-			
-		})
+		let _order = await Order.findOne({_id:orderID}).select('openID orderMoney productsId agentID').lean();
+		await Order.update({_id:orderID},{'$set':{'orderMoney':orderMoney}});
+		let value = orderMoney - _order.orderMoney;
+		console.log(value);
+		await Agent.update({openID:_order.openID},{$inc:{sales:value}});
+		await Child.update({agentID:_order.agentID,mainPromotionProducts:_order.productsId},{$inc:{sales:value}});
+		res.json({code:200})
+		return;	
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});
@@ -137,11 +159,12 @@ router.post('/api/getAccount',async function(req,res){
 	
 	let orderID = req.body.orderID;
 	
-	let _order = await Order.findOne({_id:orderID}).lean().select('agentID');
+	let _order = await Order.findOne({_id:orderID}).lean().select('agentID productsId');
 	
-	Agent.findOne({_id:_order.agentID})
+	Child.findOne({agentID:_order.agentID,mainPromotionProducts:_order.productsId})
 	.lean()
-	.select('superLevel bigSuperLevel agentNickname agentWechat')
+	.select('agentID superLevel bigSuperLevel')
+	.populate('agentID','agentNickname agentWechat')
 	.populate('superLevel','agentNickname agentWechat')
 	.populate('bigSuperLevel','agentNickname agentWechat')
 	.exec(function(err,ret){
@@ -149,7 +172,6 @@ router.post('/api/getAccount',async function(req,res){
 			logger.error(err);
 			return res.json({code:500});
 		}
-
 		res.json(ret);
 		
 	})	

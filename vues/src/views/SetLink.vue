@@ -25,8 +25,8 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/getlink',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/getlink',{agentID:agentID})
 				.then(function(res){
 					if(res.data.code===500){
 						that.$loading.hide();
@@ -44,7 +44,7 @@
 			saveLink(){
 				let that = this;
 				let url = this.$refs.link.value;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
 				let isURL = this.$Utils.checkURL(url);
 				if(!url){
 					this.$message.info('不能为空');
@@ -56,7 +56,7 @@
 				}
 				let linkData = {
 					productsLink:url,
-					openID:openID,
+					agentID:agentID,
 				}
 				this.axios.post('/api/savelink',linkData)
 				.then(function(res){

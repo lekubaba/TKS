@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Agent,Customer,Products,Order} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -11,60 +11,45 @@ let {formatDate} = require('../utils/DateUtil');
 
 
 
-router.get('/addproducts',function(req,res){
+router.get('/addproducts_15914132569',async function(req,res){
 	
-	let products = new Products({
-		_id:new mongoose.Types.ObjectId,
-		mode:'line',
-		openID:'oRMLE55mERNhqVWGmF6XtHKyGcwY',
-		productsName:'统客',
-		productsTitle:'统客分销系统',
-		promotionCover:'http://qiniu.tongkeapp.com/promotion_cover_04.png',
-		promotionQrcodeBackground:'http://qiniu.tongkeapp.com/agent_poster_04.png',
-		agentQrcodeBackground:'http://qiniu.tongkeapp.com/agent_poster_04.png',
-		promotionPoster:['http://qiniu.tongkeapp.com/agent_poster_04.png','http://qiniu.tongkeapp.com/promotion_cover_04.png'],
-		agentPoster:['http://qiniu.tongkeapp.com/promotion_cover_04.png','http://qiniu.tongkeapp.com/agent_poster_04.png'],
-		productsLink:'',
-		color:'#1476FE',
-		originalPrice:'6999',
-		activityPrice:'899',
-		summary:'统客分销一年服务',
-		squareImg:'http://qiniu.tongkeapp.com/tkImgLogo.png'
-	})
-	
-	products.save(function(err){
-		if(err) {
-			console.log(err);
-			res.send('系统出错了');
-			return;
-		}
-		Agent.update({openID:'oRMLE55mERNhqVWGmF6XtHKyGcwY'},{'$set':{'mainPromotionProducts':products._id},'$push':{'promotionProducts':products._id}},{upsert:true},function(err){
-			if(err) {
-				console.log(err);
-				res.send('系统出错lalalla');
-				return;
-			}
-			res.send('success')
-		})
-	})
-	
+	let openID = 'oRMLE55mERNhqVWGmF6XtHKyGcwY';
+	try {
+		let _agent = await Agent.findOne({openID:openID}).select('openID').lean();
+		let products = new Products();
+			products._id = "5f6c5caca687a1236af74620";
+			products.mode = 'link';
+			products.isAddLevel = false;
+			products.companyName = '乘法表科技';
+			products.openID = 'oRMLE55mERNhqVWGmF6XtHKyGcwY';
+			products.agentID = '5f6c5caca687a1236af74622';
+			products.bossPhoneNumber = '暂无';
+			products.bossWechat = '暂无';
+			products.productsName = '统客';
+			products.productsTitle = '统客分销系统';
+			products.promotionCover = '';
+			products.promotionQrcodeBackground = 'http://qiniu.tongkeapp.com/promotionqrcode.png';
+			products.agentQrcodeBackground = 'http://qiniu.tongkeapp.com/agentqrcode.png';
+			// products.promotionPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
+			products.promotionPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
+			// products.agentPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
+			products.agentPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
+			products.regularPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
+			products.productsLink = 'http://qiniu.tongkeapp.com/default_20201010_01.png';
+			products.color = '#1476FE';
+			products.originalPrice = 99999;
+			products.activityPrice = 10000;
+			products.summary = '暂无';
+			products.squareImg = 'http://qiniu.tongkeapp.com/tkImgLogo.png';
+			products.time = formatDate('yyyy-MM-dd hh:mm:ss');
+			products.timeStamp = new Date().getTime();
+		
+		await products.save();	
+		res.json({code:200});
+	}catch(err){
+		logger.error(err);
+		res.json({code:500});
+	}
 });
-
-router.get('/find',function(req,res){
-	Agent.find({openID:'oRMLE55mERNhqVWGmF6XtHKyGcwY'})
-	.lean()
-	.populate('promotionProducts')
-	.populate('mainPromotionProducts')
-	.exec(function(err,val){
-		if(err) {
-			console.log(err);
-			res.send('系统出错heiheihei');
-			return;
-		}
-		console.log(val);
-		res.send(val);
-	})
-})
-
 
 module.exports = router;

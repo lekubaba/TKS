@@ -4,7 +4,7 @@
 			<img class='poster-item' v-for='item in agentPoster' :src="item">
 		</div>
 		<div class='button-wraper'>
-			<div class='buy-tks' v-if='!isPromotion'>
+			<div class='buy-tks' v-if="productsID=='5f6c5caca687a1236af74620'">
 				<div class='buy-tk-protocol'>
 					<div class='buy-agree' :style="{backgroundColor:color}">√</div>
 					<div class='buy-agree-title'>我已阅读并同意</div>
@@ -17,7 +17,7 @@
 					<span class='buy-content'>申请免费开通</span>
 				</div>
 			</div>
-			<div class='tk-vips' v-if='isPromotion'>
+			<div class='tk-vips' v-if="productsID!='5f6c5caca687a1236af74620'">
 				<div class='buy-tk-protocol'>
 					<div class='buy-agree' :style="{backgroundColor:color}">√</div>
 					<div class='buy-agree-title'>新手必读</div>
@@ -26,7 +26,7 @@
 				<div class='tk-vips-items' data-url='lekubaba' :style="{backgroundColor:color}" :data-id='productsID'>
 					<div class='tk-vip-item' @click='toPromotionQrcode'>推广码</div>
 					<div class='tk-vip-item' @click='toAgentQrcode'>招商码</div>
-					<div class='tk-vip-item' @click='toContactBoss'>老板</div>
+					<div class='tk-vip-item' @click='toContactBoss'>客服</div>
 					<div class='tk-vip-item' @click='toMorePromotion'>更多</div>
 				</div>
 			</div>
@@ -49,26 +49,28 @@ export default {
 		}
 	},
 	mounted() {
-		
+
 	},
 	
 	methods:{
 		fetchData(){
 			let that = this;
 			let isPromotion = this.isPromotion;
-			let openID = this.userInfo.openID;
+			let agentID = this.userInfo.agentID;
 			let proData = {
 				isPromotion:isPromotion,
-				openID:openID,
+				agentID:agentID,
 			}
 			this.axios.post('/api/promotion',proData)
 				.then(function(res){
 					if(res.data.code===500){
-						this.$message.info('系统出错了');
+						that.$loading.hide()
+						that.$message.info('系统出错了');
 						return;
 					}
 					//如果代理还未参与推广，首页则展示统客介绍海报;
 					if(!isPromotion){
+						that.$loading.hide()
 						that.agentPoster = res.data.mainPromotionProducts.promotionPoster;
 						that.productsID = res.data.mainPromotionProducts._id;
 						window.localStorage.setItem('isVIP',res.data.isVIP);
@@ -76,6 +78,7 @@ export default {
 						window.localStorage.setItem('isAddLevel',res.data.mainPromotionProducts.isAddLevel);
 						return;
 					}else{
+						that.$loading.hide()
 						that.agentPoster = res.data.mainPromotionProducts.agentPoster;
 						that.productsID = res.data.mainPromotionProducts._id;
 						window.localStorage.setItem('isVIP',res.data.isVIP);
@@ -116,6 +119,7 @@ export default {
 
 	},
 	created() {
+		this.$loading.show()
 		this.fetchData();
 	},
 	computed:{

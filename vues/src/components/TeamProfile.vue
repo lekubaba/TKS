@@ -2,10 +2,14 @@
 	<div class="team">
 		<div class='profile'>
 			<div class='profile-item' v-for = 'item in team'>
-				<img class='profile-item-avatar' :src="item.agentAvatarImg">
+				<img class='profile-item-avatar' :src="item.agentID.agentAvatarImg">
 				<div class='profile-item-content'>
 					<div class='profile-item-text'>
-						<div class='profile-item-info'>{{item.agentNickname}} {{item.agentWechat}}   {{item.beAgentTime}}</div>
+						<div class='profile-item-info'>
+						{{item.agentID.agentNickname}} 
+						{{item.agentID.agentWechat}}   
+						{{item.time}}
+						</div>
 						<div class='profile-item-wraper'>
 							<div class='profile-item-left'>
 								<div class='profile-item-state' :style="{color:color}">总业绩：{{item.sales}}</div>

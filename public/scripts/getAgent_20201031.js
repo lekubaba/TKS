@@ -4,9 +4,9 @@ $(document).ready(function(){
 
 	$('.tk-vips-items').click(function(e){
 		
-		let openID = $('.tk-vips-items').attr('data-openid');
+		let agentID = $('.tk-vips-items').attr('data-agentid');
 		let productsId = $('.tk-vips-items').attr('data-productsid');
-		let uri = '/api/rigisteragentpage/'+openID+'/'+productsId;
+		let uri = '/api/rigisteragentpage/'+agentID+'/'+productsId;
 		
 		window.location.href= uri;
 		

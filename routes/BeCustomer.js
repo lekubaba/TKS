@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Agent,Customer,Products} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -7,6 +7,8 @@ var fs = require('fs');
 var path = require('path');
 var logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
+// let APPID = 'wx1d23498d4a220713'; //测试
+// let SECRET = '0cce653894d5654f1490bf4fd95af392'; //测试
 let APPID = 'wx1d23498d4a220713';
 let SECRET = '0cce653894d5654f1490bf4fd95af392';
 
@@ -15,11 +17,11 @@ let SECRET = '0cce653894d5654f1490bf4fd95af392';
 router.post('/api/customer/code',async function(req,res){
 	
 	let CODE = req.body.code; //code只能使用一次，获取一次客户后失效；
-	let _openID = req.body.openID;  //上级的openID;
+	let _agentID = req.body.agentID;  //上级的openID;
 	let _productsId = req.body.productsId; //上级推广的产品ID
 	let getTokenURL="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+SECRET+"&code="+CODE+"&grant_type=authorization_code";
 	
-	// 注意：是否要检测_openID,_productsId是否有错误,1.0默认不检测；
+	// 注意：是否要检测_agentID,_productsId是否有错误,1.0默认不检测；
 	
 	var options = {
 	    	headers: {"Connection": "close"},

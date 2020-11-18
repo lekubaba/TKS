@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let {Agent,Customer,Products,Order,Code} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 let express = require('express');
 let router = express.Router();
 let request = require('request');
@@ -15,9 +15,9 @@ router.post('/api/uploadToken',async function(req,res){
 	
 	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
 	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
 	
-	let promotionQr = await Products.findOne({openID:openID}).select('promotionQrcodeBackground').lean();
+	let promotionQr = await Products.findOne({agentID:agentID}).select('promotionQrcodeBackground').lean();
 
 	var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -39,9 +39,9 @@ router.post('/api/uploadTokenAgent',async function(req,res){
 	
 	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
 	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
 	
-	let agentQr = await Products.findOne({openID:openID}).select('agentQrcodeBackground').lean();
+	let agentQr = await Products.findOne({agentID:agentID}).select('agentQrcodeBackground').lean();
 
 	var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -63,10 +63,10 @@ router.post('/api/uploadTokenPPoster',async function(req,res){
 	
 	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
 	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
 	try{
-		let poster = await Products.findOne({openID:openID}).select('promotionPoster').lean();
-		await Products.update({openID:openID},{$set:{prePromotionPoster:[]}});
+		let poster = await Products.findOne({agentID:agentID}).select('promotionPoster').lean();
+		await Products.update({agentID:agentID},{$set:{prePromotionPoster:[]}});
 
 		var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -93,10 +93,10 @@ router.post('/api/uploadTokenAgentPoster',async function(req,res){
 	
 	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
 	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
 	try{
-		let poster = await Products.findOne({openID:openID}).select('agentPoster').lean();
-		await Products.update({openID:openID},{$set:{preAgentPoster:[]}});
+		let poster = await Products.findOne({agentID:agentID}).select('agentPoster').lean();
+		await Products.update({agentID:agentID},{$set:{preAgentPoster:[]}});
 
 		var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 
@@ -123,10 +123,10 @@ router.post('/api/uploadTokenRegularPoster',async function(req,res){
 	
 	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
 	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
-	let openID = req.body.openID;
+	let agentID = req.body.agentID;
 	try{
-		let poster = await Products.findOne({openID:openID}).select('regularPoster').lean();
-		await Products.update({openID:openID},{$set:{preRegularPoster:[]}});
+		let poster = await Products.findOne({agentID:agentID}).select('regularPoster').lean();
+		await Products.update({agentID:agentID},{$set:{preRegularPoster:[]}});
 
 		var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 

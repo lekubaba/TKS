@@ -56,7 +56,7 @@
 				let verificationCode = ref.verificationCode.value;
 				let companyName = ref.companyName.value;
 				let productsName = ref.productsName.value;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
 				
 				let isAgentName = this.$Utils.checkCName(agentName);
 				let isIdCard = this.$Utils.checkID(idCard);
@@ -86,7 +86,7 @@
 				if(isAgentName&&isIdCard&&isAgentWechat&&isVerificationCode&&isCompanyName&&isProductsName){
 					
 					let saveImformations = {
-						openID:openID,
+						agentID:agentID,
 						agentName:agentName,
 						idCard:idCard,
 						agentWechat:agentWechat,

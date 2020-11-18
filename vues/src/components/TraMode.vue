@@ -53,8 +53,8 @@ export default {
 		},
 		isConfirm(){
 			let that = this;
-			let openID = window.localStorage['openID'];
-			this.axios.post('/api/buildproductsmode',{openID:openID,mode:'tra'})
+			let agentID = window.localStorage['agentID'];
+			this.axios.post('/api/buildproductsmode',{agentID:agentID,mode:'tra'})
 			.then(function(res){
 				if(res.data.code===500){
 					that.$message.info('系统出错了');

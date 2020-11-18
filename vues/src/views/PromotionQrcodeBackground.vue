@@ -35,8 +35,8 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				that.axios.post('/api/uploadToken',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				that.axios.post('/api/uploadToken',{agentID:agentID})
 				.then(function(res){
 					that.$loading.hide();
 					that.uploadToken = res.data.uploadToken;
@@ -45,7 +45,7 @@
 			},
 			upFile(){
 				let that = this;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
 				var data = new FormData();
 				data.append('token', this.uploadToken);
 				data.append('file', this.$refs.imgLocal.files[0]);
@@ -61,7 +61,7 @@
 					if (res.status === 200) {
 						let url = 'http://images.tongkeapp.com/'+res.data.key;
 						that.exampleSrc = url;
-						that.axios.post('/api/savepromotionqrcode',{openID:openID,url:url})
+						that.axios.post('/api/savepromotionqrcode',{agentID:agentID,url:url})
 						.then(function(res1){
 							if(res1.data.code===500){
 								that.$message.info('系统出错了');

@@ -1,7 +1,6 @@
 <template>
 	<div class='more-promotion' :style="{backgroundColor:color}">
-		一个微信账号限推广一款产品
-		<p>推广其他产品，需要切换微信</p>
+		请前往设置里切换推广
 	</div>
 </template>
 

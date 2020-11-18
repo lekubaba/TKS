@@ -37,8 +37,8 @@
 			},
 			saveColorToDatabase(color){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/saveColorToDatabase',{openID:openID,color:color})
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/saveColorToDatabase',{agentID:agentID,color:color})
 				.then(function(res){
 					if(res.data.code===500){
 						that.$message.success('系统出错了');

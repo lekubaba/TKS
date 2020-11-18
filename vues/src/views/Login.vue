@@ -20,8 +20,9 @@ export default {
 	},
 	methods:{
 		Login(){
-			let redirect_url = 'http://feige.tongkeapp.com/#/login';
-			let APPID = 'wx1d23498d4a220713';
+			let redirect_url = 'http://wx.tongkeapp.com/#/login';
+			// let APPID = 'wx1d23498d4a220713'; //测试
+			let APPID = 'wx9e1db1b2a18b4a3d';
 			redirect_url = this.$Utils.encodeURL(redirect_url);
 			window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 		},
@@ -40,22 +41,24 @@ export default {
 						}
 						// 测试的时候,得到code过了5分钟，过期
 						if(res.data.code===900){
-							return window.location.href = 'http://feige.tongkeapp.com/#/login';
+							return window.location.href = 'http://wx.tongkeapp.com/#/login';
 						}
 						if(res.data.code===200){
 							// 将服务端响应的数据存储到Storage,并记录登陆状态；
 							window.localStorage.setItem('agentAvatarImg',res.data.agentAvatarImg);
 							window.localStorage.setItem('agentNickname',res.data.agentNickname);
 							window.localStorage.setItem('isPromotion',res.data.isPromotion);
+							window.localStorage.setItem('isAddLevel',res.data.isAddLevel);
 							window.localStorage.setItem('isVIP',res.data.isVIP);
 							window.localStorage.setItem('color',res.data.color);
-							window.localStorage.setItem('openID',res.data.openID);
+							window.localStorage.setItem('agentID',res.data.agentID);
+							window.localStorage.setItem('productsId',res.data.productsId);
 							window.localStorage.setItem('isLogin',true);
 							let fullPath = window.localStorage['fullPath'];
 							if(!fullPath){
-								return	window.location.href = 'http://feige.tongkeapp.com';
+								return	window.location.href = 'http://wx.tongkeapp.com';
 							}
-							window.location.href = 'http://feige.tongkeapp.com/#'+fullPath;
+							window.location.href = 'http://wx.tongkeapp.com/#'+fullPath;
 							window.localStorage.removeItem('fullPath');
 						}
 						

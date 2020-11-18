@@ -64,8 +64,9 @@ export default {
 	methods:{
 		fetchData(){
 			let that = this;
-			let openID=this.userInfo.openID;
-			this.axios.post('/api/userData',{openID:openID})
+			let agentID=this.userInfo.agentID;
+			let productsId = window.localStorage['productsId'];
+			this.axios.post('/api/userData',{agentID:agentID,productsId:productsId})
 				.then(function(response){
 					that.$loading.hide();
 					if(response.data.code===500){
@@ -90,14 +91,15 @@ export default {
 		},
 		scroll() {
 			let that = this;
-			let openID = window.localStorage['openID'];
+			let agentID = window.localStorage['agentID'];
+			let productsId = window.localStorage['productsId'];
 			window.onscroll = () => {
 				// 距离底部100px时加载一次
 				let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 100
 				if (bottomOfWindow&&that.isLoading == false) {
 					that.isLoading = true;
 					let count = that.customerList.length;
-					that.axios.post('/api/userDatas',{openID:openID,num:count})
+					that.axios.post('/api/userDatas',{agentID:agentID,productsId:productsId,num:count})
 					.then(function(res){
 						if(res.data.code===500){
 							that.$message.info('系统故障了');

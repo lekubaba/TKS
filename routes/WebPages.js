@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Agent,Customer,Products,Order} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -10,27 +10,26 @@ let {formatDate} = require('../utils/DateUtil');
 
 // 到代理页面
 
-router.get('/api/getagentpage/:openID/:productsId',async function(req,res){
+router.get('/api/getagentpage/:agentID/:productsId',async function(req,res){
 	
 	// 需要检测传过来的ID合法性；
 	let title = '限时免费代理';
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try {
-		let isAgent = await Agent.findOne({openID:openID}).lean();
-		let isProducts = await Products.findOne({_id:productsId}).lean();
+		let isAgent = await Agent.findOne({_id:agentID}).select('openID').lean();
+		let isProducts = await Products.findOne({_id:productsId}).select('agentPoster color').lean();
 		
 		if(!isAgent||!isProducts){
 			return res.json({code:600});
 		}
 		
-		let IMG = isProducts.agentPoster;
 		let data = {
 			title:title,
-			Img:IMG,
+			Img:isProducts.agentPoster,
 			color:isProducts.color,
-			openID:openID,
+			agentID:agentID,
 			productsId:productsId
 		}
 		return res.render('getAgentPage',data);
@@ -44,25 +43,24 @@ router.get('/api/getagentpage/:openID/:productsId',async function(req,res){
 
 // 到代理注册页面
 
-router.get('/api/rigisteragentpage/:openID/:productsId',async function(req,res){
+router.get('/api/rigisteragentpage/:agentID/:productsId',async function(req,res){
 	
 	// 需要检测传过来的ID合法性；
 	let title = '限时免费代理';
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try{
-		let isAgent = await Agent.findOne({openID:openID}).lean();
-		let isProducts = await Products.findOne({_id:productsId}).lean();
+		let isAgent = await Agent.findOne({_id:agentID}).select('openID').lean();
+		let isProducts = await Products.findOne({_id:productsId}).select('companyName productsName color').lean();
 		
 		if(!isAgent||!isProducts){
 			return res.json({code:600});
 		}
 			
 		let data = {
-			
 			title:title,
-			openID:openID,
+			agentID:agentID,
 			productsId:productsId,
 			color:isProducts.color,
 			companyName:isProducts.companyName,
@@ -81,14 +79,14 @@ router.get('/api/rigisteragentpage/:openID/:productsId',async function(req,res){
 
 
 // 到推广页面
-router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
+router.get('/api/getcustomerpage/:agentID/:productsId',async function(req,res){
 	
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try {
 		// 需要检测传过来的ID合法性；
-		let _agent = await Agent.findOne({openID:openID}).lean();
+		let _agent = await Agent.findOne({_id:agentID}).lean();
 		let _products = await Products.findOne({_id:productsId}).lean();
 		
 		if(!_agent||!_products){
@@ -103,7 +101,7 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 				title:'限时活动',
 				Img:IMG,
 				color:_products.color,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 			}
 			return res.render('getCustomerPage_tra',linkData);
@@ -114,7 +112,7 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 				title:'限时申请',
 				Img:IMG,
 				color:_products.color,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 				productsLink:_products.productsLink,	
 			}
@@ -124,7 +122,7 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 				title:'限时抢购',
 				Img:IMG,
 				color:_products.color,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 			}
 
@@ -134,7 +132,7 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 				title:'统客分销系统',
 				Img:IMG,
 				color:_products.color,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 			}
 			return res.render('getCustomerPage_tongke',linkData);
@@ -143,7 +141,7 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 				title:'限时活动',
 				Img:IMG,
 				color:_products.color,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 			}
 			return res.render('getCustomerPage_fictitious',linkData);
@@ -156,14 +154,14 @@ router.get('/api/getcustomerpage/:openID/:productsId',async function(req,res){
 			
 })
 
-router.get('/api/paypage_line/:openID/:productsId',async function(req,res){
+router.get('/api/paypage_line/:agentID/:productsId',async function(req,res){
 	
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try {
 		// 需要检测传过来的ID合法性；
-		let _agent = await Agent.findOne({openID:openID}).lean();
+		let _agent = await Agent.findOne({_id:agentID}).lean();
 		let _products = await Products.findOne({_id:productsId}).lean();
 		
 		if(!_agent||!_products){
@@ -173,7 +171,7 @@ router.get('/api/paypage_line/:openID/:productsId',async function(req,res){
 		let linkData = {
 			title:'收货信息并支付',
 			color:_products.color,
-			openID:openID,
+			agentID:agentID,
 			productsId:productsId,
 		}
 		
@@ -188,14 +186,14 @@ router.get('/api/paypage_line/:openID/:productsId',async function(req,res){
 })
 
 
-router.get('/api/paypage_tongke/:openID/:productsId',async function(req,res){
+router.get('/api/paypage_tongke/:agentID/:productsId',async function(req,res){
 	
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try {
 		// 需要检测传过来的ID合法性；
-		let _agent = await Agent.findOne({openID:openID}).lean();
+		let _agent = await Agent.findOne({_id:agentID}).lean();
 		let _products = await Products.findOne({_id:productsId}).lean();
 		
 		if(!_agent||!_products){
@@ -205,7 +203,7 @@ router.get('/api/paypage_tongke/:openID/:productsId',async function(req,res){
 		let linkData = {
 			title:'确认并支付',
 			color:'#1476FE',
-			openID:openID,
+			agentID:agentID,
 			productsId:productsId,
 		}
 		
@@ -218,14 +216,14 @@ router.get('/api/paypage_tongke/:openID/:productsId',async function(req,res){
 })
 
 
-router.get('/api/paypage_fictitious/:openID/:productsId',async function(req,res){
+router.get('/api/paypage_fictitious/:agentID/:productsId',async function(req,res){
 	
-	let openID = req.params.openID;
+	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	
 	try {
 		// 需要检测传过来的ID合法性；
-		let _agent = await Agent.findOne({openID:openID}).lean();
+		let _agent = await Agent.findOne({_id:agentID}).lean();
 		let _products = await Products.findOne({_id:productsId}).lean();
 		
 		if(!_agent||!_products){
@@ -235,7 +233,7 @@ router.get('/api/paypage_fictitious/:openID/:productsId',async function(req,res)
 		let linkData = {
 			title:'填写信息并支付',
 			color:_products.color,
-			openID:openID,
+			agentID:agentID,
 			productsId:productsId,
 		}
 		
@@ -250,6 +248,11 @@ router.get('/api/paypage_fictitious/:openID/:productsId',async function(req,res)
 
 router.get('/api/tkprotocol',function(req,res){
 	return res.render('tkProtocol');
+})
+
+
+router.get('/api/followwechat',function(req,res){
+	return res.render('followWechat');
 })
 
 

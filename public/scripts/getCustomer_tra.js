@@ -89,12 +89,12 @@ $(document).ready(function(){
 		// 有code，则说明用户点击了申请按钮
 		}else{
 			
-			let openID = $('.mask-confirm').attr('data-openid');
+			let agentID = $('.mask-confirm').attr('data-agentid');
 			let productsId = $('.mask-confirm').attr('data-productsid');
 			
 			let options = {
 				code:code,
-				openID:openID,
+				agentID:agentID,
 				productsId:productsId,
 			}
 			
@@ -129,7 +129,8 @@ $(document).ready(function(){
 		}
 		
 		let redirect_url = window.location.href;
-		let APPID = 'wx1d23498d4a220713';
+		// let APPID = 'wx1d23498d4a220713'; //测试
+		let APPID = 'wx9e1db1b2a18b4a3d';
 		redirect_url = encodeURIComponent(redirect_url);
 		window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 			
@@ -189,7 +190,7 @@ $(document).ready(function(){
 	$('.mask-confirm').click(function(e){
 		
 		let customerID = window.localStorage['customerID'];
-		let openID = $('.mask-confirm').attr('data-openid');
+		let agentID = $('.mask-confirm').attr('data-agentid');
 		let productsId = $('.mask-confirm').attr('data-productsid');
 		let alicode = $('.mask-confirm').attr('data-code');
 		
@@ -220,7 +221,7 @@ $(document).ready(function(){
 		
 		let infoData = {
 			customerID:customerID, //用户自身ID,
-			openID:openID, //订单归属人openID
+			agentID:agentID, //订单归属人agentID
 			productsId:productsId, //客户申请了那个产品
 			customerName:customerName, //客户名字
 			customerPhoneNumber:customerPhoneNumber, //客户手机号

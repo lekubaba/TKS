@@ -1,8 +1,8 @@
 <template>
 	<div class='contact-boss' :style="{backgroundColor:color}">
 		<h1>联系我们</h1>
-		<h3>老板电话：{{bossPhoneNumber}}</h3>
-		<h3>老板微信：{{bossWechat}}</h3>
+		<h3>客服电话：{{bossPhoneNumber}}</h3>
+		<h3>客服微信：{{bossWechat}}</h3>
 		<h4>如遇到推广、佣金等问题，请联系我。</h4>
 	</div>
 </template>

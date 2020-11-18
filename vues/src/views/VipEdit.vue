@@ -66,8 +66,8 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/getmode',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/getmode',{agentID:agentID})
 				.then(function(res){
 					if(res.data.code===500){
 						that.$loading.hide()

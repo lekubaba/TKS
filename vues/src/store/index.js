@@ -9,7 +9,8 @@ export default new Vuex.Store({
 			agentName:localStorage['agentNickname']?localStorage['agentNickname']:'',
 			agentAvatarImg:localStorage['agentAvatarImg']?localStorage['agentAvatarImg']:'',
 			isVIP:localStorage['isVIP']==='false'?false:true,
-			openID:localStorage['openID']?localStorage['openID']:'',
+			agentID:localStorage['agentID']?localStorage['agentID']:'',
+			productsId:localStorage['productsId']?localStorage['productsId']:'',
 		},
 		color:localStorage['color']?localStorage['color']:'#1476FE',
 		getAgentEndTime:'2020-10-01 00:59:59',
@@ -18,6 +19,18 @@ export default new Vuex.Store({
 		
 	},
 	mutations: {
+		updateVIP(state,isVIP){
+			state.userInfo.isVIP = isVIP;
+		},
+		updatePromotion(state,isPromotion){
+			state.isPromotion = isPromotion;
+		},
+		updateLevel(state,isAddLevel){
+			state.isAddLevel = isAddLevel;
+		},
+		updateColor(state,color){
+			state.color = color;
+		}
 	},
 	actions: {
 	},

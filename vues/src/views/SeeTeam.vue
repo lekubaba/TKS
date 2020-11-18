@@ -39,10 +39,12 @@
 		methods:{
 			getData(){
 				let that = this;
-				let openID = window.localStorage['openID'];
-				this.axios.post('/api/seeteam',{openID:openID})
+				let agentID = window.localStorage['agentID'];
+				let productsId = window.localStorage['productsId'];
+				this.axios.post('/api/seeteam',{agentID:agentID,productsId:productsId})
 				.then(function(res){
 					if(res.data.code==500){
+						that.$loading.hide();
 						that.$message.info('系统故障了');
 						return;
 					}
@@ -53,7 +55,8 @@
 			},
 			scroll() {
 				let that = this;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
+				let productsId = window.localStorage['productsId'];
 				
 				
 				window.onscroll = () => {
@@ -67,7 +70,7 @@
 						that.isLoading = true;
 						let count = that.teamProfile.length;
 						let level = that.level;
-						that.axios.post('/api/seeteamplus',{openID:openID,num:count,level:level})
+						that.axios.post('/api/seeteamplus',{agentID:agentID,productsId:productsId,num:count,level:level})
 						.then(function(res){
 							if(res.data.code===500){
 								that.$message.info('系统故障了');
@@ -94,10 +97,12 @@
 				this.level = newQuery;
 				that.isLoading = false;
 				that.isLoading2 = true;
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
+				let productsId = window.localStorage['productsId'];
 				let data = {
 					level:newQuery,
-					openID:openID
+					agentID:agentID,
+					productsId:productsId,
 				}
 				this.axios.post('/api/seeteamlevel',data)
 				.then(function(res){

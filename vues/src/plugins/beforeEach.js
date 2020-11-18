@@ -8,7 +8,7 @@ function beforeEachGlobal(toPath,fromPath,nextStep){
 		let isLogin = window.localStorage.getItem('isLogin');
 		if (toPath.name !== 'Login' && !isLogin) {
 			let fullPath = toPath.fullPath;
-			if(fullPath==='/usersetup'){
+			if(fullPath==='/usersetup'||fullPath==='/mainpromotion'){
 				window.localStorage.setItem('fullPath','/');
 				nextStep({path: '/login'});
 				return;

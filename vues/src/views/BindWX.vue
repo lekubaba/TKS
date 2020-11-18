@@ -29,9 +29,9 @@
 		},
 		methods:{
 			getData(){
-				let openID = window.localStorage['openID'];
+				let agentID = window.localStorage['agentID'];
 				let that = this;
-				this.axios.post('/api/getwechat',{openID:openID})
+				this.axios.post('/api/getwechat',{agentID:agentID})
 					.then(function(res){
 						if(res.data.code===500){
 							that.$loading.hide()
@@ -54,7 +54,7 @@
 				let wechat = this.$refs.wechat.value;/* 获取输入值 */
 				let isAgentName = this.$Utils.checkCName(agentName);/* 检测中文名合法 */
 				let isWechat = this.$Utils.checkTel(wechat);/* 检测微信手机号是否合法 */
-				let openID = window.localStorage['openID']; //当前代理的OPENID
+				let agentID = window.localStorage['agentID']; //当前代理的OPENID
 				
 				if(!agentName|| !wechat){
 					this.$message.info('内容不能为空');
@@ -66,7 +66,7 @@
 				}
 				
 				if(isAgentName && isWechat){
-					let weixin = {openID:openID,agentName:agentName,agentWechat:wechat};
+					let weixin = {agentID:agentID,agentName:agentName,agentWechat:wechat};
 					this.axios.post('/api/saveWechat',weixin)
 						.then(function(res){
 							if(res.data.code===500){

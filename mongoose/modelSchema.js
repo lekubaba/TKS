@@ -2,6 +2,20 @@ var mongoose = require('./connect.js');
 
 var Schema = mongoose.Schema;
 
+var ChildSchema = new Schema({
+		_id:{type:Schema.Types.ObjectId},
+		isVIP:Boolean,
+		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products'},
+		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
+		bigSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
+		topSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
+		agentID:{type:Schema.Types.ObjectId,ref:'Agent'},
+		openID:{type:String,index:true},
+		unionID:{type:String,index:true},
+		sales:{type:Number,default:0},
+		time:String,
+		timeStamp:String,
+},{versionKey:false})
 
 var AgentSchema = new Schema({
 		_id:{type:Schema.Types.ObjectId},
@@ -15,6 +29,7 @@ var AgentSchema = new Schema({
 		agentCity:String,
 		idCard:String,//注册非必须
 		isPromotion:Boolean,
+		subAPI:{type:Schema.Types.ObjectId,ref:'Child'},//代理推广产品的接口
 		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products'},
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
 		bigSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
@@ -54,6 +69,7 @@ var ProductsSchema = new Schema({
 		isAddLevel:Boolean,//是否增加了层级，true,false
 		companyName:String,
 		openID:String,
+		agentID:{type:Schema.Types.ObjectId,ref:'Agent'},
 		bossPhoneNumber:String,
 		bossWechat:String,
 		productsName:String,
@@ -118,12 +134,14 @@ var CodeSchema = new Schema({
 	code:Number,
 },{versionKey:false});
 
+var Child = mongoose.model('Child',ChildSchema,'child');
 var Agent = mongoose.model('Agent',AgentSchema,'agent');
 var Customer = mongoose.model('Customer',CustomerSchema,'customer');
 var Products = mongoose.model('Products',ProductsSchema,'products');
 var Order = mongoose.model('Order',OrderSchema,'order');
 var Code = mongoose.model('Code',CodeSchema,'code');
 
+module.exports.Child = Child;
 module.exports.Agent = Agent;
 module.exports.Customer = Customer;
 module.exports.Products = Products;

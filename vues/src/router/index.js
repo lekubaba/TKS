@@ -10,6 +10,7 @@ import FeedBack from '../views/FeedBack.vue';
 import SeeSales from '../views/SeeSales.vue';
 import SeeTeam from '../views/SeeTeam.vue';
 import BindWX from '../views/BindWX.vue';
+import MainPromotion from '../views/MainPromotion.vue';
 import UserSetup from '../views/UserSetup.vue';
 import VipEdit from '../views/VipEdit.vue';
 import ChoiseMode from '../views/ChoiseMode.vue';
@@ -193,6 +194,14 @@ const routes = [
 		component:BindWX,
 		meta:{
 			title:'修改微信',
+			requiresAuth:true
+		}
+	},{
+		path:'/mainpromotion',
+		name:'MainPromotion',
+		component:MainPromotion,
+		meta:{
+			title:'我的全部推广',
 			requiresAuth:true
 		}
 	},{

@@ -3,16 +3,10 @@
     <head>
         <meta charset="utf-8">
         <title><%= title%></title>
-        <link rel="shortcut icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
-        <link rel="bookmark" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
-        <link rel="icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="apple-touch-icon" href="http://qiniu.tongkeapp.com/tkImgLogo.png">
-        <meta name="apple-mobile-web-app-title" content="代理">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="white">
-        <link rel="stylesheet" href="http://192.168.0.105:8099/styles/registerAgent.css">
+        <link rel="stylesheet" href="http://qiniu.tongkeapp.com/registerAgent_20201028.css">
+		<script src='http://qiniu.tongkeapp.com/PreventAttacks_20201028.js'></script>	
     </head>
     <body>
 		<div id='register-agent'>
@@ -33,10 +27,10 @@
 				<div class='remind'>微信号便于您与上下级推荐人沟通联系，获得/提供辅导帮助，请填写正确账号</div>
 			</div>
 			<div class='register-f'>
-				<div class='register-confirm' style="background-color:<%= color%>" data-openid = "<%= openID%>" data-productsid="<%= productsId%>">注册并登陆</div>
+				<div class='register-confirm' style="background-color:<%= color%>" data-agentid = "<%= agentID%>" data-productsid="<%= productsId%>">注册并登陆</div>
 			</div>
 		</div>
     </body>
-    <script src='http://192.168.0.105:8099/scripts/jquery.min.js'></script>
-    <script src='http://192.168.0.105:8099/scripts/registerAgent.js'></script>
+    <script src='http://qiniu.tongkeapp.com/jquery.min.js'></script>
+    <script src='http://qiniu.tongkeapp.com/registerAgent.js'></script>
 </html>

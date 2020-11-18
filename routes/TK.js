@@ -11,7 +11,7 @@ let {formatDate} = require('../utils/DateUtil');
 /*首页*/
 
 router.get('/',function(req,res){
-	res.render('tkWebSiteHome',{title:'将裂变的力量赋能销售'});
+	res.render('tongkeapp');
 })
 
 module.exports = router;
