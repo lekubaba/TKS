@@ -61,8 +61,9 @@ export default {
 			this.axios.post('/api/usercenter',{agentID:agentID})
 			.then(function(res){
 				if(res.data.code==500){
-					that.$message.info('系统故障');
 					that.$loading.hide();
+					that.$message.info('系统故障');
+					window.localStorage.clear();
 				}else{
 					that.agents = res.data.agents;
 					that.sales = res.data.sales;

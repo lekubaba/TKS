@@ -22,7 +22,7 @@
 								<div class='profile-item-state' :style="{color:color}">金额：{{item.orderMoney?item.orderMoney:'暂无'}}</div>
 							</div>
 							<div class='button-vip' :data-id='item._id' :data-mode='item.mode'>
-								<div class='profile-item-button' @click='progressing' :style="{backgroundColor:color}" v-if="item.mode=='tra'" >进度</div>
+								<div class='profile-item-button' @click='progressing' :style="{backgroundColor:color}" v-if="item.mode=='tra'||item.mode=='link'" >进度</div>
 								<div class='profile-item-button-1' @click='feedback' v-if='userInfo.isVIP' :style="{backgroundColor:color}" >反馈</div>
 							</div>
 						</div>
@@ -71,6 +71,7 @@ export default {
 					that.$loading.hide();
 					if(response.data.code===500){
 						that.$message.info('系统故障了');
+						window.localStorage.clear();
 						return;
 					}
 					that.customerList = response.data.orders;

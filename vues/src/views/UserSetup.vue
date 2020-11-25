@@ -1,6 +1,6 @@
 <template>
 	<div class='user-set'>
-		<div class='set-info set-line' @click='toAboutUs'><span class='set-span-a'>关于统客</span><span class='set-span-b'>〉</span></div>
+		<div class='set-info set-line' @click='toAboutUs'><span class='set-span-a'>关于拿钱</span><span class='set-span-b'>〉</span></div>
 		<div class='set-info' @click='toStatementComplaint'><span class='set-span-a'>申明投诉</span><span class='set-span-b'>〉</span></div>
 		<div class='login-out' @click='LoginOut'>退出登陆</div>
 	</div>

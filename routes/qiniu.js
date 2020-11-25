@@ -10,11 +10,10 @@ let {formatDate} = require('../utils/DateUtil');
 let {checkOpenID} = require('../utils/CheckID');
 let {MNS} = require('../utils/MNS');
 let qiniu = require('qiniu');
+let {accessKey,secretKey} = require('../config');
 
 router.post('/api/uploadToken',async function(req,res){
 	
-	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
-	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
 	let agentID = req.body.agentID;
 	
 	let promotionQr = await Products.findOne({agentID:agentID}).select('promotionQrcodeBackground').lean();
@@ -37,8 +36,6 @@ router.post('/api/uploadToken',async function(req,res){
 
 router.post('/api/uploadTokenAgent',async function(req,res){
 	
-	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
-	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
 	let agentID = req.body.agentID;
 	
 	let agentQr = await Products.findOne({agentID:agentID}).select('agentQrcodeBackground').lean();
@@ -61,8 +58,6 @@ router.post('/api/uploadTokenAgent',async function(req,res){
 
 router.post('/api/uploadTokenPPoster',async function(req,res){
 	
-	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
-	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
 	let agentID = req.body.agentID;
 	try{
 		let poster = await Products.findOne({agentID:agentID}).select('promotionPoster').lean();
@@ -91,8 +86,6 @@ router.post('/api/uploadTokenPPoster',async function(req,res){
 
 router.post('/api/uploadTokenAgentPoster',async function(req,res){
 	
-	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
-	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
 	let agentID = req.body.agentID;
 	try{
 		let poster = await Products.findOne({agentID:agentID}).select('agentPoster').lean();
@@ -121,8 +114,6 @@ router.post('/api/uploadTokenAgentPoster',async function(req,res){
 
 router.post('/api/uploadTokenRegularPoster',async function(req,res){
 	
-	let accessKey = 'e7h6DSy7QbFL4vZJ1GSPnLST5rWITlft_2Rq3W0k';
-	let secretKey = 'poltBuskb_MljHT-vdOFRQs7pFV0mhVsR4G_juil';
 	let agentID = req.body.agentID;
 	try{
 		let poster = await Products.findOne({agentID:agentID}).select('regularPoster').lean();

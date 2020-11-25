@@ -1,7 +1,6 @@
 <template>
 	<div id='login'>
-		<img class='logo' src="http://qiniu.tongkeapp.com/tkImgLogo.png">
-		<div class='login-title'>统客</div>
+		<img class='logo' src="http://qiniu.tongkeapp.com/nq_logo_circl.png">
 		<img class='mission' src="http://qiniu.tongkeapp.com/tkMission_01.png">
 		<div class='login-button' @click='Login'>微信登陆</div>
 	</div>
@@ -20,9 +19,8 @@ export default {
 	},
 	methods:{
 		Login(){
-			let redirect_url = 'http://wx.tongkeapp.com/#/login';
-			// let APPID = 'wx1d23498d4a220713'; //测试
-			let APPID = 'wx9e1db1b2a18b4a3d';
+			let redirect_url = this.$baseURL+'/#/login';
+			let APPID = this.$APPID;
 			redirect_url = this.$Utils.encodeURL(redirect_url);
 			window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 		},
@@ -41,7 +39,7 @@ export default {
 						}
 						// 测试的时候,得到code过了5分钟，过期
 						if(res.data.code===900){
-							return window.location.href = 'http://wx.tongkeapp.com/#/login';
+							return window.location.href = that.$baseURL+'/#/login';
 						}
 						if(res.data.code===200){
 							// 将服务端响应的数据存储到Storage,并记录登陆状态；
@@ -56,9 +54,9 @@ export default {
 							window.localStorage.setItem('isLogin',true);
 							let fullPath = window.localStorage['fullPath'];
 							if(!fullPath){
-								return	window.location.href = 'http://wx.tongkeapp.com';
+								return	window.location.href = that.$baseURL;
 							}
-							window.location.href = 'http://wx.tongkeapp.com/#'+fullPath;
+							window.location.href = that.$baseURL+'/#'+fullPath;
 							window.localStorage.removeItem('fullPath');
 						}
 						

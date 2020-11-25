@@ -29,7 +29,7 @@ export default {
 			// src:'http://qiniu.tongkeapp.com/agent_poster_04.png',
 			src:'',
 			src2:'http://qiniu.tongkeapp.com/tkicon.png',
-			agentUrl:'http://wx.tongkeapp.com'+'/api/getagentpage/'+localStorage['agentID']+'/'+this.$route.query.id,
+			agentUrl:this.$baseURL+'/api/getagentpage/'+localStorage['agentID']+'/'+this.$route.query.id,
 			imgUrl:'',
 			imgload:false,
 			px10:10,

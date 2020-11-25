@@ -8,13 +8,10 @@
 				<div class='buy-tk-protocol'>
 					<div class='buy-agree' :style="{backgroundColor:color}">√</div>
 					<div class='buy-agree-title'>我已阅读并同意</div>
-					<div class='buy-agree-protocol' @click='toUserProtocol' :style="{color:color}">《统客使用协议》</div>
+					<div class='buy-agree-protocol' @click='toUserProtocol' :style="{color:color}">《拿钱使用协议》</div>
 				</div>
-				<div class='buy-tk-pay' :style="{backgroundColor:color}" @click='buyTongke'>
-					<span class='buy-underline'>¥29999</span>
-					<span class='buy-money-renminbi'>¥</span>
-					<span class='buy-money'>0.0</span>
-					<span class='buy-content'>申请免费开通</span>
+				<div class='buy-tk-pay' :style="{backgroundColor:color}" @click='JoinNaqian'>
+					<span class='buy-content'>我有产品，我要入驻</span>
 				</div>
 			</div>
 			<div class='tk-vips' v-if="productsID!='5f6c5caca687a1236af74620'">
@@ -35,7 +32,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState,mapMutations} from 'vuex';
 export default {
 	name: 'Promotion',
 	components: {
@@ -49,11 +46,12 @@ export default {
 		}
 	},
 	mounted() {
-
+		
 	},
 	
 	methods:{
 		fetchData(){
+			console.log(this.$baseURL)
 			let that = this;
 			let isPromotion = this.isPromotion;
 			let agentID = this.userInfo.agentID;
@@ -64,9 +62,16 @@ export default {
 			this.axios.post('/api/promotion',proData)
 				.then(function(res){
 					if(res.data.code===500){
-						that.$loading.hide()
+						that.$loading.hide();
 						that.$message.info('系统出错了');
+						window.localStorage.clear();
 						return;
+					}
+					let payload = {
+						isVIP :res.data.isVIP,
+						isPromotion:res.data.isPromotion,
+						color:res.data.mainPromotionProducts.color,
+						isAddLevel:res.data.mainPromotionProducts.isAddLevel,
 					}
 					//如果代理还未参与推广，首页则展示统客介绍海报;
 					if(!isPromotion){
@@ -75,7 +80,9 @@ export default {
 						that.productsID = res.data.mainPromotionProducts._id;
 						window.localStorage.setItem('isVIP',res.data.isVIP);
 						window.localStorage.setItem('isPromotion',res.data.isPromotion);
+						window.localStorage.setItem('color',res.data.mainPromotionProducts.color);
 						window.localStorage.setItem('isAddLevel',res.data.mainPromotionProducts.isAddLevel);
+						that.updater(payload)
 						return;
 					}else{
 						that.$loading.hide()
@@ -83,12 +90,14 @@ export default {
 						that.productsID = res.data.mainPromotionProducts._id;
 						window.localStorage.setItem('isVIP',res.data.isVIP);
 						window.localStorage.setItem('isPromotion',res.data.isPromotion);
+						window.localStorage.setItem('color',res.data.mainPromotionProducts.color);
 						window.localStorage.setItem('isAddLevel',res.data.mainPromotionProducts.isAddLevel);
+						that.updater(payload)
 					}
 				})
 		},
-		buyTongke(){
-			this.$message.info('内测阶段');
+		JoinNaqian(){
+			this.$router.push({name:'Join'});
 		},
 		toUserProtocol(){
 			this.$router.push({name:'UserProtocol'});
@@ -116,6 +125,10 @@ export default {
 		toMorePromotion(e){
 			this.$router.push({name:'MorePromotion'});
 		},
+		...mapMutations([
+			'updater',
+			'setVIP',
+		]),
 
 	},
 	created() {

@@ -1,7 +1,7 @@
 <template>
 	<div class='union-pay'>
 		<div class='open-top'>
-			<p>支付功能主要适用于单品分销时用户线上支付的情况，如果你只是用统客来分销获客的传统销售，那么你不需要开通此功能，
+			<p>支付功能主要适用于单品分销时用户线上支付的情况，如果你只是用拿钱来分销获客的传统销售，那么你不需要开通此功能，
 			并且你开通了支付，意味着传统获客的方式将被替换。</p>
 		</div>
 		<div class='add-pay' :style="{backgroundColor:this.$store.state.color}">
@@ -20,7 +20,14 @@
 		},
 		created() {
 			
-		}
+		},
+		beforeRouteEnter (to, from, next) {
+		  if(window.localStorage['isVIP']=="true"){
+			  next();
+			  return;
+		  }
+		  next({name:"Promotion"});
+		},
 	}
 </script>
 

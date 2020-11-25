@@ -1,7 +1,6 @@
 <template>
 	<div id='about-us'>
-		<img src="http://qiniu.tongkeapp.com/tkPureLogo_01.png">
-		<div class='login-title'>统客</div>
+		<img src="http://qiniu.tongkeapp.com/nq_logo_nobackground.png">
 		<div class='copyright'>湖南乘法表科技有限公司 版权所有</div>
 	</div>
 </template>

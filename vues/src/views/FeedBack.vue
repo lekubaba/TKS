@@ -15,7 +15,7 @@
 				<div class='problem' :style="{color:color}">客户是否已签约？</div>
 				<div class='confirm' @click='isSignUp' data-signed='signed' :style="{backgroundColor:color}" v-if='!customerInfo.signed'>已签约</div>
 			</div>
-			<div class='iscontact' v-if="mode=='tra'||mode=='link'">
+			<div class='iscontact'>
 				<div class='problem' :style="{color:color}">订单金额为多少？</div>
 				<div class='confirm' @click='enterTheAmount' :style="{backgroundColor:color}">输入订单金额</div>
 			</div>
@@ -23,7 +23,7 @@
 				<div class='problem' :style="{color:color}">给代理发佣金</div>
 				<div class='confirm' @click='Commission' :style="{backgroundColor:color}">获取账户</div>
 			</div>
-			<div class='iscontact' v-if="mode=='tra'">
+			<div class='iscontact'>
 				<div class='problem' :style="{color:color}">佣金是否已发放？</div>
 				<div class='confirm' @click='isCommission' data-issued='issued' :style="{backgroundColor:color}" v-if='!customerInfo.issued'>佣金已发放</div>
 			</div>
@@ -117,8 +117,16 @@ export default {
 			account:{},
 		}
 	},
+	beforeRouteEnter (to, from, next) {
+      if(window.localStorage['isVIP']=="true"){
+		  next();
+		  return;
+	  }
+	  next({name:"Promotion"});
+	},
 	computed:{
 		...mapState({
+			userInfo:state=>state.userInfo,
 			color:state=>state.color,
 		})
 	},

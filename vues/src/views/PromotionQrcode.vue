@@ -27,7 +27,7 @@ export default {
 			qrmcodeSrc:'',
 			src:'',
 			src2:'http://qiniu.tongkeapp.com/tkicon.png',
-			customerUrl:'http://wx.tongkeapp.com'+'/api/getcustomerpage/'+localStorage['agentID']+'/'+this.$route.query.id,
+			customerUrl:this.$baseURL+'/api/getcustomerpage/'+localStorage['agentID']+'/'+this.$route.query.id,
 			imgUrl:'',
 			imgload:false,
 			px10:10,

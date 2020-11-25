@@ -59,6 +59,13 @@
 				pro:'',
 			}
 		},
+		beforeRouteEnter (to, from, next) {
+		  if(window.localStorage['isVIP']=="true"){
+			  next();
+			  return;
+		  }
+		  next({name:"Promotion"});
+		},
 		created() {
 			this.$loading.show()
 			this.getData();

@@ -19,18 +19,24 @@ export default new Vuex.Store({
 		
 	},
 	mutations: {
-		updateVIP(state,isVIP){
+		updater(state,payload){
+			state.userInfo.isVIP = payload.isVIP;
+			state.isPromotion = payload.isPromotion;
+			state.color = payload.color;
+			state.isAddLevel = payload.isAddLevel;
+		},
+		setVIP(state,isVIP){
 			state.userInfo.isVIP = isVIP;
 		},
-		updatePromotion(state,isPromotion){
+		setPromotion(state,isPromotion){
 			state.isPromotion = isPromotion;
 		},
-		updateLevel(state,isAddLevel){
+		setColor(state,color){
+			state.color = color;
+		},
+		setLevel(state,isAddLevel){
 			state.isAddLevel = isAddLevel;
 		},
-		updateColor(state,color){
-			state.color = color;
-		}
 	},
 	actions: {
 	},

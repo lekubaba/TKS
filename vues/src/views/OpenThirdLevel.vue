@@ -14,7 +14,8 @@
 </template>
 
 <script>
-	import MaskPage from '../components/MaskPage.vue'
+	import MaskPage from '../components/MaskPage.vue';
+	import {mapState,mapMutations} from 'vuex';
 	export default {
 		name: 'OpenThirdLevel',
 		components: {
@@ -33,11 +34,21 @@
 				openState:'opening'
 			}
 		},
+		beforeRouteEnter (to, from, next) {
+		  if(window.localStorage['isVIP']=="true"){
+			  next();
+			  return;
+		  }
+		  next({name:"Promotion"});
+		},
 		created() {
 			this.$loading.show();
 			this.getData();
 		},
 		methods:{
+			...mapMutations([
+				'setLevel',
+			]),
 			getData(){
 				let that = this;
 				let agentID = window.localStorage['agentID'];
@@ -67,6 +78,8 @@
 						that.$message.success('系统出错了');
 						return;
 					}
+					window.localStorage.setItem('isAddLevel','true');
+					that.setLevel(true);
 					that.$router.replace({name:'SuccessRemind'})
 					
 				})

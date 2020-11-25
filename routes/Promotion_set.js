@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var mongoose = require('mongoose');
 let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
@@ -77,7 +76,6 @@ router.post('/api/saveVerificationImformation',async function(req,res){
 })
 
 router.post('/api/saveAddress',function(req,res){
-	console.log(req.body);
 	res.send('hello:saveAddress');
 })
 

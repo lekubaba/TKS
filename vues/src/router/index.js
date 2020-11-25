@@ -27,6 +27,7 @@ import TeamProfile from '../components/TeamProfile.vue';
 import TraMode from '../components/TraMode.vue';
 import LinkMode from '../components/LinkMode.vue';
 import Promotion from '../views/Promotion.vue';
+import Join from '../views/Join.vue';
 import RealNameAuthentication from '../views/RealNameAuthentication.vue';
 import CommissionRegular from '../views/CommissionRegular.vue';
 import PromotionQrcodeBackground from '../views/PromotionQrcodeBackground.vue';
@@ -93,6 +94,14 @@ const routes = [
 				}
 			},
 		]
+	},{
+		path:'/join',
+		name:'Join',
+		component:Join,
+		meta:{
+			title:'成为商户',
+			requiresAuth:true
+		}
 	},{
 		path:'/profile',
 		name:'Profile',

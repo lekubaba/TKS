@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 let {Agent,Customer,Products,Order,Code} = require('../mongoose/modelSchema')
 const Core = require('@alicloud/pop-core');
 let logger = require('../utils/logger').logger;
+let {ID,Secret} = require('../config');
 
 function MNS(req,res,tel){
 	
@@ -10,15 +11,10 @@ function MNS(req,res,tel){
 	}
 	
 	let alicode = rand(1000,9999);
-	
-	let config = {
-		ID:'LTAI4GDjVoKbLCBhh7AwdGCT',
-		Secret:'9qUVMSqllvcMWMAaUHSr3zt4mOcdad',
-	}
 
 	var client = new Core({
-		accessKeyId: config.ID,
-		accessKeySecret: config.Secret,
+		accessKeyId: ID,
+		accessKeySecret: Secret,
 		endpoint: 'https://dysmsapi.aliyuncs.com',
 		apiVersion: '2017-05-25'
 	});

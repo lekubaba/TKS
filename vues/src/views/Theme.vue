@@ -18,6 +18,7 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex';
 	export default {
 		name: 'Theme',
 		components: {
@@ -31,7 +32,17 @@
 				
 			}
 		},
+		beforeRouteEnter (to, from, next) {
+		  if(window.localStorage['isVIP']=="true"){
+			  next();
+			  return;
+		  }
+		  next({name:"Promotion"});
+		},
 		methods:{
+			...mapMutations([
+				'setColor',
+			]),
 			saveColor(){
 				this.$refs.color.value ===''?this.$message.info('输入颜色代码'):this.$Utils.checkColor(this.$refs.color.value)?this.saveColorToDatabase(this.$refs.color.value):this.$message.info('格式错误');
 			},
@@ -45,6 +56,7 @@
 						return;
 					}
 					window.localStorage.setItem('color',color);
+					that.setColor(color);
 					that.$router.replace({name:'SuccessRemind'})
 					
 				})

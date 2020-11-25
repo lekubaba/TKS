@@ -134,12 +134,19 @@ var CodeSchema = new Schema({
 	code:Number,
 },{versionKey:false});
 
+var TokenSchema = new Schema({
+	_id:Schema.Types.ObjectId,
+	token:String,
+	timeStamp:Number,
+},{versionKey:false});
+
 var Child = mongoose.model('Child',ChildSchema,'child');
 var Agent = mongoose.model('Agent',AgentSchema,'agent');
 var Customer = mongoose.model('Customer',CustomerSchema,'customer');
 var Products = mongoose.model('Products',ProductsSchema,'products');
 var Order = mongoose.model('Order',OrderSchema,'order');
 var Code = mongoose.model('Code',CodeSchema,'code');
+var Ten = mongoose.model('Ten',TokenSchema,'ten'); //保存微信的access_token
 
 module.exports.Child = Child;
 module.exports.Agent = Agent;
@@ -147,4 +154,5 @@ module.exports.Customer = Customer;
 module.exports.Products = Products;
 module.exports.Order = Order;
 module.exports.Code = Code;
+module.exports.Ten = Ten;
 

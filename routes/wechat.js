@@ -7,15 +7,23 @@ var fs = require('fs');
 var path = require('path');
 var logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
+let {WxApiCheck} = require('../utils/WxApiCheck');
+let {token} = require('../config');
 
-/*首页*/
 
-router.get('/',function(req,res){
-	res.render('tongkeapp');
-})
+/* 微信验证服务器用途 */
+router.get('/api/wx',function(req,res){
 
-router.get('/tongke',function(req,res){
-	res.render('tkWebSiteHome',{title:"拿钱，让天下没有难做的销售"});
+	let ret =  WxApiCheck(req.query,token);
+	
+	if(ret){
+		res.send(req.query.echostr);
+		return;
+	}
+	
+	res.send('错误');
+	
+	
 })
 
 module.exports = router;

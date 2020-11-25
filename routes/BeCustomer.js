@@ -7,10 +7,7 @@ var fs = require('fs');
 var path = require('path');
 var logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
-// let APPID = 'wx1d23498d4a220713'; //测试
-// let SECRET = '0cce653894d5654f1490bf4fd95af392'; //测试
-let APPID = 'wx1d23498d4a220713';
-let SECRET = '0cce653894d5654f1490bf4fd95af392';
+let {APPID,SECRET} = require('../config');
 
 
 // 客户端将微信code传入服务端,
