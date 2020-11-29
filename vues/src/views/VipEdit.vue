@@ -42,6 +42,10 @@
 					<div class='wraper-item-title'>| 支付配置</div>
 					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
 				</div>
+				<div class='wraper-item' @click='toSetManager'>
+					<div class='wraper-item-title'>| 管理员设置</div>
+					<div class='wraper-item-img' :style="{color:this.$store.state.color}">〉</div>
+				</div>
 			</div>
 		</div>
 		<div style='height: 100px;'></div>
@@ -147,7 +151,10 @@
 					return;
 				}
 				this.$router.push({name:'Theme'})
-			}
+			},
+			toSetManager(){
+				this.$router.push({name:'SetManager'});
+			},
 		},
 		
 	}

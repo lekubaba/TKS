@@ -75,6 +75,7 @@
 							}
 							
 							if(res.data.code===200){
+								that.$refs.agentName.value = '';
 								that.$message.success('微信修改成功');
 							}
 							

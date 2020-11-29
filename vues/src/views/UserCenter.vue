@@ -57,8 +57,9 @@ export default {
 	methods:{
 		getData(){
 			let agentID = window.localStorage['agentID'];
+			let productsId = window.localStorage['productsId'];
 			let that = this;
-			this.axios.post('/api/usercenter',{agentID:agentID})
+			this.axios.post('/api/usercenter',{agentID:agentID,productsId:productsId})
 			.then(function(res){
 				if(res.data.code==500){
 					that.$loading.hide();

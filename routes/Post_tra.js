@@ -20,6 +20,7 @@ router.post('/api/getcustomerinfo_tra', async function(req,res){
 	
 	try{
 		let _agent = await Agent.findOne({_id:agentID}).lean().populate('mainPromotionProducts');
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean();
 		let newOrder = new Order();
 		
 		newOrder._id = new mongoose.Types.ObjectId;
@@ -39,6 +40,8 @@ router.post('/api/getcustomerinfo_tra', async function(req,res){
 		newOrder.contacted = false;
 		newOrder.signed = false;
 		newOrder.issued = false;
+		newOrder.level = _child.level;
+		newOrder.relation = _child.relation;
 		
 		newOrder.save(function(err){
 			if(err){

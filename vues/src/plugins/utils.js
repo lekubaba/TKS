@@ -52,6 +52,10 @@ class Utils {
 		let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
 		return reg.test(str);
 	}
+	checkObjectID(str){
+		let reg = /^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i;
+		return reg.test(str);
+	}
 }
 
 let utils = new Utils();

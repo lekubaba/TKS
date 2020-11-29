@@ -38,6 +38,7 @@ import SetLink from '../views/SetLink.vue';
 import UnionPay from '../views/UnionPay.vue';
 import OpenThirdLevel from '../views/OpenThirdLevel.vue';
 import Theme from '../views/Theme.vue';
+import SetManager from '../views/SetManager.vue';
 import Data from '../views/UserData.vue';
 import Center from '../views/UserCenter.vue';
 import SuccessRemind from '../views/SuccessRemind.vue';
@@ -407,6 +408,15 @@ const routes = [
 		component:Theme,
 		meta:{
 			title:'设置主题颜色',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/setmanager',
+		name:'SetManager',
+		component:SetManager,
+		meta:{
+			title:'设置管理员',
 			requiresAuth:true
 		}
 		

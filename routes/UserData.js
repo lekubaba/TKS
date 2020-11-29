@@ -17,9 +17,9 @@ router.post('/api/userData',async function(req,res){
 	
 	try {
 		let _date = formatDate('yyyy-MM-dd');
-		let _agent = await Agent.findOne({_id:agentID}).select('openID isVIP').lean();
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('openID isVIP isManager').lean();
 		//不是vip
-		if(!_agent.isVIP){
+		if(!_child.isVIP&&!_child.isManager){
 			let _dayCount = await Order.count({agentID:agentID,productsId:productsId,orderTime:{'$regex':_date}});
 			let _count = await Order.count({agentID:agentID,productsId:productsId});
 			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(0).
@@ -35,9 +35,10 @@ router.post('/api/userData',async function(req,res){
 			return;
 		//vip
 		}else{
-			let _dayCount = await Order.count({topSuperLevel:agentID,productsId:productsId,orderTime:{'$regex':_date}});
-			let _count = await Order.count({topSuperLevel:agentID,productsId:productsId});
-			let _order = await Order.find({topSuperLevel:agentID,productsId:productsId}).limit(20).skip(0).
+			
+			let _dayCount = await Order.count({relation:{'$regex':agentID},productsId:productsId,orderTime:{'$regex':_date}});
+			let _count = await Order.count({relation:{'$regex':agentID},productsId:productsId});
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(20).skip(0).
 							   lean().populate('customerID','customerAvatarImg').
 							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
 			
@@ -67,9 +68,9 @@ router.post('/api/userDatas',async function(req,res){
 	
 	try {
 		let _date = formatDate('yyyy-MM-dd');
-		let _agent = await Agent.findOne({_id:agentID}).select('openID isVIP').lean();
-		if(!_agent.isVIP){
-			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(10).skip(skipNum).
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('openID isVIP isManager').lean();
+		if(!_child.isVIP&&!_child.isManager){
+			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(skipNum).
 							   lean().populate('customerID','customerAvatarImg').
 							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
 			
@@ -81,7 +82,7 @@ router.post('/api/userDatas',async function(req,res){
 			res.json({code:200,orders:_order});
 			return;
 		}else{
-			let _order = await Order.find({topSuperLevel:agentID,productsId:productsId}).limit(10).skip(skipNum).
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(20).skip(skipNum).
 							   lean().populate('customerID','customerAvatarImg').
 							   select('customerName customerID orderTime customerDesensitizationNumber orderMoney mode');
 			
@@ -99,6 +100,18 @@ router.post('/api/userDatas',async function(req,res){
 		return res.json({code:500});
 	}
 		
+})
+
+
+router.post('/api/realVip',async function(req,res){
+	let productsId = req.body.productsId;
+	let agentID = req.body.agentID;
+	_products = await Products.findOne({_id:productsId,agentID:agentID}).select('_id').lean();
+	if(_products){
+		res.json({code:1});
+	}else{
+		res.json({code:2});
+	}
 })
 
 
@@ -141,7 +154,6 @@ router.post('/api/saveMoney',async function(req,res){
 		let _order = await Order.findOne({_id:orderID}).select('openID orderMoney productsId agentID').lean();
 		await Order.update({_id:orderID},{'$set':{'orderMoney':orderMoney}});
 		let value = orderMoney - _order.orderMoney;
-		console.log(value);
 		await Agent.update({openID:_order.openID},{$inc:{sales:value}});
 		await Child.update({agentID:_order.agentID,mainPromotionProducts:_order.productsId},{$inc:{sales:value}});
 		res.json({code:200})

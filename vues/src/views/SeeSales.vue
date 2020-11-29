@@ -1,14 +1,14 @@
 <template>
 	<div class='see-sales'>
 		<div class='sales-total' :style="{backgroundColor:color}">
-			<div class='sales-title'>自身销售额 (元)</div>
+			<div class='sales-title'>团队销售额 (元)</div>
 			<div class='sales-sum'>{{sales?sales:'0.00'}}</div>
 		</div>
 		<div class='see-s-navs'>
 			<router-link :to="{name:'OwnLevelSales',query:{level:'zero'}}" replace class='see-s-nav' active-class="active" exact>自推客户</router-link>
 			<router-link :to="{name:'OneLevelSales',query:{level:'one'}}" replace class='see-s-nav' active-class="active" exact>一级客户</router-link>
 			<router-link :to="{name:'TwoLevelSales',query:{level:'two'}}" replace class='see-s-nav' active-class="active" exact v-if='isAddLevel'>二级客户</router-link>
-			<router-link :to="{name:'TotalLevelSales',query:{level:'allin'}}" replace class='see-s-nav' active-class="active" exact v-if='userInfo.isVIP'>全部客户</router-link>
+			<router-link :to="{name:'TotalLevelSales',query:{level:'allin'}}" replace class='see-s-nav' active-class="active" exact v-if='userInfo.isVIP||isManager'>全部客户</router-link>
 		</div>
 		<router-view v-bind:sales='salesProfile'/>
 		<Loading v-bind:show='isLoading' v-bind:show2='isLoading2'/>
@@ -28,6 +28,7 @@
 			return {
 				salesProfile:[],
 				sales:'',
+				isManager:'',
 				isLoading:false,
 				isLoading2:true,
 				level:'',
@@ -49,13 +50,15 @@
 			getData(){
 				let that = this;
 				let agentID = window.localStorage['agentID'];
-				this.axios.post('/api/seesales',{agentID:agentID})
+				let productsId = window.localStorage['productsId'];
+				this.axios.post('/api/seesales',{agentID:agentID,productsId:productsId})
 				.then(function(res){
 					if(res.data.code==500){
 						that.$message.info('系统故障了');
 						return;
 					}
 					that.sales = res.data.sales;
+					that.isManager = res.data.isManager;
 					that.$loading.hide();
 					
 				})

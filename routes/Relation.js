@@ -12,11 +12,11 @@ let {MNS} = require('../utils/MNS');
 
 
 
-router.post('/api/alicode',async function(req,res){
+router.get('/api/relation',async function(req,res){
 	
-	let tel = req.body.tel;
-	
-	await MNS(req,res,tel);
+	Agent.find({relation:{'$regex':'5fbeb65dfb1051f8e272f1dc'}},function(err,ret){
+		res.json(ret);
+	})
 	
 })
 

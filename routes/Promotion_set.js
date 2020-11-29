@@ -269,6 +269,37 @@ router.post('/api/changepreregularposter',async function(req,res){
 })
 
 
+//设置管理员
+router.post('/api/savemanager',async function(req,res){
+	let agentID = req.body.userid;
+	let productsId = req.body.productsId;
+	
+	try {
+		let _child =  await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('isVIP isManager').lean();
+		
+		if(!_child){
+			res.json({code:100});
+			return;
+		}
+		if(_child.isVIP == true){
+			res.json({code:101});
+			return;
+		}
+		if(_child.isManager == true){
+			res.json({code:102});
+			return;
+		}
+		await Child.update({agentID:agentID,mainPromotionProducts:productsId},{'$set':{isManager:true}});
+		res.json({code:200});
+		return;
+		
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+})
+
 
 
 

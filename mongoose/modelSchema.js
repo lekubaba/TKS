@@ -5,14 +5,18 @@ var Schema = mongoose.Schema;
 var ChildSchema = new Schema({
 		_id:{type:Schema.Types.ObjectId},
 		isVIP:Boolean,
-		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products'},
+		isManager:{type:Boolean,default:false},  //设置是否是管理员
+		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products',index:true},
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
 		bigSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
 		topSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
-		agentID:{type:Schema.Types.ObjectId,ref:'Agent'},
+		agentID:{type:Schema.Types.ObjectId,ref:'Agent',index:true},
 		openID:{type:String,index:true},
+		agentWechat:String,
 		unionID:{type:String,index:true},
 		sales:{type:Number,default:0},
+		level:Number,
+		relation:String,
 		time:String,
 		timeStamp:String,
 },{versionKey:false})
@@ -29,6 +33,7 @@ var AgentSchema = new Schema({
 		agentCity:String,
 		idCard:String,//注册非必须
 		isPromotion:Boolean,
+		isMember:{type:Boolean,default:false}, //是否是团队成员
 		subAPI:{type:Schema.Types.ObjectId,ref:'Child'},//代理推广产品的接口
 		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products'},
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
@@ -69,7 +74,7 @@ var ProductsSchema = new Schema({
 		isAddLevel:Boolean,//是否增加了层级，true,false
 		companyName:String,
 		openID:String,
-		agentID:{type:Schema.Types.ObjectId,ref:'Agent'},
+		agentID:{type:Schema.Types.ObjectId,ref:'Agent',index:true},
 		bossPhoneNumber:String,
 		bossWechat:String,
 		productsName:String,
@@ -107,7 +112,7 @@ var OrderSchema = new Schema({
 	
 		_id:Schema.Types.ObjectId,
 		mode:String,
-		productsId:{type:Schema.Types.ObjectId,ref:'Products'},
+		productsId:{type:Schema.Types.ObjectId,ref:'Products',index:true},
 		agentID:{type:Schema.Types.ObjectId,ref:'Agent'},//归属代理
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
 		bigSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
@@ -125,6 +130,8 @@ var OrderSchema = new Schema({
 		contacted:Boolean,
 		signed:Boolean,
 		issued:Boolean,
+		level:Number,
+		relation:String,
 		
 },{versionKey:false})
 

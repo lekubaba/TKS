@@ -20,17 +20,13 @@ router.post('/api/code',async function(req,res){
 	let getTokenURL="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+APPID+"&secret="+SECRET+"&code="+CODE+"&grant_type=authorization_code";
 	
 	// 注意：是否要检测_agentID,_productsId是否有错误,1.0默认不检测；
-	
 	var options = {
 	    	headers: {"Connection": "close"},
 			url: getTokenURL,
 			method: 'GET',
 			json: true
 	};
-	
-	
 	try {
-	
 		async function callback(error, response, data){
 			if (!error && response.statusCode == 200) {	
 				let ACCESS_TOKEN = data.access_token;
@@ -138,9 +134,12 @@ router.post('/api/code',async function(req,res){
 								child.topSuperLevel = _ret.topSuperLevel?_ret.topSuperLevel:null;
 								child.agentID = agentNew._id;
 								child.openID = openid;
+								child.agentWechat = _wechat;
 								child.unionID = unionid;
 								child.time = formatDate('yyyy-MM-dd hh:mm:ss');
 								child.timeStamp = new Date().getTime();
+								child.level = _ret.level +1;
+								child.relation = _ret.relation + '/'+agentNew._id;
 								
 								await agentNew.save();
 								await child.save();
@@ -212,10 +211,13 @@ router.post('/api/code',async function(req,res){
 									child.bigSuperLevel = _ret.superLevel?_ret.superLevel:null;
 									child.topSuperLevel = _ret.topSuperLevel?_ret.topSuperLevel:null;
 									child.agentID = agent._id;
+									child.agentWechat = _wechat;
 									child.openID = agent.openID;
 									child.unionID = agent.unionID;
 									child.time = formatDate('yyyy-MM-dd hh:mm:ss');
 									child.timeStamp = new Date().getTime();
+									child.level = _ret.level +1;
+									child.relation = _ret.relation + '/'+agent._id;
 									
 									await child.save();
 									
@@ -257,10 +259,14 @@ router.post('/api/code',async function(req,res){
 								child.bigSuperLevel = _ret.superLevel?_ret.superLevel:null;
 								child.topSuperLevel = _ret.topSuperLevel?_ret.topSuperLevel:null;
 								child.agentID = agent._id;
+								child.agentWechat = _wechat;
 								child.openID = agent.openID;
 								child.unionID = agent.unionID;
 								child.time = formatDate('yyyy-MM-dd hh:mm:ss');
 								child.timeStamp = new Date().getTime();
+								child.level = _ret.level +1;
+								child.relation = _ret.relation + '/'+agent._id;
+								
 								
 								await child.save();
 								

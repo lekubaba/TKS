@@ -7,7 +7,7 @@
 		<div class='see-t-navs'>
 			<router-link :to="{name:'OneLevelTeam',query:{level:'one'}}" replace class='see-t-nav' active-class="active" exact>一级团队</router-link>
 			<router-link :to="{name:'TwoLevelTeam',query:{level:'two'}}" replace class='see-t-nav' active-class="active" exact v-if='isAddLevel'>二级团队</router-link>
-			<router-link :to="{name:'TotalLevelTeam',query:{level:'allin'}}" replace class='see-t-nav' active-class="active" exact v-if='userInfo.isVIP'>全部</router-link>
+			<router-link :to="{name:'TotalLevelTeam',query:{level:'allin'}}" replace class='see-t-nav' active-class="active" exact v-if='userInfo.isVIP||isManager'>全部</router-link>
 		</div>
 		<router-view v-bind:team='teamProfile'/>
 		<Loading v-bind:show='isLoading' v-bind:show2='isLoading2'/>
@@ -27,6 +27,7 @@
 			return {
 				teamProfile:[],
 				team:'',
+				isManager:'',
 				isLoading:false,
 				isLoading2:true,
 				level:'',
@@ -49,6 +50,7 @@
 						return;
 					}
 					that.team = res.data.team;
+					that.isManager = res.data.isManager;
 					that.$loading.hide();
 					
 				})

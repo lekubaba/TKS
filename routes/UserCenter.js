@@ -14,23 +14,70 @@ let {formatDate} = require('../utils/DateUtil');
 router.post('/api/usercenter',async function(req,res){
 	
 	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
 	
 	try {
-		let _agent = await Agent.findOne({_id:agentID}).lean().select('mainPromotionProducts isVIP sales');
-		if(!_agent.isVIP){
-			let _agents = await Child.count({superLevel:_agent._id,mainPromotionProducts:_agent.mainPromotionProducts});
-			let data = {
-				code:200,
-				agents:_agents,
-				sales:_agent.sales
+		let userid = mongoose.Types.ObjectId(agentID);
+		let proid = mongoose.Types.ObjectId(productsId);
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager').populate('mainPromotionProducts','isAddLevel');
+		if(!_child.isVIP&&!_child.isManager){
+			// 商户没有开通三级分销，默认二级
+			if(!_child.mainPromotionProducts.isAddLevel){
+				let _agents = await Child.count({'$or':[{agentID:agentID,mainPromotionProducts:productsId},{superLevel:agentID,mainPromotionProducts:productsId},]});
+				let result = await Order.aggregate([
+					{ $match : {'$or':[{agentID:userid,productsId:proid},{superLevel:userid,productsId:proid}]}},
+					{$group : {_id:null, total: {$sum:"$orderMoney"}}},
+				]);
+				
+				//还没有订单
+				if(!result[0]){
+					let data = {
+						code:200,
+						agents:_agents,
+						sales:0,
+					}
+					return res.json(data);	
+				}else{
+					let total = result[0].total;
+					let data = {
+						code:200,
+						agents:_agents,
+						sales:total,
+					}
+					return res.json(data);	
+				}
+			}else{
+				let _agents = await Child.count({'$or':[{agentID:agentID,mainPromotionProducts:productsId},{superLevel:agentID,mainPromotionProducts:productsId},{bigSuperLevel:agentID,mainPromotionProducts:productsId},]});
+				let result = await Order.aggregate([
+					{ $match : {'$or':[{agentID:userid,productsId:proid},{superLevel:userid,productsId:proid},{bigSuperLevel:userid,productsId:proid}]}},
+					{$group : {_id:null, total: {$sum:"$orderMoney"}}},
+				]);
+				
+				//还没有订单
+				if(!result[0]){
+					let data = {
+						code:200,
+						agents:_agents,
+						sales:0,
+					}
+					return res.json(data);	
+				}else{
+					let total = result[0].total;
+					let data = {
+						code:200,
+						agents:_agents,
+						sales:total,
+					}
+					return res.json(data);	
+				}
 			}
-			return res.json(data);	
 		}else{
-			let _agents = await Child.count({topSuperLevel:_agent._id});
+			let _agents = await Child.count({relation:{'$regex':agentID},mainPromotionProducts:productsId});
+			// $macth里，id必须要转化，同时$regex必须是字符串形式；
 			let result = await Order.aggregate([
-								{ $match : {'topSuperLevel':_agent._id} },
+								{ $match : {'relation':{'$regex':agentID},productsId:proid}},
 								{$group : {_id:null, total: {$sum:"$orderMoney"}}},
-								]);
+						]);
 			//还没有订单
 			if(!result[0]){
 				let data = {
@@ -99,22 +146,22 @@ router.post('/api/getwechat',function(req,res){
 	})
 })
 
-router.post('/api/saveWechat',function(req,res){
+router.post('/api/saveWechat',async function(req,res){
 	
 	let agentID = req.body.agentID;
 	let agentName = req.body.agentName;
 	let agentWechat = req.body.agentWechat;
 	
-	Agent.update({_id:agentID},{'$set':{agentName:agentName,agentWechat:agentWechat}},function(err){
-		
-		if(err){
-			logger.error(err);
-			return res.json({code:500});
-		}
-		
+	try{
+		await Agent.update({_id:agentID},{'$set':{agentName:agentName,agentWechat:agentWechat}});
+		await Child.update({agentID:agentID},{'$set':{agentWechat:agentWechat}},{multi:true});
 		return res.json({code:200});
-		
-	})
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+	
 	
 })
 
@@ -165,14 +212,92 @@ router.post('/api/setmainpromotionproducts',async function(req,res){
 router.post('/api/seesales',async function(req,res){
 	
 	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
 	try {
-		let _agent = await Agent.findOne({_id:agentID}).lean().select('sales');
-		let data = {
-			code:200,
-			sales:_agent.sales,
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).populate('mainPromotionProducts','isAddLevel').lean();
+		/* 
+			*不是VIP,且也不是管理员；
+		 */
+		if(!_child.isVIP&&!_child.isManager){
+			// $macth里，id必须要转化，同时$regex必须是字符串形式；
+			let userid = mongoose.Types.ObjectId(agentID);
+			let proid = mongoose.Types.ObjectId(productsId);
+			/* 商户没有开通三级分销 */
+			if(!_child.mainPromotionProducts.isAddLevel){
+				
+				let result = await Order.aggregate([
+					{ $match : {'$or':[{agentID:userid,productsId:proid},{superLevel:userid,productsId:proid}]}},
+					{$group : {_id:null, total: {$sum:"$orderMoney"}}},
+				]);
+				
+				//还没有订单
+				if(!result[0]){
+					let data = {
+						code:200,
+						sales:0,
+						isManager:_child.isManager
+					}
+					return res.json(data);	
+				}else{
+					let total = result[0].total;
+					let data = {
+						code:200,
+						sales:total,
+						isManager:_child.isManager
+					}
+					return res.json(data);	
+				}
+				
+	
+			}else{
+				let result = await Order.aggregate([
+					{ $match : {'$or':[{agentID:userid,productsId:proid},{superLevel:userid,productsId:proid},{bigSuperLevel:userid,productsId:proid}]}},
+					{$group : {_id:null, total: {$sum:"$orderMoney"}}},
+				]);
+				
+				//还没有订单
+				if(!result[0]){
+					let data = {
+						code:200,
+						sales:0,
+						isManager:_child.isManager
+					}
+					return res.json(data);	
+				}else{
+					let total = result[0].total;
+					let data = {
+						code:200,
+						sales:total,
+						isManager:_child.isManager
+					}
+					return res.json(data);	
+				}
+			}
+		}else{
+			// $macth里，id必须要转化，同时$regex必须是字符串形式；
+			let proid = mongoose.Types.ObjectId(productsId);
+			let result = await Order.aggregate([
+								{ $match : {'relation':{'$regex':agentID},productsId:proid}},
+								{$group : {_id:null, total: {$sum:"$orderMoney"}}},
+						]);
+			//还没有订单
+			if(!result[0]){
+				let data = {
+					code:200,
+					sales:0,
+					isManager:_child.isManager
+				}
+				return res.json(data);	
+			}else{
+				let total = result[0].total;
+				let data = {
+					code:200,
+					sales:total,
+					isManager:_child.isManager
+				}
+				return res.json(data);	
+			}
 		}
-		return res.json(data);
-		
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});
@@ -222,7 +347,7 @@ router.post('/api/seesaleslevel',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _order = await Order.find({'topSuperLevel':agentID,productsId:productsId}).limit(20).skip(0).
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(20).skip(0).
 						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
 			let data = {
 				code:200,
@@ -285,7 +410,7 @@ router.post('/api/seesalesplus',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _order = await Order.find({'topSuperLevel':agentID,productsId:productsId}).limit(10).skip(skipNum).
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(10).skip(skipNum).
 						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
 			let data = {
 				code:200,
@@ -316,23 +441,37 @@ router.post('/api/seeteam',async function(req,res){
 	let productsId = req.body.productsId;
 
 	try {
-		let _agent = await Agent.findOne({_id:agentID}).select('isVIP').lean();
-		if(!_agent.isVIP){
-			let _team = await Child.count({superLevel:agentID,mainPromotionProducts:productsId});
-			let data = {
-				code:200,
-				team:_team
-			}
-			return res.json(data);	
-		}else{
-			let _team = await Child.count({topSuperLevel:agentID,mainPromotionProducts:productsId});
-			let data = {
-				code:200,
-				team:_team
-			}
-			return res.json(data);	
-		}
+		let userid = mongoose.Types.ObjectId(agentID);
+		let proid = mongoose.Types.ObjectId(productsId);
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager').populate('mainPromotionProducts','isAddLevel');
 		
+		if(!_child.isVIP&&!_child.isManager){
+			if(!_child.mainPromotionProducts.isAddLevel){
+				let _team = await Child.count({'$or':[{agentID:agentID,mainPromotionProducts:productsId},{superLevel:agentID,mainPromotionProducts:productsId},]});
+				let data = {
+					code:200,
+					team:_team,
+					isManager:_child.isManager
+				}
+				return res.json(data);	
+			}else{
+				let _team = await Child.count({'$or':[{agentID:agentID,mainPromotionProducts:productsId},{superLevel:agentID,mainPromotionProducts:productsId},{bigSuperLevel:agentID,mainPromotionProducts:productsId},]});
+				let data = {
+					code:200,
+					team:_team,
+					isManager:_child.isManager
+				}
+				return res.json(data);	
+			}
+		}else{
+			let _team = await Child.count({relation:{'$regex':agentID},mainPromotionProducts:productsId});
+			let data = {
+				code:200,
+				team:_team,
+				isManager:_child.isManager
+			}
+			return res.json(data);
+		}
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});
@@ -370,7 +509,7 @@ router.post('/api/seeteamlevel',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _agents = await Child.find({topSuperLevel:agentID,mainPromotionProducts:productsId}).limit(20).skip(0).
+			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId}).limit(20).skip(0).
 								lean().select('agentID topSuperLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			
 			let data = {
@@ -424,7 +563,7 @@ router.post('/api/seeteamplus',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _agents = await Child.find({topSuperLevel:agentID,mainPromotionProducts:productsId}).limit(10).skip(skipNum).
+			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId}).limit(10).skip(skipNum).
 								lean().select('agentID superLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			
 			let data = {
@@ -515,6 +654,8 @@ router.post('/api/buildproductsmode',async function(req,res){
 		child.unionID = _agent.unionID;
 		child.time = formatDate('yyyy-MM-dd hh:mm:ss');
 		child.timeStamp = new Date().getTime();
+		child.level = 0;
+		child.relation = '/'+agentID;
 		
 		await products.save();
 		await child.save();

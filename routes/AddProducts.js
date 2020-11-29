@@ -28,19 +28,17 @@ router.get('/addproducts_15914132569',async function(req,res){
 			products.productsName = '统客';
 			products.productsTitle = '统客分销系统';
 			products.promotionCover = '';
-			products.promotionQrcodeBackground = 'http://qiniu.tongkeapp.com/promotionqrcode.png';
-			products.agentQrcodeBackground = 'http://qiniu.tongkeapp.com/agentqrcode.png';
-			// products.promotionPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
-			products.promotionPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
-			// products.agentPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
-			products.agentPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
-			products.regularPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
-			products.productsLink = 'http://qiniu.tongkeapp.com/default_20201010_01.png';
+			products.promotionQrcodeBackground = 'http://qiniu.tongkeapp.com/promotionqrcode.png?time=20201130';
+			products.agentQrcodeBackground = 'http://qiniu.tongkeapp.com/agentqrcode.png?time=20201130';
+			products.promotionPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_022.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_033.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_044.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_055.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_066.png?time=20201130'];
+			products.agentPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_022.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_033.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_044.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_055.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_066.png?time=20201130'];
+			products.regularPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png?time=20201130');
+			products.productsLink = 'http://qiniu.tongkeapp.com/default_20201010_01.png?time=20201130';
 			products.color = '#1476FE';
 			products.originalPrice = 99999;
 			products.activityPrice = 10000;
 			products.summary = '暂无';
-			products.squareImg = 'http://qiniu.tongkeapp.com/tkImgLogo.png';
+			products.squareImg = 'http://qiniu.tongkeapp.com/tkImgLogo.png?time=20201130';
 			products.time = formatDate('yyyy-MM-dd hh:mm:ss');
 			products.timeStamp = new Date().getTime();
 		
