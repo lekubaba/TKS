@@ -20,15 +20,30 @@
 			}
 		},
 		methods:{
-			
+			getData(){
+				let that = this;
+				let agentID = window.localStorage['agentID'];
+				this.axios.post('/api/getBusinessState',{agentID:agentID})
+				.then(function(res){
+					if(res.data.code===500){
+						that.$loading.hide();
+						that.$message.info('系统故障');
+					}else{
+						if(res.data.isBusiness==true){
+							that.$loading.hide();
+							return;
+						}else{
+							that.$loading.hide();
+							that.$router.replace({name:'Promotion'});
+						}
+					}
+				})
+			}
 		},
-		beforeRouteEnter (to, from, next) {
-		  if(window.localStorage['isVIP']=="true"){
-			  next();
-			  return;
-		  }
-		  next({name:"Promotion"});
-		},
+		created(){
+			this.$loading.show();
+			this.getData();
+		}
 	
 	}
 </script>

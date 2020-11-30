@@ -25,6 +25,9 @@ export default new Vuex.Store({
 			state.color = payload.color;
 			state.isAddLevel = payload.isAddLevel;
 		},
+		updateProductsId(state,productsId){
+			state.userInfo.productsId = productsId;
+		},
 		setVIP(state,isVIP){
 			state.userInfo.isVIP = isVIP;
 		},

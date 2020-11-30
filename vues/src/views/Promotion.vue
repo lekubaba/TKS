@@ -51,7 +51,6 @@ export default {
 	
 	methods:{
 		fetchData(){
-			console.log(this.$baseURL)
 			let that = this;
 			let isPromotion = this.isPromotion;
 			let agentID = this.userInfo.agentID;
@@ -73,7 +72,7 @@ export default {
 						color:res.data.mainPromotionProducts.color,
 						isAddLevel:res.data.mainPromotionProducts.isAddLevel,
 					}
-					//如果代理还未参与推广，首页则展示统客介绍海报;
+					//如果代理还未参与推广，首页则展示拿钱介绍海报;
 					if(!isPromotion){
 						that.$loading.hide()
 						that.agentPoster = res.data.mainPromotionProducts.promotionPoster;

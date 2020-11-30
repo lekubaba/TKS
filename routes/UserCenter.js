@@ -19,7 +19,18 @@ router.post('/api/usercenter',async function(req,res){
 	try {
 		let userid = mongoose.Types.ObjectId(agentID);
 		let proid = mongoose.Types.ObjectId(productsId);
+		let _isBusiness = await Agent.findOne({_id:agentID}).select('isBusiness').lean();
 		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager').populate('mainPromotionProducts','isAddLevel');
+		if(!_child){
+			let data = {
+				code:200,
+				agents:0,
+				sales:0,
+				isBusiness:_isBusiness.isBusiness,
+			}
+			res.json(data);	
+			return;
+		}
 		if(!_child.isVIP&&!_child.isManager){
 			// 商户没有开通三级分销，默认二级
 			if(!_child.mainPromotionProducts.isAddLevel){
@@ -35,6 +46,7 @@ router.post('/api/usercenter',async function(req,res){
 						code:200,
 						agents:_agents,
 						sales:0,
+						isBusiness:_isBusiness.isBusiness,
 					}
 					return res.json(data);	
 				}else{
@@ -43,6 +55,7 @@ router.post('/api/usercenter',async function(req,res){
 						code:200,
 						agents:_agents,
 						sales:total,
+						isBusiness:_isBusiness.isBusiness,
 					}
 					return res.json(data);	
 				}
@@ -59,6 +72,7 @@ router.post('/api/usercenter',async function(req,res){
 						code:200,
 						agents:_agents,
 						sales:0,
+						isBusiness:_isBusiness.isBusiness,
 					}
 					return res.json(data);	
 				}else{
@@ -67,6 +81,7 @@ router.post('/api/usercenter',async function(req,res){
 						code:200,
 						agents:_agents,
 						sales:total,
+						isBusiness:_isBusiness.isBusiness,
 					}
 					return res.json(data);	
 				}
@@ -84,6 +99,7 @@ router.post('/api/usercenter',async function(req,res){
 					code:200,
 					agents:_agents,
 					sales:0,
+					isBusiness:_isBusiness.isBusiness,
 				}
 				return res.json(data);	
 			}else{
@@ -92,6 +108,7 @@ router.post('/api/usercenter',async function(req,res){
 					code:200,
 					agents:_agents,
 					sales:total,
+					isBusiness:_isBusiness.isBusiness,
 				}
 				return res.json(data);	
 			}
@@ -191,6 +208,7 @@ router.post('/api/setmainpromotionproducts',async function(req,res){
 		await Agent.update({_id:agentID},{$set:{
 			subAPI:_child._id,
 			isVIP:_child.isVIP,
+			isBusiness:_child.isBusiness,
 			mainPromotionProducts:productsId,
 			superLevel:_child.superLevel,
 			bigSuperLevel:_child.bigSuperLevel,
@@ -215,6 +233,16 @@ router.post('/api/seesales',async function(req,res){
 	let productsId = req.body.productsId;
 	try {
 		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).populate('mainPromotionProducts','isAddLevel').lean();
+		//如果还没有child，也就是用户从公众号直接进来的；
+		if(!_child){
+			let data = {
+				code:200,
+				sales:0,
+				isManager:false,
+			}
+			res.json(data);	
+			return;
+		}
 		/* 
 			*不是VIP,且也不是管理员；
 		 */
@@ -445,6 +473,16 @@ router.post('/api/seeteam',async function(req,res){
 		let proid = mongoose.Types.ObjectId(productsId);
 		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager').populate('mainPromotionProducts','isAddLevel');
 		
+		if(!_child){
+			let data = {
+				code:200,
+				team:0,
+				isManager:false,
+			}
+			res.json(data);
+			return;
+		}
+		
 		if(!_child.isVIP&&!_child.isManager){
 			if(!_child.mainPromotionProducts.isAddLevel){
 				let _team = await Child.count({'$or':[{agentID:agentID,mainPromotionProducts:productsId},{superLevel:agentID,mainPromotionProducts:productsId},]});
@@ -585,7 +623,20 @@ router.post('/api/seeteamplus',async function(req,res){
 	
 })
 
+//判断是不是商户；
 
+router.post('/api/getBusinessState',async function(req,res){
+	
+	let agentID = req.body.agentID;
+	try{
+		let _isBusiness = await Agent.findOne({_id:agentID}).select('isBusiness').lean();
+		res.json({code:200,isBusiness:_isBusiness.isBusiness});
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+})
 //判断用户是否已经建立了产品；
 
 router.post('/api/isbuildproducts',async function(req,res){
@@ -627,17 +678,17 @@ router.post('/api/buildproductsmode',async function(req,res){
 		products.productsName = '还没起名';
 		products.productsTitle = '暂无标题';
 		products.promotionCover = '';
-		products.promotionQrcodeBackground = 'http://qiniu.tongkeapp.com/promotionqrcode.png';
-		products.agentQrcodeBackground = 'http://qiniu.tongkeapp.com/agentqrcode.png';
-		products.promotionPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
-		products.agentPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png','http://qiniu.tongkeapp.com/tk_introduction_022.png','http://qiniu.tongkeapp.com/tk_introduction_033.png','http://qiniu.tongkeapp.com/tk_introduction_044.png','http://qiniu.tongkeapp.com/tk_introduction_055.png','http://qiniu.tongkeapp.com/tk_introduction_066.png'];
-		products.regularPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png');
-		products.productsLink = 'http://qiniu.tongkeapp.com/default_20201010_01.png';
+		products.promotionQrcodeBackground = 'http://qiniu.tongkeapp.com/promotionqrcode.png?time=20201130';
+		products.agentQrcodeBackground = 'http://qiniu.tongkeapp.com/agentqrcode.png?time=20201130';
+		products.promotionPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_022.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_033.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_044.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_055.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_066.png?time=20201130'];
+		products.agentPoster = ['http://qiniu.tongkeapp.com/tk_introduction_011.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_022.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_033.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_044.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_055.png?time=20201130','http://qiniu.tongkeapp.com/tk_introduction_066.png?time=20201130'];
+		products.regularPoster.push('http://qiniu.tongkeapp.com/default_20201010_01.png?time=20201130');
+		products.productsLink = 'http://qiniu.tongkeapp.com/default_20201010_01.png?time=20201130';
 		products.color = '#1476FE';
 		products.originalPrice = 99999;
 		products.activityPrice = 10000;
 		products.summary = '暂无';
-		products.squareImg = 'http://qiniu.tongkeapp.com/tkImgLogo.png';
+		products.squareImg = 'http://qiniu.tongkeapp.com/tkImgLogo.png?time=20201130';
 		products.time = formatDate('yyyy-MM-dd hh:mm:ss');
 		products.timeStamp = new Date().getTime();
 		
@@ -645,6 +696,7 @@ router.post('/api/buildproductsmode',async function(req,res){
 		let child = new Child();
 		child._id = new mongoose.Types.ObjectId;
 		child.isVIP = true;
+		child.isBusiness = true;
 		child.mainPromotionProducts = products._id;
 		child.superLevel = null;
 		child.bigSuperLevel = null;
@@ -659,8 +711,8 @@ router.post('/api/buildproductsmode',async function(req,res){
 		
 		await products.save();
 		await child.save();
-		await Agent.update({_id:agentID},{$set:{isPromotion:true,subAPI:child._id,mainPromotionProducts:products._id,superLevel:null,bigSuperLevel:null,topSuperLevel:_agent._id}});
-		res.json({code:200});
+		await Agent.update({_id:agentID},{$set:{isVIP:true,isBusiness:true,isPromotion:true,subAPI:child._id,mainPromotionProducts:products._id,superLevel:null,bigSuperLevel:null,topSuperLevel:_agent._id}});
+		res.json({code:200,productsId:products._id});
 		return;
 		
 	}catch(err){

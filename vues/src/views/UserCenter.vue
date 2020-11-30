@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class='center-menu'>
-			<div class='set-row set-promotion' v-if='userInfo.isVIP' @click='VipEdit'>
+			<div class='set-row set-promotion' v-if='isBusiness' @click='VipEdit'>
 				<div>推广配置</div>
 				<div class='arrow'>〉</div>
 			</div>
@@ -48,6 +48,7 @@ export default {
 		return {
 			agents:'',
 			sales:'',
+			isBusiness:false,
 		}
 	},
 	created(){
@@ -68,6 +69,7 @@ export default {
 				}else{
 					that.agents = res.data.agents;
 					that.sales = res.data.sales;
+					that.isBusiness = res.data.isBusiness;
 					that.$loading.hide();
 					return;
 				}

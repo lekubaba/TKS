@@ -22,7 +22,7 @@ function MNS(req,res,tel){
 	var params = {
 		"RegionId": "cn-hangzhou",
 		"PhoneNumbers": tel,
-		"SignName": "统客",
+		"SignName": "拿钱",
 		"TemplateCode": "SMS_204295272",
 		"TemplateParam": "{\"code\":\""+alicode+"\"}"
 	}

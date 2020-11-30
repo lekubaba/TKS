@@ -18,6 +18,10 @@ router.post('/api/userData',async function(req,res){
 	try {
 		let _date = formatDate('yyyy-MM-dd');
 		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('openID isVIP isManager').lean();
+		if(!_child){
+			res.json({code:200,count:0,dayCount:0,orders:[]});
+			return;
+		}
 		//不是vip
 		if(!_child.isVIP&&!_child.isManager){
 			let _dayCount = await Order.count({agentID:agentID,productsId:productsId,orderTime:{'$regex':_date}});
@@ -69,6 +73,12 @@ router.post('/api/userDatas',async function(req,res){
 	try {
 		let _date = formatDate('yyyy-MM-dd');
 		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('openID isVIP isManager').lean();
+		
+		if(!_child){
+			res.json({code:200,orders:[]});
+			return;
+		}
+		
 		if(!_child.isVIP&&!_child.isManager){
 			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(skipNum).
 							   lean().populate('customerID','customerAvatarImg').

@@ -29,7 +29,7 @@
 	</div>
 </template>
 <script>
-
+import {mapState,mapMutations} from 'vuex';
 export default {
 	name: 'TraMode',
 	components: {
@@ -45,6 +45,10 @@ export default {
 	created() {
 	},
 	methods:{
+		...mapMutations([
+			'updateProductsId',
+			'setVIP',
+		]),
 		showMask(){
 			this.mask = true;
 		},
@@ -61,6 +65,10 @@ export default {
 					return;
 				}
 				if(res.data.code===200){
+					window.localStorage.setItem('productsId',res.data.productsId);
+					window.localStorage.setItem('isVIP',true);
+					that.updateProductsId(res.data.productsId);
+					that.setVIP(true);
 					that.$router.replace({name:'VipEdit'});
 					return;
 				}

@@ -64,7 +64,7 @@ export default {
 	methods:{
 		fetchData(){
 			let that = this;
-			let agentID=this.userInfo.agentID;
+			let agentID=window.localStorage['agentID'];
 			let productsId = window.localStorage['productsId'];
 			this.axios.post('/api/userData',{agentID:agentID,productsId:productsId})
 				.then(function(response){

@@ -6,6 +6,7 @@ var ChildSchema = new Schema({
 		_id:{type:Schema.Types.ObjectId},
 		isVIP:Boolean,
 		isManager:{type:Boolean,default:false},  //设置是否是管理员
+		isBusiness:{type:Boolean,default:false},  //是否是商户；
 		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products',index:true},
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
 		bigSuperLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
@@ -34,6 +35,7 @@ var AgentSchema = new Schema({
 		idCard:String,//注册非必须
 		isPromotion:Boolean,
 		isMember:{type:Boolean,default:false}, //是否是团队成员
+		isBusiness:{type:Boolean,default:false}, //是否是商家
 		subAPI:{type:Schema.Types.ObjectId,ref:'Child'},//代理推广产品的接口
 		mainPromotionProducts:{type:Schema.Types.ObjectId,ref:'Products'},
 		superLevel:{type:Schema.Types.ObjectId,ref:'Agent'},
@@ -46,7 +48,6 @@ var AgentSchema = new Schema({
 		agentAlipay:String,//注册非必须
 		openID:{type:String,index:true},
 		unionID:{type:String,index:true},
-		color:String,
 		sales:{type:Number,default:0},
 },{versionKey:false})
 

@@ -82,7 +82,6 @@
 				let that = this;
 				let agentID = window.localStorage['agentID'];
 				let productsId = this.productsId;
-				console.log(productsId);
 				this.axios.post('/api/setmainpromotionproducts',{agentID:agentID,productsId:productsId})
 				.then(function(resp){
 					that.mask.mask1 = false;

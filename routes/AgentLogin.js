@@ -79,7 +79,6 @@ router.post('/api/code',async function(req,res){
 								agentNew.agentWechat = '';
 								agentNew.isPromotion = false;								
 								agentNew.isVIP = false;								
-								agentNew.color = '#1476FE';							
 								agentNew.mainPromotionProducts = '5f6c5caca687a1236af74620'; //把统客作为默认主推
 								agentNew.beAgentTime = formatDate('yyyy-MM-dd hh:mm:ss');
 								agentNew.beAgentTimeStamp = new Date().getTime();
@@ -115,7 +114,6 @@ router.post('/api/code',async function(req,res){
 								agentNew.isPromotion = true;
 								agentNew.agentWechat = _wechat;
 								agentNew.isVIP = false;								
-								agentNew.color = _ret.mainPromotionProducts.color;				
 								agentNew.mainPromotionProducts = _productsId;
 								agentNew.beAgentTime = formatDate('yyyy-MM-dd hh:mm:ss');
 								agentNew.beAgentTimeStamp = new Date().getTime();
