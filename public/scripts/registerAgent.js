@@ -101,8 +101,8 @@ $(document).ready(function(){
 		window.localStorage.setItem('agentWechat',agentWechat);
 			
 		let redirect_url = window.location.href;
-		let APPID = 'wx1d23498d4a220713'; //测试
-		// let APPID = 'wx473b861c5a5a8dbb';
+		// let APPID = 'wx1d23498d4a220713'; //测试
+		let APPID = 'wx473b861c5a5a8dbb';
 		redirect_url = encodeURIComponent(redirect_url);
 		window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 	})

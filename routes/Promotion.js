@@ -17,6 +17,10 @@ router.post('/api/promotion',async function(req,res){
 	
 	try {
 		let rets = await Agent.findOne({_id:agentID}).select('mainPromotionProducts isVIP isPromotion').lean().populate('mainPromotionProducts','promotionPoster agentPoster isAddLevel color');
+		if(!rets){
+			res.json({code:100});
+			return;
+		}
 		res.json(rets);
 		return;
 	}catch(err){

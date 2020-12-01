@@ -43,26 +43,11 @@ router.post('/api/getcustomerinfo_tra', async function(req,res){
 		newOrder.level = _child.level;
 		newOrder.relation = _child.relation;
 		
-		newOrder.save(function(err){
-			if(err){
-				logger.error(err);
-				return res.json({code:500});
-			}
+		await newOrder.save();
+		await Customer.update({_id:customerID},{'$set':{customerName:customerName,customerPhoneNumber:customerPhoneNumber,customerDesensitizationNumber:customerDesensitizationNumber}});
+		return res.json({code:200});
 			
-			Customer.update({_id:customerID},{'$set':{
-				customerName:customerName,
-				customerPhoneNumber:customerPhoneNumber,
-				customerDesensitizationNumber:customerDesensitizationNumber,
-			}},function(err){
-				if(err){
-					logger.error(err);
-					return res.json({code:500});
-				}
-				
-				return res.json({code:200});
-			})
-			
-		})
+	
 		
 	}catch(err){
 		logger.error(err);

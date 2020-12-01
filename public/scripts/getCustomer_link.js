@@ -85,6 +85,7 @@ $(document).ready(function(){
 		let code = parseURL(redirect_uri).params.code;
 		// 没有code,则什么都不做
 		if(!code){
+			window.localStorage.removeItem('customerID'); //新进入页面清理用户ID,
 			return;
 		// 有code，则说明用户点击了申请按钮
 		}else{
@@ -129,8 +130,8 @@ $(document).ready(function(){
 		}
 		
 		let redirect_url = window.location.href;
-		let APPID = 'wx1d23498d4a220713'; //测试
-		// let APPID = 'wx473b861c5a5a8dbb';
+		// let APPID = 'wx1d23498d4a220713'; //测试
+		let APPID = 'wx473b861c5a5a8dbb';
 		redirect_url = encodeURIComponent(redirect_url);
 		window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 		

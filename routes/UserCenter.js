@@ -629,8 +629,14 @@ router.post('/api/getBusinessState',async function(req,res){
 	
 	let agentID = req.body.agentID;
 	try{
+		let _products = await Products.findOne({agentID:agentID}).lean();
 		let _isBusiness = await Agent.findOne({_id:agentID}).select('isBusiness').lean();
-		res.json({code:200,isBusiness:_isBusiness.isBusiness});
+		if(!_products){
+			res.json({code:200,isBusiness:_isBusiness.isBusiness});
+		}else{
+			res.json({code:100});
+		}
+		
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});

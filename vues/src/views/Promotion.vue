@@ -52,8 +52,8 @@ export default {
 	methods:{
 		fetchData(){
 			let that = this;
-			let isPromotion = this.isPromotion;
-			let agentID = this.userInfo.agentID;
+			let isPromotion = window.localStorage['isPromotion']==='true'?true:false;
+			let agentID = window.localStorage['agentID']
 			let proData = {
 				isPromotion:isPromotion,
 				agentID:agentID,
@@ -66,6 +66,13 @@ export default {
 						window.localStorage.clear();
 						return;
 					}
+					if(res.data.code===100){
+						that.$loading.hide();
+						that.$message.info('系统出错了');
+						window.localStorage.clear();
+						return;
+					}
+					
 					let payload = {
 						isVIP :res.data.isVIP,
 						isPromotion:res.data.isPromotion,

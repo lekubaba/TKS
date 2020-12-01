@@ -28,6 +28,9 @@
 					if(res.data.code===500){
 						that.$loading.hide();
 						that.$message.info('系统故障');
+					}else if(res.data.code===100){
+						that.$loading.hide();
+						that.$router.replace({name:'Promotion'});
 					}else{
 						if(res.data.isBusiness==true){
 							that.$loading.hide();
