@@ -72,15 +72,6 @@ $(document).ready(function(){
 				if(data.code===500){
 					return alert('系统出错了');
 				}
-				window.localStorage.setItem('agentAvatarImg',data.agentAvatarImg);
-				window.localStorage.setItem('agentNickname',data.agentNickname);
-				window.localStorage.setItem('isPromotion',data.isPromotion);
-				window.localStorage.setItem('isAddLevel',data.isAddLevel);
-				window.localStorage.setItem('isVIP',data.isVIP);
-				window.localStorage.setItem('color',data.color);
-				window.localStorage.setItem('agentID',data.agentID);
-				window.localStorage.setItem('productsId',data.productsId);
-				window.localStorage.setItem('isLogin',true);
 				window.location.href = '/api/followwechat';
 				return;
 				

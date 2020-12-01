@@ -74,6 +74,7 @@ export default {
 						window.localStorage.clear();
 						return;
 					}
+				
 					that.customerList = response.data.orders;
 					that.dayCount = response.data.dayCount;
 					that.count = response.data.count;
