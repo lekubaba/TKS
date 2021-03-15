@@ -13,7 +13,6 @@ export default new Vuex.Store({
 			productsId:localStorage['productsId']?localStorage['productsId']:'',
 		},
 		color:localStorage['color']?localStorage['color']:'#1476FE',
-		getAgentEndTime:'2020-10-01 00:59:59',
 		isPromotion:localStorage['isPromotion']==='false'?false:true,
 		isAddLevel:localStorage['isAddLevel']==='false'?false:true,
 		

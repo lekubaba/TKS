@@ -3,7 +3,7 @@
 ### 项目发布前需要修改的地方
 ###  
 ###  web h5页面修改的地方
-### 1,在h5页面的注册代理和成为客户页（多种模式）需要修改appid;和检查H5页面的js和css文件是否正确,tonngkeapp.html的缓存问题
+### 1,在h5页面的注册代理和成为客户页（多种模式）需要修改appid;和检查H5页面的js和css文件是否正确,tonngkeapp.html的缓存问题，空码页面的appid
 ### main.js修改的地方
 ### 1，baseURL
 ### 2,APPID

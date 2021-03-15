@@ -90,7 +90,7 @@
 		padding-top: 20px;
 		width:100vw;
 		min-height: 100vh;
-		background-color: rgb(237,237,237);
+		background-color: #F2F5FA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child,Ten} = require('../mongoose/modelSchema')
 let express = require('express');
 let router = express.Router();
 let request = require('request');
@@ -7,16 +7,14 @@ let fs = require('fs');
 let path = require('path');
 let logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
-let {checkOpenID} = require('../utils/CheckID');
-let {MNS} = require('../utils/MNS');
+let {WechatMessages} = require('../utils/WechatMessages.js');
 
 
 
-router.post('/api/alicode',async function(req,res){
+router.get('/api/getMessage',async function(req,res){
 	
-	let tel = req.body.tel;
-	
-	await MNS(req,res,tel);
+	WechatMessages.TemplateFive('杨锦旋','wechatnumber',);
+	res.json({code:200});
 	
 })
 

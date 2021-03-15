@@ -62,9 +62,19 @@
 				
 				
 				window.onscroll = () => {
-					// 距离底部200px时加载一次
+					// 距离底部100px时加载一次
 					
-					let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 100
+					// 变量scrollTop为当前页面的滚动条纵坐标位置
+					let scrollTop =
+					  document.documentElement.scrollTop || document.body.scrollTop;
+					// 变量 windowHeight 是可视区的高度
+					let windowHeight =
+					  document.documentElement.clientHeight || document.body.clientHeight;
+					// 变量 scrollHeight 是滚动条的总高度
+					let scrollHeight =
+					  document.documentElement.scrollHeight || document.body.scrollHeight;
+					// 距离底部100px时加载一次
+					let bottomOfWindow =  scrollHeight -(scrollTop + windowHeight)<=100;
 					if (bottomOfWindow&&that.isLoading == false) {
 						if(!that.level){
 							return;
@@ -142,18 +152,19 @@
 		// justify-content: center;
 	}
 	.team-total{
-		margin-top:20px;
+		margin-top:10px;
 		width:92vw;
-		height: 206px;
+		height: 156px;
 		background-color: #fff;
-		border-radius: 20px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
 		// background-image: linear-gradient(135deg,#39485c 0%,#333 100%);
 		padding:20px 0 0 20px;
 	}
 	.team-total {
 		// background: linear-gradient(135deg, #1ff0ef, #1476fe, #3c9, #09f, #66f) left center/400% 400%;
 		background-color: #1476fe;
-		animation: move 10s infinite;
+		// animation: move 10s infinite;
 	}
 	@keyframes move {
 		0%,
@@ -174,10 +185,10 @@
 		color: #fff;
 	}
 	.see-t-navs{
-		margin-top:10px;
-		width:80vw;
+		width:92vw;
 		height: 45px;
 		display: flex;
+		background-color: rgb(247,247,247);
 	}
 	.see-t-nav{
 		width:33.33333%;

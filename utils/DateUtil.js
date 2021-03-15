@@ -29,6 +29,11 @@ var DateUtil = {
     formatDate: function (pattern) {
         var time= Date.now();
         return new Date(time).Format(pattern);
-    }
+    },
+	_preDate:function(_today){
+		let preDate = new Date(new Date(_today).getTime() - 24*60*60*1000);
+		let preDateCn = preDate.getFullYear() + '-'+parseInt(preDate.getMonth()+1)+'-'+preDate.getDate();
+		return preDateCn;
+	}
 };
 module.exports = DateUtil;

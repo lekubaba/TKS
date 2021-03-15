@@ -27,7 +27,7 @@
 			},
 			LoginOut(){
 				window.localStorage.clear();
-				window.location.reload();
+				this.$router.push({name:'Login'});
 
 			}
 		},
@@ -44,6 +44,8 @@
 		flex-direction: column;
 		align-items: center;
 		padding-top:10px;
+		background: url('http://qiniu.tongkeapp.com/bg_5.png') no-repeat;
+		background-size:100%;
 
 	}
 	.set-top{
@@ -57,7 +59,7 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		background-color: #fff;
+		// background-color: #fff;
 		
 	}
 	.set-line{

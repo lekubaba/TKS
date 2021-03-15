@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>绑定推广码</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+		 <link rel="stylesheet" href="http://qiniu.tongkeapp.com/bindIdToAgent.css?time=20201227">
+		 <!-- <link rel="stylesheet" href="http://192.168.0.105:8099/styles/bindIdToAgent.css?time=20201227"> -->
+    </head>
+    <body>
+		<div class='bind'>
+			<div class='containery'>
+				<div>
+					<div class='b-nickname'><%= _children[0].agentID.agentNickname%></div>
+					<div class='title'>请绑定您要推广的产品</div>
+				</div>
+				<img class='b-img' src="<%= _children[0].agentID.agentAvatarImg%>">
+			</div>
+			
+			
+			<div class='items'>
+				<% _children.forEach(function(item){%>
+					<div class='item' style="background-color: <%= item.mainPromotionProducts.color%>">
+						<div class='b-name'><%= item.mainPromotionProducts.productsName%></div>
+						<div class='b-submit' style="color:<%= item.mainPromotionProducts.color%>" data-agentid = <%= item.agentID._id%> data-productsid = <%= item.mainPromotionProducts._id%>>绑定</div>
+					</div>
+				<% }) %>
+			</div>
+			<div class='remind'>每一个产品默认可绑定5个推广立牌二维码，如需要绑定更多，联系客服配额！</div>
+		</div>
+		<div id='mask' style='display: none;'>
+			<div class='m-content'>
+				<div class='m-title'>填写行业并确认绑定</div>
+				<div class='m-subtitle'>绑定后此二维码即可用来门店获客</div>
+				<input maxlength="16" class='m-class' type="text" placeholder="请填写您当前所属行业" onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<div class='buttons'>
+					<div class='mask-confirm' style="background-color:<%= _children[0].mainPromotionProducts.color%>">确认绑定二维码</div>
+				</div>
+			</div>
+			<div class='mask-cancel'>×</div>
+		</div>
+    </body>
+	<script src='http://qiniu.tongkeapp.com/jquery.min.js'></script>
+	<!-- <script src='http://qiniu.tongkeapp.com/bindIdToAgent.js?time=20201227'></script> -->
+	<script src='http://192.168.0.101:8099/scripts/bindIdToAgent.js?time=20201227'></script>
+</html>

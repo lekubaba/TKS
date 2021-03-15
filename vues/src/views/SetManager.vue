@@ -7,7 +7,7 @@
 		<div class='add-manager-top'>
 			<textarea maxlength="30" class='manager-input' ref='userid' placeholder="请填写或复制粘贴24位管理员ID，ID获取流程：我的-设置-ID" onkeyup="this.value=this.value.replace(/[, ]/g,'')"></textarea>
 		</div>
-		<div class='manager-sure' @click='saveManager' :style="{backgroundColor:this.$store.state.color}">提交设置</div>
+		<div class='manager-sure' @click='saveManager' :style="{backgroundColor:color}">提交配置</div>
 		<transition name='fade'>
 			<div class='mask' v-if='mask'>
 				<div class='mask-contenta'>
@@ -16,7 +16,7 @@
 					<div class='mask-titleb'>设置以后暂不可撤销，请谨慎</div>
 					<div class='mask-button'>
 						<div class='mask-cancel' @click='isCancel' :style="{color:color}">取消</div>
-						<div class='mask-confirm' @click='isConfirm' :data-state='state' :style="{backgroundColor:color}">确认</div>
+						<div class='mask-confirm' @click='isConfirm' :style="{backgroundColor:color}">确认</div>
 					</div>
 				</div>
 			</div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex';
 	export default {
 		name: 'SetManager',
 		components: {
@@ -43,6 +44,7 @@
 		  }
 		  next({name:"Promotion"});
 		},
+		
 		methods:{
 			saveManager(){
 				let userid = this.$refs.userid.value;
@@ -109,6 +111,13 @@
 		},
 		created() {
 		},
+		computed:{
+			...mapState({
+				userInfo:state=>state.userInfo,
+				color:state=>state.color,
+				isPromotion:state=>state.isPromotion,
+			})
+		},
 		mounted(){
 	
 		}
@@ -119,8 +128,8 @@
 	.manager{
 		padding:10px 0 0 0;
 		width:100vw;
-		height: 100vh;
-		background-color: rgb(237,237,237);
+		min-height: 100vh;
+		background-color: #F2F5FA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

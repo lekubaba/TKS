@@ -1,3 +1,5 @@
+ 
+ 
  *{
     margin:0;
     padding:0;
@@ -24,6 +26,31 @@ body{
 	align-items: center;
 	justify-content: center;
 }
+
+
+/* icon字体 */
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1607902484103'); /* IE9 */
+  src: url('iconfont.eot?t=1607902484103#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALYAAsAAAAABqgAAAKLAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBNIE7ATYCJAMICwYABCAFhG0HMBvhBRHVkxdkPwfczcxobVPX0q1FJUuO5wjPSJmZuYPna7/Xc3fv+9kgggJAFRWVVgHBtyWH4ytMG12WgK6uM29rzdKpA3zQEepI1j+iX0i22+NcHkgY+25wti6j5bbp4ANVBYDPczm9FlAg84OUyxyTj3oBxlsD2hujyAokAG8Yu+AFPoYAYWRRgQycXj+DQ7FXCSB7MRhwhQiKsrxDCDQcVOQaHs6cN2+Aq9H35Rd14sDgWeym8d0TDz1f2ymyx/xjywFBFAR03AMsUAEoyHRjZhSLMKYljF/JAxSNf432fWxDjvrnIQHs2ggAMqDkmaSe7FFrDQAKR+uAiUkXgUZEREZu/Hs2mZNmyKOuajoW5S+0VzaJ7wSfPEqk2/ceRlx4/CA53CUT7yf4W37x6d+/+soRBiJfkTWF92+C9vDQQmUQi6ACTzOD8/MdfwfHVRMHYdlR1MgkMilxPaSJ8Mh5egDw39mntuRf/oYjLScvrUV3/HPhCsDH/z9RyH+nDPOBO6NX4M9JB7aoIbf15hEkyGuoy4UwAEXcj48diOPLVEPibRYER+LN+kLIzGBxFFCUUQGPcBoQwNGNMMoZPh5OPPtYREOBMk4DCDE8gyGK17DE8JaijM/wSOIPAsSIRRizEn9hOEVCxQmEjJJH+4XRtQ27dp3E9Y8U3iojeXnEeiUZYhzzJCvnz6ghWWLL8B4KVUaWtsZT8BxVVYudtHtymuxUu22actObEtfWMAEIGSWP9gujaxsOOuuk8vlHCm+VkQ5SXfCVZIjjY55kAyhnmmYQ6VFeGd5DocrI0tZ4ClxUOZkWu+Z5e3Ka7Cakum2K2vFQTbK9rv67XUAY2EYzcmaNocKbaWwEAAA=') format('woff2'),
+  url('iconfont.woff?t=1607902484103') format('woff'),
+  url('iconfont.ttf?t=1607902484103') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1607902484103#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-guanbi:before {
+  content: "\e60f";
+}
+
+/* --------- */
 
 .promotion{
 	width:100vw;
@@ -223,7 +250,7 @@ body{
 	
 }
 .rna-input-check{
-	width:60vw;
+	width:55vw;
 	height: 55px;
 	border:none;
 	background-color: rgb(247,247,247);
@@ -232,15 +259,15 @@ body{
 	caret-color:#1476fe;
 }
 .get-check-number{
-	width:30vw;
+	width:35vw;
 	height: 30px;
 	color: #fff;
 	background-color: #1476fe;
 	text-align: center;
 	line-height: 30px;
-	font-size: 14px;
+	font-size: 12px;
 	border-radius: 2px;
-	font-weight: 900;
+	/* font-weight: 900; */
 	border:none;
 }
 
@@ -252,33 +279,35 @@ body{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 20px;
+	justify-content: center;
+	margin-bottom: 30px;
 }
-.mask-cancel,.mask-confirm{
-	width:45%;
-	height: 40px;
+.mask-confirm{
+	width:100%;
+	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: #fff;
-	font-size: 16px;
-	font-weight: 900;
+	font-size: 18px;
+	/* font-weight: 900; */
 	cursor: pointer;
 	border-radius: 5px;
 	
 }
 .mask-cancel{
-	color: #1476FE;
-	background-color: #eee;
-	margin-right: 10px;
+	margin-top:20px;
+	width:50px;
+	height: 50px;
+	font-size: 40px;
+	color:#fff;
 	
 	
 }
 .mask-confirm{
 	color: #fff;
 	background-color: #eee;
-	margin-left: 10px;
+	cursor: pointer;
 }
 /* 消息框 */
 

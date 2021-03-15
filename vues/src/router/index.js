@@ -4,16 +4,24 @@ import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
 // import App from '../App.vue';
 import Login from '../views/Login.vue';
+import MessageLogin from '../views/MessageLogin.vue';
 import Home from '../views/Home.vue';
 import Profile from '../views/ProgressProfile.vue';
 import FeedBack from '../views/FeedBack.vue';
+// const FeedBack = ()=>import(/* webpackChunkName: "management" */ '../views/FeedBack.vue');
 import SeeSales from '../views/SeeSales.vue';
 import SeeTeam from '../views/SeeTeam.vue';
+import Account from '../views/Account.vue';
+import BindAlipay from '../views/BindAlipay.vue';
 import BindWX from '../views/BindWX.vue';
 import MainPromotion from '../views/MainPromotion.vue';
+import SetMainPromotion from '../views/SetMainPromotion.vue';
 import UserSetup from '../views/UserSetup.vue';
 import VipEdit from '../views/VipEdit.vue';
+// const VipEdit = ()=>import(/* webpackChunkName: "management" */ '../views/VipEdit.vue');
+import PaiFa from '../views/PaiFa.vue';
 import ChoiseMode from '../views/ChoiseMode.vue';
+// const ChoiseMode = ()=>import(/* webpackChunkName: "management" */ '../views/ChoiseMode.vue');
 import UserProtocol from '../views/UserProtocol.vue';
 import PromotionGuide from '../views/PromotionGuide.vue';
 import PromotionQrcode from '../views/PromotionQrcode.vue';
@@ -23,28 +31,103 @@ import MorePromotion from '../views/MorePromotion.vue';
 import AboutUs from '../views/AboutUs.vue';
 import StatementComplaint from '../views/StatementComplaint.vue';
 import SalesProfile from '../components/SalesProfile.vue';
+import DataProfile from '../components/DataProfile.vue';
 import TeamProfile from '../components/TeamProfile.vue';
 import TraMode from '../components/TraMode.vue';
+// const TraMode = ()=>import(/* webpackChunkName: "management" */ '../components/TraMode.vue');
 import LinkMode from '../components/LinkMode.vue';
+// const LinkMode = ()=>import(/* webpackChunkName: "management" */ '../components/LinkMode.vue');
 import Promotion from '../views/Promotion.vue';
+/* 探宝 */
+import Interesting from '../views/bao/Interesting.vue';
+import JiFen from '../views/bao/JiFen.vue';
+import SeeBao from '../views/bao/SeeBao.vue';
+import OpenBao from '../views/bao/OpenBao.vue';
+import JiLu from '../views/bao/JiLu.vue';
+import MoneyProfilePage from '../views/MoneyProfilePage.vue';
+import InCome from '../components/InCome.vue';
+import MoneyRecord from '../components/MoneyRecord.vue';
+import CommissionCounter from '../views/CommissionCounter.vue';
+import UpLevelPage from '../views/UpLevelPage.vue';
+import ManagerCommission from '../views/ManagerCommission.vue';
+import BonusProfile from '../views/BonusProfile.vue';
+import EarnMoneyRoad from '../views/EarnMoneyRoad.vue';
 import Join from '../views/Join.vue';
 import RealNameAuthentication from '../views/RealNameAuthentication.vue';
+// const RealNameAuthentication = ()=>import(/* webpackChunkName: "management" */ '../views/RealNameAuthentication.vue');
 import CommissionRegular from '../views/CommissionRegular.vue';
+// const CommissionRegular = ()=>import(/* webpackChunkName: "management" */ '../views/CommissionRegular.vue');
+import CommissionRate from '../views/CommissionRate.vue';
+import AgentCommissionRate from '../views/AgentCommissionRate.vue';
+import ManagerCommissionRate from '../views/ManagerCommissionRate.vue';
 import PromotionQrcodeBackground from '../views/PromotionQrcodeBackground.vue';
+// const PromotionQrcodeBackground = ()=>import(/* webpackChunkName: "management" */ '../views/PromotionQrcodeBackground.vue');
 import AgentQrcodeBackground from '../views/AgentQrcodeBackground.vue';
+// const AgentQrcodeBackground = ()=>import(/* webpackChunkName: "management" */ '../views/AgentQrcodeBackground.vue');
 import PromotionPoster from '../views/PromotionPoster.vue';
+// const PromotionPoster = ()=>import(/* webpackChunkName: "management" */ '../views/PromotionPoster.vue');
 import AgentPoster from '../views/AgentPoster.vue';
+// const AgentPoster = ()=>import(/* webpackChunkName: "management" */ '../views/AgentPoster.vue');
 import SetLink from '../views/SetLink.vue';
+// const SetLink = ()=>import(/* webpackChunkName: "management" */ '../views/SetLink.vue');
 import UnionPay from '../views/UnionPay.vue';
+// const UnionPay = ()=>import(/* webpackChunkName: "management" */ '../views/UnionPay.vue');
 import OpenThirdLevel from '../views/OpenThirdLevel.vue';
+// const OpenThirdLevel = ()=>import(/* webpackChunkName: "management" */ '../views/OpenThirdLevel.vue');
 import Theme from '../views/Theme.vue';
+// const Theme = ()=>import(/* webpackChunkName: "management" */ '../views/Theme.vue');
 import SetManager from '../views/SetManager.vue';
-import Data from '../views/UserData.vue';
-import Center from '../views/UserCenter.vue';
+// const SetManager = ()=>import(/* webpackChunkName: "management" */ '../views/SetManager.vue');
+import OtherTool from '../views/OtherTool.vue';
+// const OtherTool = ()=>import(/* webpackChunkName: "management" */ '../views/OtherTool.vue');
+import Audit from '../views/Audit.vue';
+// const Audit = ()=>import(/* webpackChunkName: "management" */ '../views/Audit.vue');
+import ManagerBonus from '../views/ManagerBonus.vue';
+// const ManagerBonus = ()=>import(/* webpackChunkName: "management" */ '../views/ManagerBonus.vue');
+import FindSuper from '../views/FindSuper.vue';
+// const FindSuper = ()=>import(/* webpackChunkName: "management" */ '../views/FindSuper.vue');
+import CashProfile from '../components/CashProfile.vue';
+import CashRecord from '../components/CashRecord.vue';
+import SetCityJinLi from '../views/SetCityJinLi.vue';
+import UserData from '../views/UserData.vue';
+import UserCenter from '../views/UserCenter.vue';
 import SuccessRemind from '../views/SuccessRemind.vue';
 import beforeEachGlobal from '../plugins/beforeEach.js';
-// const Data = ()=>import(/* webpackChunkName: "userdata" */ '../views/UserData.vue');
-// const Center = ()=>import(/* webpackChunkName: "usercenter" */ '../views/UserCenter.vue');
+// const UserData = ()=>import(/* webpackChunkName: "management" */ '../views/UserData.vue');
+// const UserCenter = ()=>import(/* webpackChunkName: "usercenter" */ '../views/UserCenter.vue');
+//在main.js设置全局的请求次数，请求的间隙
+axios.defaults.retry = 4;
+axios.defaults.retryDelay = 5000;
+ 
+axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
+    var config = err.config;
+    // If config does not exist or the retry option is not set, reject
+    if(!config || !config.retry) return Promise.reject(err);
+     
+    // Set the variable for keeping track of the retry count
+    config.__retryCount = config.__retryCount || 0;
+     
+    // Check if we've maxed out the total number of retries
+    if(config.__retryCount >= config.retry) {
+        // Reject with the error
+        return Promise.reject(err);
+    }
+     
+    // Increase the retry count
+    config.__retryCount += 1;
+     
+    // Create new promise to handle exponential backoff
+    var backoff = new Promise(function(resolve) {
+        setTimeout(function() {
+            resolve();
+        }, config.retryDelay || 1);
+    });
+     
+    // Return the promise in which recalls axios to retry the request
+    return backoff.then(function() {
+        return axios(config);
+    });
+});
 
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
@@ -62,11 +145,21 @@ const routes = [
 		}
 		
 	},{
+		path:'/messagelogin',
+		name:'MessageLogin',
+		component:MessageLogin,
+		meta: {
+			title: '短信登录',
+			// requiresAuth:true
+		}
+		
+	},{
 		path:'/',
 		component:Home,
 		meta:{
-			title:'推广',
-			requiresAuth:true
+			title:'',
+			requiresAuth:true,
+			keepAlive:false,
 		},
 		children:[
 			{
@@ -74,24 +167,109 @@ const routes = [
 				name: 'Promotion',
 				component: Promotion,
 				meta:{
-					title:'推广',
-					requiresAuth:true
+					title:'拿钱',
+					requiresAuth:true,
+					keepAlive:false,
+				}
+			},{
+				path: '/interesting',
+				name: 'Interesting',
+				component: Interesting,
+				meta:{
+					title:'黑盒',
+					requiresAuth:true,
+					keepAlive:false,
 				}
 			},{
 				path: '/userdata',
-				name: 'UserData',
-				component: Data,
+				component: UserData,
 				meta:{
-					title:'客户分析',
-					requiresAuth:true
-				}
+					title:'',
+					requiresAuth:true,
+					keepAlive:true,
+					isBack:false, 
+				},
+				children:[
+					{
+						path:'',
+						component:DataProfile,
+						meta:{
+							title:'全部',
+							requiresAuth:true,
+							code:100,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'1',
+						component:DataProfile,
+						meta:{
+							title:'今天',
+							requiresAuth:true,
+							code:101,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'2',
+						component:DataProfile,
+						meta:{
+							title:'昨天',
+							requiresAuth:true,
+							code:102,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'3',
+						component:DataProfile,
+						meta:{
+							title:'待申请',
+							requiresAuth:true,
+							code:103,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'4',
+						component:DataProfile,
+						meta:{
+							title:'已出额',
+							requiresAuth:true,
+							code:104,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'5',
+						component:DataProfile,
+						meta:{
+							title:'已借款',
+							requiresAuth:true,
+							code:105,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},{
+						path:'7',
+						component:DataProfile,
+						meta:{
+							title:'已拒绝',
+							requiresAuth:true,
+							code:107,
+							keepAlive:true,
+							isBack:false, 
+						}
+					},
+				]
 			},{
 				path: '/usercenter',
 				name: 'UserCenter',
-				component: Center,
+				component: UserCenter,
 				meta:{
 					title:'我的',
-					requiresAuth:true
+					requiresAuth:true,
+					keepAlive:false,
 				}
 			},
 		]
@@ -101,6 +279,70 @@ const routes = [
 		component:Join,
 		meta:{
 			title:'成为商户',
+			requiresAuth:true
+		}
+	},{
+		path:'/moneyprofilepage',
+		component:MoneyProfilePage,
+		meta:{
+			title:'',
+			requiresAuth:true
+		},
+		children:[
+			{
+				path:'',
+				component:InCome,
+				meta:{
+					title:'我的收入',
+					requiresAuth:true,
+				}
+			},{
+				path:'moneyRecord',
+				component:MoneyRecord,
+				meta:{
+					title:'我的收入',
+					requiresAuth:true,
+				}
+			},
+		]
+	},{
+		path:'/commissioncounter',
+		name:'CommissionCounter',
+		component:CommissionCounter,
+		meta:{
+			title:'佣金计算工具',
+			requiresAuth:true
+		}
+	},{
+		path:'/uplevelpage',
+		name:'UpLevelPage',
+		component:UpLevelPage,
+		meta:{
+			title:'等级提升之路',
+			requiresAuth:true
+		}
+	},{
+		path:'/managercommission',
+		name:'ManagerCommission',
+		component:ManagerCommission,
+		meta:{
+			title:'管理佣金',
+			requiresAuth:true
+		}
+	},{
+		path:'/bonusprofile',
+		name:'BonusProfile',
+		component:BonusProfile,
+		meta:{
+			title:'如何计算',
+			requiresAuth:true
+		}
+	},{
+		path:'/earnmoneyroad',
+		name:'EarnMoneyRoad',
+		component:EarnMoneyRoad,
+		meta:{
+			title:'搞懂挣钱门路',
 			requiresAuth:true
 		}
 	},{
@@ -117,7 +359,9 @@ const routes = [
 		component:FeedBack,
 		meta:{
 			title:'进度反馈',
-			requiresAuth:true
+			requiresAuth:true,
+			keepAlive:false,
+			isBack:false,
 		}
 	},{
 		path:'/seesales/:userId',
@@ -199,11 +443,27 @@ const routes = [
 			}
 		]
 	},{
+		path:'/account',
+		name:'Account',
+		component:Account,
+		meta:{
+			title:'收款与账户',
+			requiresAuth:true
+		}
+	},{
 		path:'/bindwx',
 		name:'BindWX',
 		component:BindWX,
 		meta:{
-			title:'修改微信',
+			title:'绑定本人微信',
+			requiresAuth:true
+		}
+	},{
+		path:'/bindalipay',
+		name:'BindAlipay',
+		component:BindAlipay,
+		meta:{
+			title:'绑定支付宝',
 			requiresAuth:true
 		}
 	},{
@@ -212,6 +472,14 @@ const routes = [
 		component:MainPromotion,
 		meta:{
 			title:'我的全部推广',
+			requiresAuth:true
+		}
+	},{
+		path:'/setmainpromotion',
+		name:'SetMainPromotion',
+		component:SetMainPromotion,
+		meta:{
+			title:'主推设置',
 			requiresAuth:true
 		}
 	},{
@@ -228,6 +496,14 @@ const routes = [
 		component:VipEdit,
 		meta:{
 			title:'推广配置',
+			requiresAuth:true
+		}
+	},{
+		path:'/paifa',
+		name:'PaiFa',
+		component:PaiFa,
+		meta:{
+			title:'统计',
 			requiresAuth:true
 		}
 	},{
@@ -292,7 +568,7 @@ const routes = [
 		name:'ContactBoss',
 		component:ContactBoss,
 		meta:{
-			title:'联系老板',
+			title:'联系客服',
 			requiresAuth:true
 		}
 	},{
@@ -336,6 +612,31 @@ const routes = [
 		component:CommissionRegular,
 		meta:{
 			title:'上传佣金规则海报',
+			requiresAuth:true
+		},
+	},{
+		path:'/commissionrate',
+		name:'CommissionRate',
+		component:CommissionRate,
+		meta:{
+			title:'配置佣金比例',
+			requiresAuth:true
+		},		
+	},{
+		path:'/agentcommissionrate',
+		name:'AgentCommissionRate',
+		component:AgentCommissionRate,
+		meta:{
+			title:'城市代理佣金分配',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/managercommissionrate',
+		name:'ManagerCommissionRate',
+		component:ManagerCommissionRate,
+		meta:{
+			title:'城市经理佣金分配',
 			requiresAuth:true
 		}
 		
@@ -416,7 +717,79 @@ const routes = [
 		name:'SetManager',
 		component:SetManager,
 		meta:{
-			title:'设置管理员',
+			title:'管理员配置',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/othertool',
+		name:'OtherTool',
+		component:OtherTool,
+		meta:{
+			title:'常用工具',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/audit',
+		component:Audit,
+		meta:{
+			title:'提现审核与佣金发放',
+			requiresAuth:true
+		},
+		children:[
+			{
+				path:'',
+				component:CashProfile,
+				meta:{
+					title:'佣金审核',
+					requiresAuth:true,
+					code:100,
+				}
+			},{
+				path:'1',
+				component:CashProfile,
+				meta:{
+					title:'佣金审核',
+					requiresAuth:true,
+					code:101,
+				}
+			}
+		]
+		
+	},{
+		path:'/managerbonus',
+		name:'ManagerBonus',
+		component:ManagerBonus,
+		meta:{
+			title:'上月管理佣金',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/findsuper',
+		name:'FindSuper',
+		component:FindSuper,
+		meta:{
+			title:'查上级',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/cashrecord',
+		name:'CashRecord',
+		component:CashRecord,
+		meta:{
+			title:'该笔提现详情',
+			requiresAuth:true
+		}
+		
+	},{
+		path:'/setcitylinli',
+		name:'SetCityJinLi',
+		component:SetCityJinLi,
+		meta:{
+			title:'添加城市经理',
 			requiresAuth:true
 		}
 		
@@ -430,11 +803,57 @@ const routes = [
 		}
 		
 	},
+	{
+		path: '/jifen',
+		name: 'JiFen',
+		component: JiFen,
+		meta:{
+			title:'获取积分途径',
+			requiresAuth:true,
+			keepAlive:false,
+		}
+	},{
+		path: '/seebao',
+		name: 'SeeBao',
+		component: SeeBao,
+		meta:{
+			title:'黑盒概率',
+			requiresAuth:true,
+			keepAlive:false,
+		}
+	},{
+		path: '/openbao',
+		name: 'OpenBao',
+		component: OpenBao,
+		meta:{
+			title:'开黑盒',
+			requiresAuth:true,
+			keepAlive:false,
+		}
+	},{
+		path: '/jilu',
+		name: 'JiLu',
+		component: JiLu,
+		meta:{
+			title:'拆宝箱',
+			requiresAuth:true,
+			keepAlive:false,
+		}
+	}
+	
 	
 ]
 
 const router = new VueRouter({
-	routes
+	mode:'hash',
+	scrollBehavior (to, from, savedPosition) {
+	  if (savedPosition) {
+	    return savedPosition
+	  } else {
+	    return { x: 0, y: 0 }
+	  }
+	},
+	routes:routes,
 });
 
 router.beforeEach((to, from, next) => {

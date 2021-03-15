@@ -9,6 +9,7 @@ let logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
 let {checkOpenID} = require('../utils/CheckID');
 let {MNS} = require('../utils/MNS');
+let {Probability} = require('../utils/HeiHe.js');
 
 
 
@@ -19,6 +20,7 @@ router.get('/api/relation',async function(req,res){
 	})
 	
 })
+
 
 
 module.exports = router;

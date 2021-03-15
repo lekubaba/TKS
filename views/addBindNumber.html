@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>增加绑定数</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+		 <link rel="stylesheet" href="http://qiniu.tongkeapp.com/addBindNumber.css?time=20201224">
+		 <!-- <link rel="stylesheet" href="http://192.168.0.105:8099/styles/addBindNumber.css?time=20201224"> -->
+    </head>
+    <body>
+		<div class='business'>
+			<div class='container'>
+				<div class='container-a'>
+					<div class='c-title'>
+						配额<span style='color:#11b764'>说明</span>
+					</div>
+					<div class='remind1'>
+						针对一些特殊的场景，比如酒店，连锁店等需求立牌比较大的场景，那么默认的5个是不够了，这里可以配置数量。
+					</div>
+					<div class='remind1'>
+						此工具属于高级权限工具，只能在独家手中流通。
+					</div>
+				</div>
+			</div>
+			<div class='containerh'>
+				<div id='message'></div>
+				<input type="number" class='ismaxbind' placeholder="填写还需要的数量" name='maxBind' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<input type="text" maxlength="30" class='isagentid' placeholder="请填写代理ID" name='agentID' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+				<div class='commit'>添加</div>
+			</div>
+		</div>
+		<div id='mask' style="display: none;">配额成功</div>
+    </body>
+	<script src='http://qiniu.tongkeapp.com/jquery.min.js'></script>
+	<script src='http://qiniu.tongkeapp.com/addBindNumber.js?time=20201224'></script>
+	<!-- <script src='http://192.168.0.105:8099/scripts/addBindNumber.js?time=20201224'></script> -->
+</html>

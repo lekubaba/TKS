@@ -1,0 +1,55 @@
+ *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Helvetica Neue,PingFang SC,Microsoft YaHei;
+    -webkit-font-smoothing:antialiased;/* chorm safari 抗锯齿*/
+    -webkit-overflow-scrolling:touch;
+    outline:none;
+}
+/* 滚动条样式调节*/
+::-webkit-scrollbar{margin-right:3px;width:4px;height:4px}
+::-webkit-scrollbar,::-webkit-scrollbar-track{background-color:transparent}
+::-webkit-scrollbar-thumb{width:4px;border-radius:2px;background-color:#e4e4e4}
+
+body,html{min-height:100%;}
+a,a:visited{text-decoration:none}
+h1,h2,h3,h4,h5,h6{font-weight:500}
+input{
+	border-radius: 0px;
+}
+body{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #F2F5FA;
+}
+
+#container{
+	margin-top:40px;
+	width:92vw;
+	height: auto;
+	padding:20px 25px 20px 25px;
+	background-color: #fff;
+	border-radius: 10px;
+	display: flex;
+}
+
+.container-a{
+	width:100%;
+}
+.c-title{
+	font-size:26px;
+	color:#333;
+	font-weight: 900;
+}
+
+
+.remind{
+	width: 100%;
+	padding:5px 0px 0 0px;
+	margin-top:5px;
+	font-size: 14px;
+	color:#666;
+}

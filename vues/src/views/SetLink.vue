@@ -4,7 +4,7 @@
 			你需要准备在第三方拿到的推广链接，并将链接在这里复制粘贴并保存。
 		</div>
 		<div class='add-link-top'>
-			<textarea maxlength="160" class='link-input' ref='link' :placeholder="productsLink?productsLink:'复制粘贴第三方申请链接或购买链接'" onkeyup="this.value=this.value.replace(/[, ]/g,'')"></textarea>
+			<textarea maxlength="300" class='link-input' ref='link' :placeholder="productsLink?productsLink:'复制粘贴第三方申请链接或购买链接'" onkeyup="this.value=this.value.replace(/[, ]/g,'')"></textarea>
 		</div>
 		<div class='link-sure' @click='saveLink' :style="{backgroundColor:this.$store.state.color}">保存</div>
 	</div>
@@ -94,7 +94,7 @@
 		padding:10px 0 0 0;
 		width:100vw;
 		height: 100vh;
-		background-color: rgb(237,237,237);
+		background-color: #F2F5FA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -113,7 +113,7 @@
 	}
 	.add-link-top{
 		width:85vw;
-		height: 115px;
+		height: 165px;
 		border-radius: 5px;
 		display: flex;
 		flex-direction: row;
@@ -126,7 +126,7 @@
 	.link-input{
 		padding:5px 10px 10px 10px;
 		width:85vw;
-		height: 115px;
+		height: 165px;
 		border:none;
 		border-radius: 5px;
 		font-size: 18px;

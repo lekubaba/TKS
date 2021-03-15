@@ -1,30 +1,23 @@
 <template>
 	<div class='promotion-item'>
-		<div class='add-remindx' :style="{backgroundColor:color}">
+		<div class='add-remindx'>
 			设置须知：如需推广某个产品，生成二维码，查看对应产品推广的代理详情和业绩详情，需要将这个产品设置为主推，可以理解为“切换账号”。
 		</div>
 		<div class='wraper-items'>
 			<div class='wraper-item' v-for='item in promotionList'>
-				<div class='container'>
-					<div class='wraper-item-title1'>{{item.mainPromotionProducts.productsName}}</div>
-					<div class='wraper-item-titleone' v-if="currentProductsId===item.mainPromotionProducts._id">当前</div>
+				<div class='container-c'>
+					<div class='container'>
+						<div class='wraper-item-title1'>{{item.mainPromotionProducts.productsName}}</div>
+						<div class='wraper-item-titleone' v-if="currentProductsId===item.mainPromotionProducts._id">当前主推</div>
+					</div>
+					<div class='item-t'>
+						加入时间：{{item.time}}
+					</div>
 				</div>
 				<div class='wraper-item-title2' :style="{backgroundColor:color}" :data-productsname="item.mainPromotionProducts.productsName" :data-productsid="item.mainPromotionProducts._id" @click='setMainPromotion'>设为主推</div>
 			</div>
 		</div>
 		<div style='height: 100px;'></div>
-		<transition name='fade'>
-			<div class='mask' v-if='mask.mask1'>
-				<div class='mask-contenta'>
-					<div class='mask-titlea' :style="{color:color}">确认提醒</div>
-					<div class='mask-titleb'>确认切换{{productsName}}为主推并需重新登陆</div>
-					<div class='mask-button'>
-						<div class='mask-cancel' @click='isCancel' :style="{color:color}">取消</div>
-						<div class='mask-confirm' @click='isConfirm' :style="{backgroundColor:color}">确认</div>
-					</div>
-				</div>
-			</div>
-		</transition>
 	</div>
 </template>
 
@@ -66,34 +59,10 @@
 				})
 			},
 			setMainPromotion(event){
-				this.productsName = event.currentTarget.dataset.productsname;
-				this.productsId = event.currentTarget.dataset.productsid;
-				let currentProductsId = window.localStorage['productsId'];
-				if(this.productsId == currentProductsId){
-					this.$message.info('不要重复设置');
-					return;
-				}
-				this.mask.mask1 = true;
+				let productsId = event.currentTarget.dataset.productsid;
+				this.productsId = productsId;
+				this.$router.push({name:'SetMainPromotion',params:{productsId:productsId}});
 			},
-			isCancel(){
-				this.mask.mask1 = false;
-			},
-			isConfirm(event){
-				let that = this;
-				let agentID = window.localStorage['agentID'];
-				let productsId = this.productsId;
-				this.axios.post('/api/setmainpromotionproducts',{agentID:agentID,productsId:productsId})
-				.then(function(resp){
-					that.mask.mask1 = false;
-					if(resp.data.code===500){
-						that.$message.info('系统出错了');
-						return;
-					}
-					that.$message.info('切换成功');
-					window.localStorage.clear();
-					window.location.reload();
-				})
-			}
 		},
 		computed:{
 			...mapState({
@@ -108,11 +77,13 @@
 <style scoped lang="less">
 	.promotion-item{
 		width:100vw;
-		min-height: 110vh;
+		min-height: 100vh;
 		background-color: rgb(237,237,237);
 		display: flex;
 		flex-direction:column;
 		align-items: center;
+		background: url('http://qiniu.tongkeapp.com/bg_5.png') no-repeat;
+		background-size:100%;
 	}
 	.add-remindx{
 		margin-top:30px;
@@ -124,10 +95,9 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		background-color: #1476FE;
-		box-shadow: 0 1px 6px 0px rgba(100,100,100,.3);
+		box-shadow: 0 1px 3px 0px rgba(100,100,100,.5);
 		font-size: 12px;
-		color: #fff;
+		color: #333;
 	}
 	.edit-wraper{
 		margin-top:20px;
@@ -167,6 +137,11 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+	}
+	.item-t{
+		margin-left: 20px;
+		font-size: 10px;
+		color: #999;
 	}
 	.wraper-item-title1{
 		margin-left: 20px;

@@ -2,7 +2,8 @@
 	<div id="app">
 		<div id="nav">
 			<router-link :to="{name:'Promotion'}" class='tabbar-item-text' active-class="active" exact>首页</router-link>
-			<router-link :to="{name:'UserData'}" class='tabbar-item-text line' active-class="active" exact>客户数据</router-link>
+			<router-link :to="{name:'Interesting'}" class='tabbar-item-text linea' active-class="active" exact v-if='isPromotion'>黑盒</router-link>
+			<router-link to="/userdata" class='tabbar-item-text line' active-class="active" exact v-if='isPromotion'>客户数据</router-link>
 			<router-link :to="{name:'UserCenter'}" class='tabbar-item-text' active-class="active" exact>我的</router-link>
 		</div>
 		<router-view/>
@@ -13,15 +14,11 @@
 		name: 'Home',
 		data () {
 			return {
+				isPromotion:null,
 			}
 		},
-		watch: {
-			$route(to,from){
-				
-			}
-		},
-		created () {
-
+		created(){
+			this.isPromotion = this.$store.state.isPromotion;
 		}
 
 	}	
@@ -41,8 +38,11 @@
 		padding:10px 0 0 0;
 		background-color: #fff;
 		box-shadow: 0 0 6px 0 rgba(0,0,0,.1);
-		z-index: 1000;
+		z-index: 3000;
 		
+	}
+	.linea{
+		border-left: 1px solid #e4e4e4;
 	}
 	.line{
 		border-left: 1px solid #e4e4e4;
@@ -50,7 +50,7 @@
 	}
 	.tabbar-item-text{
 		height: 32px;
-		width:33.33333vw;
+		width:33.333%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -64,8 +64,8 @@
 		color: #1476FE;
 		&:after {
 			content: " ";
-			width: 30px;
-			height: 0.12rem;
+			width: 20px;
+			height: 0.22rem;
 			background: #1476FE;
 			position: absolute;
 			bottom: -0.1rem;

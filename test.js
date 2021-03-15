@@ -1,14 +1,35 @@
-async function Te(a,b){
-	let x = await new Promise(function(resolve){
-		if(true){
-			resolve(a+b);
-		}
-	})
-	
-	return x;
-	
+let baobeis = ['积分宝箱','红包宝箱','翻倍宝箱','手机宝箱','金牛宝箱','旅游宝箱'];
+//随机数留俩位小数
+function random(min,max){
+　　return (Math.random()*(max-min) + min).toFixed(2);    
 }
 
-Te(3,4).then(function(v){
-	console.log(v);
-})
+/**
+ * (1)10000代表总概率，小于9900时代表概率为99%;
+ * (2)10000代表总概率，小于9990时代表概率为0.9%;
+ * (3)10000代表总概率，小于9999时代表概率为0.01%;
+ */
+function baobei(){
+	
+	let ran = random(0,10000);
+	
+	if(ran<8900){
+		return  '积分宝箱';
+	}
+	if(ran<9400){
+		return  '红包宝箱';
+	}
+	if(ran<9650){
+		return  '翻倍宝箱';
+	}
+	if(ran<9900){
+		return  '手机宝箱';
+	}
+	if(ran<10000){
+		return  '金牛钥匙';
+	}
+}
+
+for(var i = 0;i<100;i++){
+	console.log(baobei());
+}

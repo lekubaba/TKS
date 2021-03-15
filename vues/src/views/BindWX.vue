@@ -1,13 +1,19 @@
 <template>
 	<div class='bind-wx'>
-		<div class='wx-wrapera'>
-			<span>姓名</span><input type="text" class='wx-input wx-username' name='agentName' placeholder="请填写姓名" ref='agentName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+		<div class='container'>
+			<div class='c-title'>
+				请输入本人微信号
+			</div>
+			<div class='remind'>
+				微信账号便于您与上下级沟通联系，获得/提供辅导帮助，请填写正确账号。
+			</div>
+			<div class='wx-wraperb'>
+				<input type="text" class='wx-input wx-number' name='agentWechat' :placeholder="agentWechat?agentWechat:placeholder" ref='wechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			</div>
+			<div class='remind'>请填写微信绑定的手机号。</div>
+			<div class='wx-submit' @click='saveWechat' :style="{backgroundColor:this.$store.state.color}">保存</div>
+			
 		</div>
-		<div class='wx-wraperb'>
-			<span>微信</span><input type="text" class='wx-input wx-number' name='agentWechat' :placeholder="agentWechat?agentWechat:placeholder" ref='wechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-		</div>
-		<div class='remind'>此微信用于收款，沟通，获得/提供辅导帮助，请填写正确账号</div>
-		<div class='wx-submit' @click='saveWechat' :style="{backgroundColor:this.$store.state.color}">保存</div>
 	</div>
 </template>
 
@@ -30,8 +36,9 @@
 		methods:{
 			getData(){
 				let agentID = window.localStorage['agentID'];
+				let productsId = window.localStorage['productsId'];
 				let that = this;
-				this.axios.post('/api/getwechat',{agentID:agentID})
+				this.axios.post('/api/getwechat',{agentID:agentID,productsId:productsId})
 					.then(function(res){
 						if(res.data.code===500){
 							that.$loading.hide()
@@ -50,23 +57,22 @@
 			},
 			saveWechat(){
 				let that = this;
-				let agentName = this.$refs.agentName.value; /* 获取输入值*/
 				let wechat = this.$refs.wechat.value;/* 获取输入值 */
-				let isAgentName = this.$Utils.checkCName(agentName);/* 检测中文名合法 */
 				let isWechat = this.$Utils.checkTel(wechat);/* 检测微信手机号是否合法 */
-				let agentID = window.localStorage['agentID']; //当前代理的OPENID
+				let agentID = window.localStorage['agentID']; //
+				let productsId = window.localStorage['productsId'];
 				
-				if(!agentName|| !wechat){
+				if(!wechat){
 					this.$message.info('内容不能为空');
 					return;
 				}
-				if(!isAgentName || !isWechat){
+				if(!isWechat){
 					this.$message.info('格式错误');
 					return;
 				}
 				
-				if(isAgentName && isWechat){
-					let weixin = {agentID:agentID,agentName:agentName,agentWechat:wechat};
+				if(isWechat){
+					let weixin = {agentID:agentID,productsId:productsId,agentWechat:wechat};
 					this.axios.post('/api/saveWechat',weixin)
 						.then(function(res){
 							if(res.data.code===500){
@@ -75,8 +81,9 @@
 							}
 							
 							if(res.data.code===200){
-								that.$refs.agentName.value = '';
-								that.$message.success('微信修改成功');
+								that.$refs.wechat.value = '';
+								that.agentWechat = '已绑定:'+wechat;
+								that.$message.success('微信绑定成功');
 							}
 							
 						})
@@ -96,18 +103,34 @@
 	flex-direction: column;
 	align-items: center;
 	// justify-content: center;
+	background: url('http://qiniu.tongkeapp.com/bg_5.png') no-repeat;
+	background-size:100%;
+	
+}
+.container{
+	margin-top:40px;
+	width:92vw;
+	min-height: 500px;
+	padding:30px 25px 30px 25px;
+	background-color: #fff;
+	border-radius: 10px;
+}
+.c-title{
+	
+	font-size:26px;
+	color:#333;
+	font-weight: 900;
 }
 .wx-wrapera,.wx-wraperb{
-	width:100vw;
-	height: 60px;
+	width:100%;
+	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding:0 0 0 20px;
 	border-bottom: 1px solid #ccc;
 }
 .wx-wrapera{
-	margin-top:30px;
+	margin-top:20px;
 }
 .wx-wraperb{
 	margin-top:10px;
@@ -118,14 +141,13 @@
 	color: #666;
 }
 .wx-input{
-	width:80vw;
-	height: 30px;
-	margin-left:10px;
+	width:100%;
+	height: 50px;
 	border:none;
-	background-color: #ededed;
-	font-size: 15px;
-	color: #555;
-	font-weight: 900;
+	background-color: #fff;
+	font-size: 16px;
+	color: #333;
+	border-bottom: .03125rem solid #dae0ea;
 }
 .wx-submit{
 	margin-top:50px;
@@ -139,8 +161,8 @@
 	border-radius: 10px;
 }
 .remind{
-	width: 100vw;
-	padding:5px 20px 0 20px;
+	width: 100%;
+	padding:5px 0px 0 0px;
 	margin-top:5px;
 	font-size: 12px;
 	color:#666;

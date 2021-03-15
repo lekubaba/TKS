@@ -25,8 +25,7 @@ var CheckID = {
 				}
 			})
 		})
-		
-		console.log(isOpenID);
+
 		
 		return isOpenID;
 		

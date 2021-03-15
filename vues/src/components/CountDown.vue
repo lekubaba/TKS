@@ -37,9 +37,9 @@
 					var m1 = m.toString().length ===1?'0'+m:m;
 					var s = Math.floor((leftTime / 1000) % 60);
 					var s1 = s.toString().length ===1?'0'+s:s;
-					this.timeRes = d1+':'+h1+':'+m1+':'+s1;
+					this.timeRes = d1+'天'+h1+'时'+m1+'分'+s1+' 后降级';
 				}else{
-					this.timeRes = '已结束';
+					this.timeRes = '';
 				}
 				//递归每秒调用countTime方法，显示动态时间效果
 				setTimeout(this.countTime, 1000)
@@ -54,5 +54,9 @@
 </script>
 
 <style scoped lang="less">
-	
+	.count-down{
+		color:#1476FE;
+		font-size: 10px;
+		margin-left: 5px;
+	}
 </style>

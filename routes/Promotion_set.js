@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-let {Agent,Customer,Products,Order,Child} = require('../mongoose/modelSchema')
+let {Agent,Customer,Products,Order,Child,Income,Cash} = require('../mongoose/modelSchema')
 var express = require('express');
 var router = express.Router();
 var request = require('request');
@@ -9,6 +9,7 @@ var path = require('path');
 var logger = require('../utils/logger').logger;
 let {formatDate} = require('../utils/DateUtil');
 let qiniu = require('qiniu');
+let {WechatMessages} = require('../utils/WechatMessages');
 
 
 router.post('/api/openThirdLevel',function(req,res){
@@ -275,7 +276,7 @@ router.post('/api/savemanager',async function(req,res){
 	let productsId = req.body.productsId;
 	
 	try {
-		let _child =  await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('isVIP isManager').lean();
+		let _child =  await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('openID isVIP isManager').populate('agentID','agentNickname').lean();
 		
 		if(!_child){
 			res.json({code:100});
@@ -289,7 +290,15 @@ router.post('/api/savemanager',async function(req,res){
 			res.json({code:102});
 			return;
 		}
-		await Child.update({agentID:agentID,mainPromotionProducts:productsId},{'$set':{isManager:true}});
+		let countDown = new Date().getTime()+86400000*60;
+		await Child.update({agentID:agentID,mainPromotionProducts:productsId},{'$set':{isManager:true,managerLevel:2,countDown:countDown}});
+		
+		let agentName = _child.agentID.agentNickname;
+		let level1 = '代理';
+		let level2 = '城市总监';
+		let _openID = _child.openID;
+		WechatMessages.TemplateSix(agentName,level1,level2,_openID);
+		
 		res.json({code:200});
 		return;
 		
@@ -299,6 +308,105 @@ router.post('/api/savemanager',async function(req,res){
 	}
 	
 })
+
+
+//获取提现数据用来审核
+router.post('/api/getCashProfile',async function(req,res){
+	
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
+	let pathCode = req.body.pathCode;
+	
+	try {
+		
+		let isFa = pathCode===100?false:true;
+		
+		let _cash = await Cash.find({productsId:productsId,isFa:isFa})
+		.limit(20).skip(0).sort({"_id":-1})
+		.populate('agentID','agentName agentAvatarImg agentNickname agentAlipay')
+		.lean();
+		
+		res.json({code:200,cashs:_cash});
+		
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+})
+
+
+//下拉刷新获取提现数据用来审核
+router.post('/api/getCashProfiles',async function(req,res){
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
+	let pathCode = req.body.pathCode;
+	let _num = req.body.num;
+	
+	try {
+		
+		let isFa = pathCode===100?false:true;
+		
+		let _cash = await Cash.find({productsId:productsId,isFa:isFa})
+		.limit(20).skip(_num).sort({"_id":-1})
+		.populate('agentID','agentName agentAvatarImg agentNickname agentAlipay')
+		.lean();
+		
+		res.json({code:200,cashs:_cash});
+		
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+})
+
+
+/* 通过CashID获取到某一笔提现包含的所有记录 */
+
+router.post('/api/getIncomeByCashID', async function(req,res){
+	let _cashID = req.body.cashID;
+	try{
+		let _incomes = await Income.find({cashID:_cashID})
+		.limit(20).skip(0).sort({"_id":-1})
+		.select('types howMuch inTime orderID')
+		.populate({path:'orderID',select:'agentID',populate:{path:'agentID',select:'agentNickname'}}).lean();
+		res.json({code:200,data:_incomes});
+	}catch(err){
+		logger.error(err);
+		res.json({code:500});
+	}
+})
+
+/* 下拉加载通过CashID获取到某一笔提现包含的所有记录 */
+
+router.post('/api/getIncomeByCashIDs', async function(req,res){
+	let _cashID = req.body.cashID;
+	let _num = req.body.num;
+	try{
+		let _incomes = await Income.find({cashID:_cashID})
+		.limit(20).skip(_num).sort({"_id":-1})
+		.select('types howMuch inTime orderID')
+		.populate({path:'orderID',select:'agentID',populate:{path:'agentID',select:'agentNickname'}}).lean();
+		res.json({code:200,data:_incomes});
+	}catch(err){
+		logger.error(err);
+		res.json({code:500});
+	}
+})
+
+/* 结算完毕,保存记录 */
+router.post('/api/saveSettlementRecord', async function(req,res){
+	let _cashID = req.body.cashID;
+	try{
+		await Cash.update({_id:_cashID},{'$set':{isFa:true}});
+		res.json({code:200});
+	}catch(err){
+		logger.error(err);
+		res.json({code:500});
+	}
+})
+
 
 
 

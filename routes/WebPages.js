@@ -46,7 +46,7 @@ router.get('/api/getagentpage/:agentID/:productsId',async function(req,res){
 router.get('/api/rigisteragentpage/:agentID/:productsId',async function(req,res){
 	
 	// 需要检测传过来的ID合法性；
-	let title = '限时免费代理';
+	let title = '免费代理';
 	let agentID = req.params.agentID;
 	let productsId = req.params.productsId;
 	

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <title>代理数据</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+		 <style type="text/css">
+		 	body{
+		 		display: flex;
+		 		flex-direction: column;
+		 		align-items: center;
+		 		justify-content: center;
+		 		background-color: #F2F5FA;
+		 		padding-top:50px;
+		 	}
+		 </style>
+    </head>
+    <body>
+		<div>
+			<table border="0" cellspacing="9" cellpadding="0">
+				<tr>
+					<th>加入时间</th>
+					<th>昵称</th>
+					<th>姓名</th>
+					<th>微信手机</th>
+					<th>层级</th>
+					<th>职位</th>
+					<th>邀请数</th>
+					<th>绑定数</th>
+					<th>代理数</th>
+					<th>业绩</th>
+				</tr>
+				<% datas.forEach(function(item){ %>
+					<tr>
+						<td><%= item.time%></td>
+						<td><%= item.agentID.agentNickname%></td>
+						<td><%= item.agentID.agentName%></td>
+						<td><%= item.agentWechat%></td>
+						<td><%= item.level%></td>
+						<td><%= item.managerLevel%></td>
+						<td><%= item.inviteNum%></td>
+						<td><%= item.bindNumber%></td>
+						<td><%= item.agentNum%></td>
+						<td><%= item.sales%></td>
+					</tr>
+				<% }) %>
+				
+			</table>
+		</div>
+    </body>
+	
+</html>

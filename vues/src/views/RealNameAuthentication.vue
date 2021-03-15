@@ -1,29 +1,29 @@
 <template>
 	<div class='authentication'>
-		<div class='rna-wrapera'>
-			<span>姓名</span><input type="text" class='rna-input' name='agentName' placeholder="请填写管理员真实姓名" ref='agentName' onkeyup="this.value=this.value.replace(/[, ]/g,'')"
->
-		</div>
-		<div class='rna-wraperb'>
-			<span>身份证</span><input type="text" class='rna-input' name='idCard' placeholder="请填写管理员身份证号" ref='idCard' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-		</div>
-		<div class='rna-wraperb'>
-			<span>手机号</span><input type="text" class='rna-input' name='agentWechat' placeholder="管理员手机号(同微信号)" ref='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-		</div>
-		<div class='rna-wraperb'>
-			<span>验证码</span>
-			<div class='rna-check'>
-				<input type="number" class='rna-input-check' name='verificationCode' placeholder="请填写验证码" ref='verificationCode' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-				<div class='get-check-number' :style="{backgroundColor:this.$store.state.color}" @click='countDownSixty'>{{content}}</div>	
+		<div class='container'>
+			<div class='rna-wrapera'>
+				<input type="text" class='rna-input' name='agentName' placeholder="请填写管理员真实姓名" ref='agentName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
 			</div>
+			<div class='rna-wraperb'>
+				<input type="text" class='rna-input' name='idCard' placeholder="请填写管理员身份证号" ref='idCard' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			</div>
+			<div class='rna-wraperb'>
+				<input type="text" class='rna-input' name='agentWechat' placeholder="管理员手机号(同微信号)" ref='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			</div>
+			<div class='rna-wraperb'>
+				<div class='rna-check'>
+					<input type="number" class='rna-input-check' name='verificationCode' placeholder="请填写验证码" ref='verificationCode' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+					<div class='get-check-number' :style="{backgroundColor:this.$store.state.color}" @click='countDownSixty'>{{content}}</div>	
+				</div>
+			</div>
+			<div class='rna-wraperb'>
+				<input type="text" class='rna-input' name='companyName' placeholder="请填写所在的公司名称" ref='companyName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			</div>
+			<div class='rna-wraperb'>
+				<input type="text" class='rna-input' name='productsName' placeholder="请填写产品中文简称" ref='productsName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+			</div>
+			<div class='rna-submit' @click= 'saveImformation' :style="{backgroundColor:this.$store.state.color}">保存</div>
 		</div>
-		<div class='rna-wraperb'>
-			<span>公司名称</span><input type="text" class='rna-input' name='companyName' placeholder="请填写所在的公司名称" ref='companyName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-		</div>
-		<div class='rna-wraperb'>
-			<span>产品名称</span><input type="text" class='rna-input' name='productsName' placeholder="请填写产品中文简称" ref='productsName' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-		</div>
-		<div class='rna-submit' @click= 'saveImformation' :style="{backgroundColor:this.$store.state.color}">保存</div>
 	</div>
 </template>
 
@@ -165,72 +165,74 @@
 	.authentication{
 		width:100vw;
 		height: 100vh;
-		background-color: rgb(237,237,237);
+		background-color: #F2F5FA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		// justify-content: center;
 	}
+	.container{
+		margin-top:30px;
+		width:90%;
+		height: auto;
+		padding:30px 0px 20px 0px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #fff;
+		border-radius: 20px;
+	}
 	.rna-wrapera,.rna-wraperb{
-		width:100vw;
+		width:85vw;
 		height: 60px;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		padding:0 0 0 20px;
-		border-bottom: .5px solid #ccc;
-	}
-	.rna-wrapera{
-		margin-top:30px;
-	}
-	.rna-wraperb{
-		margin-top:10px;
-	}
-	.authentication span{
-		font-size: 16px;
-		font-weight: 900;
-		color: #666;
+		justify-content: center;
+		background-color: #fff;
 	}
 	.rna-check{
-		width:70vw;
-		height: 30px;
-		margin-left:10px;
+		width:80vw;
+		height: 50px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
 	.rna-input{
-		width:70vw;
-		height: 30px;
-		margin-left:10px;
+		width:80vw;
+		height: 45px;
 		border:none;
-		background-color: #ededed;
-		font-size: 15px;
+		background-color: #F2F5FA;;
+		font-size: 16px;
 		color: #555;
 		font-weight: 900;
+		padding-left: 20px;
+		border-radius: 5px;
 	}
 	.rna-input-check{
-		width:40vw;
-		height: 30px;
+		width:50vw;
+		height: 45px;
 		border:none;
-		background-color: #ededed;
-		font-size: 15px;
+		background-color: #F2F5FA;
+		font-size: 16px;
 		color: #555;
 		font-weight: 900;
+		padding-left: 20px;
+		border-bottom-left-radius: 5px;
+		border-top-left-radius: 5px;
 	}
 	.get-check-number{
-		margin-right: 20px;
 		width:35vw;
-		height: 30px;
+		height:45px;
 		color: #fff;
 		background-color: #1476fe;
 		text-align: center;
-		line-height: 30px;
+		line-height: 45px;
 		font-size: 12px;
-		border-radius: 20px;
+		border-bottom-right-radius: 5px;
+		border-top-right-radius: 5px;
 	}
 	.rna-submit{
-		margin-top:50px;
+		margin-top:20px;
 		width:80vw;
 		height: 50px;
 		text-align: center;
@@ -238,6 +240,6 @@
 		color: #fff;
 		font-size: 20px;
 		background-color: #1476fe;
-		border-radius: 10px;
+		border-radius: 5px;
 	}
 </style>

@@ -3,7 +3,7 @@
 		<h1>联系我们</h1>
 		<h3>客服电话：{{bossPhoneNumber}}</h3>
 		<h3>客服微信：{{bossWechat}}</h3>
-		<h4>如遇到推广、佣金等问题，请联系我。</h4>
+		<h3>服务内容：邀请进地区群，咨询各种推广问题，订立牌，开通城市经理，城市总监，城市独家。</h3>
 	</div>
 </template>
 
@@ -26,11 +26,11 @@
 		},
 		methods:{
 			getBossInfo(){
-				let productsID = this.$route.query.id;
+				let agentID = window.localStorage['agentID'];
+				let productsId = window.localStorage['productsId'];
 				let that = this;
-				this.axios.post('/api/getBossInfo',{productsID:productsID})
+				this.axios.post('/api/getBossInfo',{productsID:productsId,agentID:agentID})
 					.then(function(res){
-						
 						that.bossPhoneNumber = res.data.bossPhoneNumber;
 						that.bossWechat = res.data.bossWechat;
 					})

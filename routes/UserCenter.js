@@ -20,13 +20,17 @@ router.post('/api/usercenter',async function(req,res){
 		let userid = mongoose.Types.ObjectId(agentID);
 		let proid = mongoose.Types.ObjectId(productsId);
 		let _isBusiness = await Agent.findOne({_id:agentID}).select('isBusiness').lean();
-		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager').populate('mainPromotionProducts','isAddLevel');
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean().select('mainPromotionProducts isVIP sales isManager managerLevel activityNumber').populate('mainPromotionProducts','isAddLevel');
 		if(!_child){
 			let data = {
 				code:200,
 				agents:0,
 				sales:0,
 				isBusiness:_isBusiness.isBusiness,
+				isVIP:false,
+				isManager:false,
+				managerLevel:100,
+				activityNumber:0,
 			}
 			res.json(data);	
 			return;
@@ -47,6 +51,11 @@ router.post('/api/usercenter',async function(req,res){
 						agents:_agents,
 						sales:0,
 						isBusiness:_isBusiness.isBusiness,
+						isVIP:_child.isVIP,
+						isManager:_child.isManager,
+						managerLevel:_child.managerLevel,
+						activityNumber:_child.activityNumber
+						
 					}
 					return res.json(data);	
 				}else{
@@ -56,6 +65,10 @@ router.post('/api/usercenter',async function(req,res){
 						agents:_agents,
 						sales:total,
 						isBusiness:_isBusiness.isBusiness,
+						isVIP:_child.isVIP,
+						isManager:_child.isManager,
+						managerLevel:_child.managerLevel,
+						activityNumber:_child.activityNumber
 					}
 					return res.json(data);	
 				}
@@ -73,6 +86,10 @@ router.post('/api/usercenter',async function(req,res){
 						agents:_agents,
 						sales:0,
 						isBusiness:_isBusiness.isBusiness,
+						isVIP:_child.isVIP,
+						isManager:_child.isManager,
+						managerLevel:_child.managerLevel,
+						activityNumber:_child.activityNumber
 					}
 					return res.json(data);	
 				}else{
@@ -82,6 +99,10 @@ router.post('/api/usercenter',async function(req,res){
 						agents:_agents,
 						sales:total,
 						isBusiness:_isBusiness.isBusiness,
+						isVIP:_child.isVIP,
+						isManager:_child.isManager,
+						managerLevel:_child.managerLevel,
+						activityNumber:_child.activityNumber
 					}
 					return res.json(data);	
 				}
@@ -100,6 +121,10 @@ router.post('/api/usercenter',async function(req,res){
 					agents:_agents,
 					sales:0,
 					isBusiness:_isBusiness.isBusiness,
+					isVIP:_child.isVIP,
+					isManager:_child.isManager,
+					managerLevel:_child.managerLevel,
+					activityNumber:_child.activityNumber
 				}
 				return res.json(data);	
 			}else{
@@ -109,6 +134,10 @@ router.post('/api/usercenter',async function(req,res){
 					agents:_agents,
 					sales:total,
 					isBusiness:_isBusiness.isBusiness,
+					isVIP:_child.isVIP,
+					isManager:_child.isManager,
+					managerLevel:_child.managerLevel,
+					activityNumber:_child.activityNumber
 				}
 				return res.json(data);	
 			}
@@ -142,89 +171,99 @@ router.post('/api/getmode',async function(req,res){
 
 // 绑定微信获取用户绑定前微信
 
-router.post('/api/getwechat',function(req,res){
+router.post('/api/getwechat',async function(req,res){
 	let agentID = req.body.agentID;
-	Agent.findOne({_id:agentID})
-	.lean()
-	.select('agentWechat')
-	.exec(function(err,_agent){
-		if(err){
-			logger.error(err);
-			return res.json({code:500});
-		}
+	let productsId = req.body.productsId;
+	
+	try {
+		let _agent = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('agentWechat').lean();
 		
+		if(!_agent){
+			let data = {
+				code:200,
+				agentWechat:'',
+			}
+			res.json(data);
+			return;
+		}
 		let data = {
 			code:200,
 			agentWechat:_agent.agentWechat
 		}
 		return res.json(data);
-		
-		
-	})
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
 })
 
 router.post('/api/saveWechat',async function(req,res){
 	
 	let agentID = req.body.agentID;
-	let agentName = req.body.agentName;
 	let agentWechat = req.body.agentWechat;
+	let productsId = req.body.productsId;
 	
 	try{
-		await Agent.update({_id:agentID},{'$set':{agentName:agentName,agentWechat:agentWechat}});
-		await Child.update({agentID:agentID},{'$set':{agentWechat:agentWechat}},{multi:true});
+		await Agent.update({_id:agentID},{'$set':{agentWechat:agentWechat}});
+		await Child.update({agentID:agentID,mainPromotionProducts:productsId},{'$set':{agentWechat:agentWechat}});
 		return res.json({code:200});
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});
-	}
-	
-	
+	}	
 	
 })
 
-router.post('/api/getpromotionlist',async function(req,res){
-	
-	let agentID = req.body.agentID;
-	
-	try {
-		let promotionList = await Child.find({agentID:agentID}).select('mainPromotionProducts').populate('mainPromotionProducts','productsName').lean();
-		res.json({code:200,promotionList:promotionList});
-	}catch(err){
-		logger.error(err);
-		return res.json({code:500});
-	}
-	
-})
+// 绑定支付宝
 
-//设置主推，那么父信息需要做相应的更新；
-
-router.post('/api/setmainpromotionproducts',async function(req,res){
-	
+router.post('/api/getalipay',async function(req,res){
 	let agentID = req.body.agentID;
 	let productsId = req.body.productsId;
 	
 	try {
-		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean();
-		await Agent.update({_id:agentID},{$set:{
-			subAPI:_child._id,
-			isVIP:_child.isVIP,
-			isBusiness:_child.isBusiness,
-			mainPromotionProducts:productsId,
-			superLevel:_child.superLevel,
-			bigSuperLevel:_child.bigSuperLevel,
-			topSuperLevel:_child.topSuperLevel,
-			sales:_child.sales,
-		}})
-		res.json({code:200});
-		return;
+		let _agent = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).select('agentID agentAlipay').populate('agentID','agentName').lean();
+		
+		if(!_agent){
+			let data = {
+				code:200,
+				agentName:'',
+				agentAlipay:'',
+			}
+			res.json(data);
+			return;
+		}
+		
+		let data = {
+			code:200,
+			agentName:_agent.agentID.agentName,
+			agentAlipay:_agent.agentAlipay
+		}
+		return res.json(data);
 	}catch(err){
 		logger.error(err);
 		return res.json({code:500});
 	}
-	
 })
 
+// 绑定支付宝
 
+router.post('/api/savealipay',async function(req,res){
+	
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
+	let agentName = req.body.agentName;
+	let agentAlipay = req.body.agentAlipay;
+	
+	try{
+		await Agent.update({_id:agentID},{'$set':{agentName:agentName,agentAlipay:agentAlipay}});
+		await Child.update({agentID:agentID,mainPromotionProducts:productsId},{'$set':{agentAlipay:agentAlipay}});
+		return res.json({code:200});
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}	
+	
+})
 
 
 router.post('/api/seesales',async function(req,res){
@@ -345,8 +384,8 @@ router.post('/api/seesaleslevel',async function(req,res){
 	
 	try {
 		if(level=='zero'){
-			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(0).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney');
+			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(20).skip(0).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu');
 			let data = {
 				code:200,
 				_order:_order
@@ -355,8 +394,8 @@ router.post('/api/seesaleslevel',async function(req,res){
 			return;
 		}
 		if(level=='one'){
-			let _order = await Order.find({superLevel:agentID,productsId:productsId}).limit(20).skip(0).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({superLevel:agentID,productsId:productsId}).limit(20).skip(0).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -365,8 +404,8 @@ router.post('/api/seesaleslevel',async function(req,res){
 			return;
 		}
 		if(level=='two'){
-			let _order = await Order.find({'bigSuperLevel':agentID,productsId:productsId}).limit(20).skip(0).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({'bigSuperLevel':agentID,productsId:productsId}).limit(20).skip(0).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -375,8 +414,8 @@ router.post('/api/seesaleslevel',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(20).skip(0).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(20).skip(0).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -408,8 +447,8 @@ router.post('/api/seesalesplus',async function(req,res){
 	
 	try {
 		if(level=='zero'){
-			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(10).skip(skipNum).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney');
+			let _order = await Order.find({agentID:agentID,productsId:productsId}).limit(10).skip(skipNum).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu');
 			let data = {
 				code:200,
 				_order:_order
@@ -418,8 +457,8 @@ router.post('/api/seesalesplus',async function(req,res){
 			return;
 		}
 		if(level=='one'){
-			let _order = await Order.find({superLevel:agentID,productsId:productsId}).limit(10).skip(skipNum).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({superLevel:agentID,productsId:productsId}).limit(10).skip(skipNum).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -428,8 +467,8 @@ router.post('/api/seesalesplus',async function(req,res){
 			return;
 		}
 		if(level=='two'){
-			let _order = await Order.find({'bigSuperLevel':agentID,productsId:productsId}).limit(10).skip(skipNum).
-							   lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({'bigSuperLevel':agentID,productsId:productsId}).limit(10).skip(skipNum).sort({orderMoney:-1}).
+							   lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -438,8 +477,8 @@ router.post('/api/seesalesplus',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(10).skip(skipNum).
-						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney')
+			let _order = await Order.find({relation:{'$regex':agentID},productsId:productsId}).limit(10).skip(skipNum).sort({orderMoney:-1}).
+						 lean().populate('agentID','agentNickname agentWechat').populate('customerID','customerAvatarImg').select('agentID customerID customerName customerDesensitizationNumber orderTime orderMoney eDu')
 			let data = {
 				code:200,
 				_order:_order
@@ -527,8 +566,8 @@ router.post('/api/seeteamlevel',async function(req,res){
 	
 	try {
 		if(level=='one'){
-			let _agents = await Child.find({superLevel:agentID,mainPromotionProducts:productsId}).limit(20).skip(0).
-								lean().select('agentID superLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({superLevel:agentID,mainPromotionProducts:productsId}).limit(20).skip(0).sort({"_id":-1}).
+								lean().select('agentID superLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			let data = {
 				code:200,
 				_agents:_agents
@@ -537,8 +576,8 @@ router.post('/api/seeteamlevel',async function(req,res){
 			return;
 		}
 		if(level=='two'){
-			let _agents = await Child.find({bigSuperLevel:agentID,mainPromotionProducts:productsId}).limit(20).skip(0).
-								lean().select('agentID bigSuperLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({bigSuperLevel:agentID,mainPromotionProducts:productsId}).limit(20).skip(0).sort({"_id":-1}).
+								lean().select('agentID bigSuperLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			let data = {
 				code:200,
 				_agents:_agents
@@ -547,8 +586,10 @@ router.post('/api/seeteamlevel',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId}).limit(20).skip(0).
-								lean().select('agentID topSuperLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId})
+			.limit(20).skip(0).sort({"managerLevel":-1,"_id":-1})
+			.select('agentID topSuperLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat')
+			.lean();
 			
 			let data = {
 				code:200,
@@ -581,8 +622,8 @@ router.post('/api/seeteamplus',async function(req,res){
 	try {
 		
 		if(level=='one'){
-			let _agents = await Child.find({superLevel:agentID,mainPromotionProducts:productsId}).limit(10).skip(skipNum).
-								lean().select('agentID superLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({superLevel:agentID,mainPromotionProducts:productsId}).limit(10).skip(skipNum).sort({"_id":-1}).
+								lean().select('agentID superLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			let data = {
 				code:200,
 				_agents:_agents
@@ -591,8 +632,8 @@ router.post('/api/seeteamplus',async function(req,res){
 			return;
 		}
 		if(level=='two'){
-			let _agents = await Child.find({bigSuperLevel:agentID,mainPromotionProducts:productsId}).limit(10).skip(skipNum).
-								lean().select('agentID superLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({bigSuperLevel:agentID,mainPromotionProducts:productsId}).limit(10).skip(skipNum).sort({"_id":-1}).
+								lean().select('agentID superLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat');
 			let data = {
 				code:200,
 				_agents:_agents
@@ -601,8 +642,10 @@ router.post('/api/seeteamplus',async function(req,res){
 			return;
 		}
 		if(level=='allin'){
-			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId}).limit(10).skip(skipNum).
-								lean().select('agentID superLevel time sales').populate('agentID','agentAvatarImg agentNickname agentWechat');
+			let _agents = await Child.find({relation:{'$regex':agentID},mainPromotionProducts:productsId})
+			.limit(10).skip(skipNum).sort({"managerLevel":-1,"_id":-1})
+			.select('agentID superLevel time sales managerLevel activityNumber bindNumber inviteNum agentNum').populate('agentID','agentAvatarImg agentNickname agentWechat')
+			.lean()
 			
 			let data = {
 				code:200,
@@ -643,6 +686,35 @@ router.post('/api/getBusinessState',async function(req,res){
 	}
 	
 })
+
+//查看所有的权限，是不是VIP,是不是管理员，和managerLevel;
+
+router.post('/api/getlevels',async function(req,res){
+	
+	let agentID = req.body.agentID;
+	let productsId = req.body.productsId;
+	try{
+		let _child = await Child.findOne({agentID:agentID,mainPromotionProducts:productsId}).lean();
+		if(!_child){
+			res.json({code:101})
+			return;
+		}
+		if(_child.isVIP===true||_child.isManager===true){
+			res.json({code:201});
+			return;
+		}
+		res.json({code:204});
+		
+	}catch(err){
+		logger.error(err);
+		return res.json({code:500});
+	}
+	
+})
+
+
+
+
 //判断用户是否已经建立了产品；
 
 router.post('/api/isbuildproducts',async function(req,res){
@@ -714,6 +786,7 @@ router.post('/api/buildproductsmode',async function(req,res){
 		child.timeStamp = new Date().getTime();
 		child.level = 0;
 		child.relation = '/'+agentID;
+		child.managerLevel = 3;
 		
 		await products.save();
 		await child.save();
@@ -736,3 +809,4 @@ router.post('/api/buildproductsmode',async function(req,res){
 
 
 module.exports = router;
+

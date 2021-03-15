@@ -61,7 +61,7 @@ $(document).ready(function(){
 	function removeContent(element){
 		setTimeout(function(){
 			element.innerHTML = '';
-		},3000);
+		},5000);
 	}
 	
 	function checkTel(str){ //检测手机号吗
@@ -83,8 +83,10 @@ $(document).ready(function(){
 	(function onLoad(){
 		let redirect_uri = window.location.href;
 		let code = parseURL(redirect_uri).params.code;
+		let line = parseURL(redirect_uri).params.line;
 		// 没有code,则什么都不做
 		if(!code){
+			line?window.localStorage.setItem('line',line):'';
 			window.localStorage.removeItem('customerID'); //新进入页面清理用户ID,
 			return;
 		// 有code，则说明用户点击了申请按钮
@@ -130,8 +132,8 @@ $(document).ready(function(){
 		}
 		
 		let redirect_url = window.location.href;
-		// let APPID = 'wx1d23498d4a220713'; //测试
-		let APPID = 'wx473b861c5a5a8dbb';
+		let APPID = 'wx1d23498d4a220713'; //测试
+		// let APPID = 'wx473b861c5a5a8dbb';
 		redirect_url = encodeURIComponent(redirect_url);
 		window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+redirect_url+'&response_type=code&scope=snsapi_userinfo&state=lekubaba#wechat_redirect';
 		
@@ -195,6 +197,7 @@ $(document).ready(function(){
 		let productsId = $('.mask-confirm').attr('data-productsid');
 		let link = $('.mask-confirm').attr('data-link');
 		let alicode = $('.mask-confirm').attr('data-code');
+		let line = window.localStorage['line']?window.localStorage['line']:'1';
 		
 		let message = document.getElementById('message');
 		let customerName = $('.customer-name').val();
@@ -229,10 +232,17 @@ $(document).ready(function(){
 			customerName:customerName, //客户名字
 			customerPhoneNumber:customerPhoneNumber, //客户手机号
 			verificationCode:verificationCode, //验证码
+			line:line,
 		}
 		
 		$.post('/api/getcustomerinfo_link',infoData,function(data,status){
+			if(data.code===500){
+				alert('系统出错了');
+				return;
+			}
 			if(data.code===200){
+				message.innerHTML = '正前往申请页面...';
+				removeContent(message);
 				window.location.href = link;
 			}
 		})

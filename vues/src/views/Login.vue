@@ -3,6 +3,7 @@
 		<img class='logo' src="http://qiniu.tongkeapp.com/nq_logo_circl.png">
 		<img class='mission' src="http://qiniu.tongkeapp.com/tkMission_01.png">
 		<div class='login-button' @click='Login'>微信登陆</div>
+		<div class='message-login' @click='MessageLogin'>手机验证码登陆</div>
 	</div>
 </template>
 
@@ -63,6 +64,9 @@ export default {
 						
 					})
 			}
+		},
+		MessageLogin(){
+			this.$router.push({name:'MessageLogin'});
 		}
 	},
 }
@@ -94,8 +98,8 @@ export default {
 		color: #444;
 	}
 	.login-button{
-		margin-top:40vh;
-		width:80vw;
+		margin-top:30vh;
+		width:70vw;
 		height: 52px;
 		background-color: #1476FE;
 		border-radius: 10px;
@@ -105,5 +109,12 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	.message-login{
+		position: fixed;
+		bottom:20px;
+		font-size: 12px;
+		color:#1476FE;
+		text-decoration: underline;
 	}
 </style>

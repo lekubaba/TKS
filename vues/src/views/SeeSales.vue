@@ -71,7 +71,17 @@
 				window.onscroll = () => {
 					// 距离底部200px时加载一次
 					
-					let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 100
+					// 变量scrollTop为当前页面的滚动条纵坐标位置
+					let scrollTop =
+					  document.documentElement.scrollTop || document.body.scrollTop;
+					// 变量 windowHeight 是可视区的高度
+					let windowHeight =
+					  document.documentElement.clientHeight || document.body.clientHeight;
+					// 变量 scrollHeight 是滚动条的总高度
+					let scrollHeight =
+					  document.documentElement.scrollHeight || document.body.scrollHeight;
+					// 距离底部100px时加载一次
+					let bottomOfWindow =  scrollHeight -(scrollTop + windowHeight)<=100;
 					if (bottomOfWindow&&that.isLoading == false) {
 						if(!that.level){
 							return;
@@ -143,13 +153,15 @@
 		flex-direction: column;
 		align-items: center;
 		// justify-content: center;
+		
 	}
 	.sales-total{
 		margin-top:20px;
 		width:92vw;
-		height: 206px;
+		height: 156px;
 		background-color: #fff;
-		border-radius: 20px;
+		border-top-left-radius: 10px;
+		border-top-right-radius: 10px;
 		// background-image: linear-gradient(135deg,#f5336e 0%,#ff7639 100%);
 		background-color: #1476fe;
 		padding:20px 0 0 20px;
@@ -164,11 +176,11 @@
 		color: #fff;
 	}
 	.see-s-navs{
-		margin-top:10px;
-		width:80vw;
+		width:92vw;
 		height: 45px;
 		display: flex;
 		justify-content: space-between;
+		background-color: rgb(247,247,247);
 	}
 	.see-s-nav{
 		width:25%;

@@ -4,13 +4,21 @@ const Core = require('@alicloud/pop-core');
 let logger = require('../utils/logger').logger;
 let {ID,Secret} = require('../config');
 
-function MNS(req,res,tel){
+async function MNS(req,res,tel){
+	
+	let alicode;
+	let _timeStamp = new Date().getTime() - 300000;
+	let _code = await Code.findOne({tel:tel,timeStamp:{'$gt':_timeStamp}}).lean();
 	
 	function rand(min,max) {
 		return Math.floor(Math.random()*(max-min))+min;
 	}
 	
-	let alicode = rand(1000,9999);
+	if(_code){
+		alicode = _code.code;
+	}else{
+		alicode = rand(1000,9999);
+	}
 
 	var client = new Core({
 		accessKeyId: ID,
@@ -47,6 +55,7 @@ function MNS(req,res,tel){
 					code._id = new mongoose.Types.ObjectId;
 					code.tel = tel;
 					code.code = alicode
+					code.timeStamp = new Date().getTime();
 					code.save(function(err){
 						if(err){
 							logger.error(err);
@@ -56,7 +65,7 @@ function MNS(req,res,tel){
 						res.json({code:200,alicode:alicode});  
 					})
 				}else{
-					Code.update({tel:tel},{$set:{code:alicode}},function(err){
+					Code.update({tel:tel},{$set:{code:alicode,timeStamp:new Date().getTime()}},function(err){
 						if(err){
 							logger.error(err);
 							res.json({code:500});

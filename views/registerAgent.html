@@ -5,33 +5,60 @@
         <title><%= title%></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="http://qiniu.tongkeapp.com/registerAgent.css?time=202012003">
-		<script src='http://qiniu.tongkeapp.com/PreventAttacks.js?time=202012003'></script>	
+        <link rel="stylesheet" href="http://qiniu.tongkeapp.com/registerAgent.css?time=20201226">
+        <!-- <link rel="stylesheet" href="http://192.168.0.105:8099/styles/registerAgent.css?time=20201226"> -->
+		<script src='http://qiniu.tongkeapp.com/PreventAttacks.js?time=20201226'></script>	
     </head>
     <body>
 		<div id='register-agent'>
-			<div class='register-h'>
-				<div class='register-title1'>此招商由：</div>
-				<div class='register-title2' style="color:<%= color%>"><%= companyName%>发布</div>
-				<div class='register-title3'>推广产品：<span class='register-title4' style="color:<%= color%>"><%= productsName%></span></div>
-				<div class='registe-countdown'>
-					<div class='register-agree' style="background-color:<%= color%>">√</div>
-					<div class='register-agree-title'>限时招商</div>
-					<!-- <div class='register-agree-title' style="color:<%= color%>">12-22-22</div> -->
-				</div>
-				<div class='regulation' style="color:<%= color%>">注册代理并登陆可查看佣金政策</div>
-			</div>
 			<div class='register-c'>
 				<div id='message' style='height: 20px;'></div>
-				<input class='register-input' type="text" placeholder="| 请输入本人微信号" name='agentWechat' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
-				<div class='remind'>微信号便于您与上下级推荐人沟通联系，获得/提供辅导帮助，请填写正确账号</div>
+				<div class='container'>
+					<div class='container-a'>
+						<div class='c-title'>
+							请选择<span style='color:#11b764'>所在地区</span>
+						</div>
+						<div class='remind'>
+							我们将为您推荐同城一起参与推广的伙伴，让推广更有趣。
+						</div>
+						<div id='address-a'>还没选择城市</div>
+					</div>
+					<div class='container-b'>
+						<div class='arrow-right'></div>
+					</div>
+				</div>
+				<div class='containerx'>
+					<div class='container-a'>
+						<div id='message2' style='height: 20px;'></div>
+						<input class='register-input' type="number" placeholder="请填写注册手机号" name='agentPhoneNumber' onkeyup="this.value=this.value.replace(/[, ]/g,'')">
+						<div class='rna-wraperb'>
+							<input type="number" class='rna-input-check' name='verificationCode' placeholder="验证码" oninput="this.value=this.value.length>4?this.value.substr(0,4):this.value;">
+							<button class='get-check-number' style="background-color:<%= color%>">获取验证码</button>	
+						</div>
+						<div id='dataset' style="background-color:<%= color%>" class='register-confirm' data-agentid = "<%= agentID%>" data-productsid="<%= productsId%>" data-code="">
+							注册/登陆
+						</div>
+					</div>
+					
+				</div>
 			</div>
-			<div class='register-f'>
-				<div class='register-confirm' style="background-color:<%= color%>" data-agentid = "<%= agentID%>" data-productsid="<%= productsId%>">注册并登陆</div>
+		</div>
+		<div class='mask-city' style='display:none;'>
+			<div class='wrapper-c'>
+				<div id='message1' style='height: 20px;'></div>
+				<div class='please'>请选择所在地区</div>
+				<div class='close-city'>×</div>
+				<div id='distpicker' data-toggle="distpicker">
+					<select id='province' data-province="所在省"></select>
+					<select id='city' data-city="所在市"></select>
+				</div>
+				<button class='sure-city' style="background-color:<%= color%>">确认</button>
 			</div>
 		</div>
     </body>
     <script src='http://qiniu.tongkeapp.com/jquery.min.js'></script>
-    <!-- <script src='http://192.168.0.105:8099/scripts/registerAgent.js?time=202012003'></script> -->
-    <script src='http://qiniu.tongkeapp.com/registerAgent.js?time=202012003'></script>
+	<script src='http://qiniu.tongkeapp.com/distpicker.min.js'></script>
+    <script src='http://192.168.0.101:8099/scripts/registerAgent.js?time=20201226'></script>
+    <!-- <script src='http://static.tongkeapp.com/registerAgent.js?time=20201226'></script> -->
+    <!-- <script src='http://qiniu.tongkeapp.com/registerAgent.js?time=20201226'></script> -->
 </html>

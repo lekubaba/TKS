@@ -6,6 +6,8 @@
 				<div class='profile-head-title'>
 					<span class='title-username'>{{customerInfo.customerName}} {{customerInfo.customerDesensitizationNumber}}</span>
 					<span class='title-tel'>{{customerInfo.orderTime}}</span>
+					<span class='title-tel' :style='{color:color}'>推荐人昵称：{{customerInfo.agentID.agentNickname}}</span>
+					<span class='title-tel' :style='{color:color}'>推荐人微信：{{customerInfo.agentID.agentWechat}}</span>
 				</div>
 			</div>
 			<div class='profile-head-production' :style="{color:color}">{{customerInfo.productsId.productsName}}</div>
@@ -27,16 +29,10 @@
 				</li>
 			</ul>
 		</div>
-		<div class='profile-note'>
-			<span>客户跟进笔记</span>
-			<div class='waiting'>
-				此功能正在开发...
-			</div>
-		</div>
-		<div class='profile-contact' :style="{backgroundColor:color}">
+		<!-- <div class='profile-contact' :style="{backgroundColor:color}">
 			<h3>客服电话：{{customerInfo.productsId.bossPhoneNumber}}</h3>
 			<h3>客服微信：{{customerInfo.productsId.bossWechat}}</h3>
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -60,6 +56,10 @@ export default {
 					productsName:'',
 					bossPhoneNumber:'',
 					bossWechat:'',
+				},
+				agentID:{
+					agentWechat:'',
+					agentNickname:'',
 				}
 				
 			},
@@ -89,7 +89,6 @@ export default {
 				.then(function(response){
 					that.$loading.hide();
 					that.customerInfo = response.data;
-					console.log(response.data);
 				})
 		}
 	},
@@ -103,7 +102,7 @@ export default {
 	#profile-a{
 		width:100vw;
 		min-height: 100vh;
-		background-color: #ededed;
+		background-color: #F2F5FA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
